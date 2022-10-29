@@ -9,9 +9,7 @@ class Customer(AbstractUser):
         Becouse we dont inherit from the base model,so
         we use the created, and updated fields in this class.
     """
-
-    phone_number = models.CharField(
-        validators=[phone_number_regex], max_length=16, blank=True)
+    
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
 
