@@ -27,11 +27,16 @@ services:
 
   db:
     container_name: db
-    image: postgres:13-alpine
+    image: postgres:13
     environment:
       - POSTGRES_DB=shopping-cart
       - POSTGRES_USER=mobin
       - POSTGRES_PASSWORD=mobinmobin
     ports:
       - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
     restart: always
+
+volumes:
+  postgres_data:
