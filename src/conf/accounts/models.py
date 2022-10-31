@@ -8,7 +8,7 @@ class Customer(AbstractUser):
         Becouse we dont inherit from the base model,so
         we use the created, and updated fields in this class.
     """
-    
+
     created = models.DateTimeField(_("created"), auto_now_add=True)
     updated = models.DateTimeField(_("updated"), auto_now=True)
 
