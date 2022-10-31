@@ -3,9 +3,11 @@ from djmoney.models.fields import MoneyField
 from django.utils.translation import gettext_lazy as _
 from common.basemodels import BaseModel
 
+
 class Category(BaseModel):
     name = models.CharField(_('name'), max_length=100)
-    parent = models.ForeignKey("self", null=True, blank=True, on_delete=models.CASCADE)
+    parent = models.ForeignKey(
+        "self", null=True, blank=True, on_delete=models.CASCADE)
 
     class Meta:
         db_table = _('categories')
@@ -26,10 +28,10 @@ class Category(BaseModel):
         super(Category, self).save(*args, **kwargs)
 
 
-
 class Contact(BaseModel):
     name = models.CharField(_('name'), max_length=150, null=True, blank=True)
-    email = models.EmailField(_('email'), max_length=150, null=True, blank=True)
+    email = models.EmailField(
+        _('email'), max_length=150, null=True, blank=True)
     subject = models.CharField(_('subject'), max_length=100)
     message = models.TextField()
 
@@ -60,7 +62,8 @@ class Product(BaseModel):
     image = models.ImageField(upload_to='product_images')
     number_of_product = models.PositiveSmallIntegerField(blank=True, null=True)
     price = MoneyField(max_digits=10, decimal_places=2, default_currency='USD')
-    category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='products')
+    category = models.ForeignKey(
+        Category, on_delete=models.CASCADE, related_name='products')
     is_active = models.BooleanField(default=True)
     views = models.ManyToManyField(IPaddress, blank=True)
 
