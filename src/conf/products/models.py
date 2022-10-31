@@ -33,7 +33,7 @@ class Contact(BaseModel):
     email = models.EmailField(
         _('email'), max_length=150, null=True, blank=True)
     subject = models.CharField(_('subject'), max_length=100)
-    message = models.TextField()
+    message = models.TextField(_('message'),)
 
     class Meta:
         db_table = _('contacts')
@@ -45,7 +45,7 @@ class Contact(BaseModel):
 
 
 class IPaddress(BaseModel):
-    ip_address = models.GenericIPAddressField()
+    ip_address = models.GenericIPAddressField(_('ip_address'))
 
     class Meta:
         db_table = _('ip_addresses')
@@ -57,13 +57,15 @@ class IPaddress(BaseModel):
 
 
 class Product(BaseModel):
-    name = models.CharField(max_length=150)
-    description = models.TextField()
-    image = models.ImageField(upload_to='product_images')
-    number_of_product = models.PositiveSmallIntegerField(blank=True, null=True)
-    price = MoneyField(max_digits=10, decimal_places=2, default_currency='USD')
+    name = models.CharField(_('name'), max_length=150)
+    description = models.TextField(_('description'), )
+    image = models.ImageField(_('image'), upload_to='product_images')
+    number_of_product = models.PositiveSmallIntegerField(_('number_of_product'),
+                                                         blank=True, null=True)
+    price = MoneyField(_('price'), max_digits=10, decimal_places=2,
+                       default_currency='USD')
     category = models.ForeignKey(
-        Category, on_delete=models.CASCADE, related_name='products')
+        Category, _('category'), on_delete=models.CASCADE, related_name='products')
     is_active = models.BooleanField(default=True)
     views = models.ManyToManyField(IPaddress, blank=True)
 
