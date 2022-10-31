@@ -9,8 +9,8 @@ class Customer(AbstractUser):
         we use the created, and updated fields in this class.
     """
     
-    created = models.DateTimeField(auto_now_add=True)
-    updated = models.DateTimeField(auto_now=True)
+    created = models.DateTimeField(_("created"), auto_now_add=True)
+    updated = models.DateTimeField(_("updated"), auto_now=True)
 
     class Meta:
         db_table = _("customers")
