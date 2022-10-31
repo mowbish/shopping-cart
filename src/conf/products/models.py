@@ -65,7 +65,7 @@ class Product(BaseModel):
     price = MoneyField(_('price'), max_digits=10, decimal_places=2,
                        default_currency='USD')
     category = models.ForeignKey(
-        Category, _('category'), on_delete=models.CASCADE, related_name='products')
+        Category, on_delete=models.CASCADE, related_name='products')
     is_active = models.BooleanField(default=True)
     views = models.ManyToManyField(IPaddress, blank=True)
 
@@ -73,7 +73,7 @@ class Product(BaseModel):
         db_table = _('products')
         verbose_name = _('Product')
         verbose_name_plural = _('Products')
-        ordering = ['-created']
 
     def __str__(self):
         return f'{self.name}'
+    

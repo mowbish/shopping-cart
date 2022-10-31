@@ -6,6 +6,7 @@ django-money==3.0.0
 djangorestframework==3.14.0
 djangorestframework-simplejwt==5.2.2
 Markdown==3.4.1
+pillow
 psycopg2
 pycodestyle==2.9.1
 PyJWT==2.6.0
