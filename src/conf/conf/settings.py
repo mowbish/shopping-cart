@@ -32,6 +32,7 @@ INSTALLED_APPS = [
     
     # DRF
     'rest_framework',
+    'djmoney',
 ]
 
 MIDDLEWARE = [
