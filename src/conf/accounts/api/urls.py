@@ -3,4 +3,5 @@ from .views import SignUpModelViewSet
 
 router = DefaultRouter()
 
-router.register(r'accounts/signup', SignUpModelViewSet, basename='sign_up_account')
+router.register(r'accounts/signup', SignUpModelViewSet,
+                basename='sign_up_account')
