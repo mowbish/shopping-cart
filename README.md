@@ -4,3 +4,5 @@ tasks:
 	-add logger to project
 	-add swagger to project
 	-deploy project on server 
+	-change structure of project for microservice
+	-change structure of conf file 
