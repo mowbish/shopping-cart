@@ -6,3 +6,10 @@ tasks:
 	-deploy project on server 
 	-change structure of project for microservice
 	-change structure of conf file 
+	-save ip address in product model (maybe change location to accounts)
+	-library for convert latitude and longitude to address
+	-pep8 for project
+	-lazy translate for all fields of models (Especially foriegn key and OTO field)
+	-review for models names and fields and fat models
+	--------------------------------------
+	-add serializer, view and routing for each app
