@@ -17,7 +17,8 @@ class RetriveSignUpModelSerializer(serializers.ModelSerializer):
                   "date_joined", "last_login", "is_staff")
 
 
-class UpdateSignUpModelSerializer(serializers.ModelSerializer):
+class 
+(serializers.ModelSerializer):
 
     class Meta:
         model = Customer
