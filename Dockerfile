@@ -5,7 +5,6 @@ ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1
 
 RUN apt-get update
-
 WORKDIR /app/src
 
 COPY requirements.txt /requirements.txt
