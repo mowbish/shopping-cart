@@ -4,13 +4,7 @@ ENV PIP_DISABLE_PIP_VERSION_CHECK=1
 ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1
 
-RUN apt-get update && apt-get install --no-install-recommends -y \
-  vim-tiny \
-  binutils \
-  libproj-dev \
-  gdal-bin \
-  libsqlite3-mod-spatialite\
- && rm -rf /var/lib/apt/lists/*
+RUN apt-get update
 
 WORKDIR /app/src
 
