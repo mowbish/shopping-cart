@@ -11,13 +11,13 @@ services:
       - 8000:8000
     volumes:
       - ./src/conf:/app/src
-    environment:
-      - DB_HOST=db
-      - DB_NAME=shopping-cart
-      - DB_USER=mobin
-      - DB_PASS=mobinmobin
-    depends_on:
-      - db
+    # environment:
+    #   - DB_HOST=db
+    #   - DB_NAME=shopping-cart
+    #   - DB_USER=mobin
+    #   - DB_PASS=mobinmobin
+    # depends_on:
+    #   - db
 
     command: >
       sh -c "python3 /app/src/manage.py makemigrations &&
@@ -25,18 +25,18 @@ services:
             /app/src/manage.py test &&
             /app/src/manage.py runserver 0:8000"
 
-  db:
-    container_name: db
-    image: postgres:13
-    environment:
-      - POSTGRES_DB=shopping-cart
-      - POSTGRES_USER=mobin
-      - POSTGRES_PASSWORD=mobinmobin
-    ports:
-      - "5432:5432"
-    volumes:
-      - postgres_data:/var/run/postgresql/
-    restart: always
+#   db:
+#     container_name: db
+#     image: postgres:13
+#     environment:
+#       - POSTGRES_DB=shopping-cart
+#       - POSTGRES_USER=mobin
+#       - POSTGRES_PASSWORD=mobinmobin
+#     ports:
+#       - "5432:5432"
+#     volumes:
+#       - postgres_data:/var/run/postgresql/
+#     restart: always
 
-volumes:
-  postgres_data:
+# volumes:
+#   postgres_data:
