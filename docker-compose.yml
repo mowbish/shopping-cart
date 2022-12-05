@@ -2,15 +2,16 @@ version: '3.9'
 
 services:
 
-  server:
+  back-end:
     restart: always
+    container_name: front-end
     build:
       dockerfile: Dockerfile
-      context: .
+      context: ./back-end/
     ports:
       - 8000:8000
     volumes:
-      - ./src/conf:/app/src
+      - ./back-end/src:/app/src
     # environment:
     #   - DB_HOST=db
     #   - DB_NAME=shopping-cart
@@ -24,7 +25,25 @@ services:
             /app/src/manage.py migrate &&
             /app/src/manage.py test &&
             /app/src/manage.py runserver 0:8000"
+  
+  frontend:
+    restart: always
+    command : npm start
+    container_name: front-end
+    build:
+      context: ./front-end/
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    stdin_open: true
+    depends_on:
+      - back-end
+    networks:
+      - db-net  
 
+networks:
+  db-net:
+    driver: bridge
 #   db:
 #     container_name: db
 #     image: postgres:13
