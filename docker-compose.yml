@@ -6,11 +6,11 @@ services:
     restart: always
     build:
       dockerfile: Dockerfile
-      context: .
+      context: ./back-end/
     ports:
       - 8000:8000
     volumes:
-      - ./src/conf:/app/src
+      - ./back-end/src:/app/src
     # environment:
     #   - DB_HOST=db
     #   - DB_NAME=shopping-cart
