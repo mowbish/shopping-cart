@@ -1,0 +1,12 @@
+.main {
+	display: inline-flex;
+	position: fixed;
+
+	// align-items: center;
+	gap: 20px;
+
+	bottom: 10%;
+
+	left: 50%;
+	transform: translateX(-50%);
+}
