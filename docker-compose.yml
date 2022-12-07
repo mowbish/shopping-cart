@@ -4,7 +4,7 @@ services:
 
   back-end:
     restart: always
-    container_name: front-end
+    container_name: back-end
     build:
       dockerfile: Dockerfile
       context: ./back-end/
@@ -26,15 +26,19 @@ services:
             /app/src/manage.py test &&
             /app/src/manage.py runserver 0:8000"
   
-  frontend:
+  front-end:
     restart: always
-    command : npm start
+#    command : npm start
     container_name: front-end
+
     build:
       context: ./front-end/
       dockerfile: Dockerfile
+
     ports:
       - "3000:3000"
+      - "3001:3001"
+
     stdin_open: true
     depends_on:
       - back-end
