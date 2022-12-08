@@ -19,9 +19,7 @@ body {
 	font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu,
 		Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
 	overflow-y: hidden;
-}
-
-#__next {
+	transition: all 400ms ease-out;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -31,6 +29,15 @@ body {
 	body {
 		color: white;
 		background: black;
+	}
+}
+@media (prefers-color-scheme: light) {
+	html {
+		color-scheme: light;
+	}
+	body {
+		color: black;
+		background: white;
 	}
 }
 
