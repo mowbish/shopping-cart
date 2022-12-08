@@ -1,12 +1,14 @@
 .main {
 	display: inline-flex;
 	position: fixed;
+	z-index: 99;
+
+	input {
+		width: 50%;
+	}
 
 	// align-items: center;
-	gap: 20px;
+	gap: 15px;
 
-	bottom: 10%;
-
-	left: 50%;
-	transform: translateX(-50%);
+	transition: all 400ms ease-out;
 }

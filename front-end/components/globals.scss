@@ -3,6 +3,7 @@
 	// border: 1px solid white;
 
 	cursor: none;
+	scroll-behavior: smooth;
 
 	// -ms-overflow-style: none; /* IE and Edge */
 	// scrollbar-width: none; /* Firefox */
@@ -21,10 +22,6 @@ body {
 }
 
 #__next {
-	// scroll-snap-type: y mandatory;
-	// * {
-	// 	scroll-snap-align: center;
-	// }
 }
 
 @media (prefers-color-scheme: dark) {

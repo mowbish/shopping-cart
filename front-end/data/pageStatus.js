@@ -1,12 +1,12 @@
 import { createSlice } from "@reduxjs/toolkit"
 
-const initialState = { state: 0 }
+const initialState = { status: "home" }
 
 export const pageStatus = createSlice({
 	name: "pageStatus",
 	initialState,
 	reducers: {
-		setState: (state, action) => ({ ...state, state: action.payload }),
+		setState: (state, action) => ({ ...state, status: action.payload }),
 	},
 })
 

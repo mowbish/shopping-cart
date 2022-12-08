@@ -1,0 +1,24 @@
+.main {
+	height: 100vh;
+	position: relative;
+}
+
+.productContainer {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	gap: 19px;
+	overflow-y: scroll;
+
+	//framework
+	position: absolute;
+	width: 90%;
+	height: 90%;
+	left: 50%;
+	top: 50%;
+	transform: translateX(-50%) translateY(-50%);
+
+	padding: 25px;
+	border-radius: 50px;
+	background-color: gray;
+}
