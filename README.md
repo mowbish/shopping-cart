@@ -44,7 +44,7 @@ Back-end tasks:
 
 # Front
 
-## current task: create general framework - 
+## current task: create general framework - create cart page
 
 #### website usage:
 

@@ -20,7 +20,6 @@ export default function Search() {
 			dispatch(setState("store"))
 		}
 		const goToHomeFromStore = () => {
-			console.log("close clicked")
 			if (pageStatus.status == "home") return
 			window.scroll(0, window.scrollY - window.innerHeight)
 			dispatch(setState("home"))
@@ -56,7 +55,7 @@ export default function Search() {
 				}
 			>
 				<input id="searchInput" placeholder="Search store" />
-				<SearchComponent name="price" />
+				<SearchComponent name="type" />
 				<button
 					id="closeSearch"
 					style={

@@ -1,5 +1,6 @@
 .main {
 	height: 100vh;
+	width: 100%;
 	position: relative;
 }
 
@@ -7,18 +8,21 @@
 	display: flex;
 	flex-direction: row;
 	flex-wrap: wrap;
-	gap: 19px;
+	gap: 10px;
+	row-gap: 4%;
+	align-items: stretch;
+	justify-content: space-evenly;
 	overflow-y: scroll;
 
 	//framework
-	position: absolute;
 	width: 90%;
 	height: 90%;
+	position: absolute;
 	left: 50%;
 	top: 50%;
 	transform: translateX(-50%) translateY(-50%);
 
-	padding: 25px;
-	border-radius: 50px;
+	padding: 25px 25px;
+	border-radius: 35px;
 	background-color: gray;
 }
