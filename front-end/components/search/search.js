@@ -1,10 +1,10 @@
 import styles from "./search.module.scss"
 import { useSelector, useDispatch } from "react-redux"
 import { useEffect } from "react"
-//components
-import SearchComponent from "./searchComponent"
 //data
 import { setState } from "/data/pageStatus"
+//components
+import SearchComponent from "./searchComponent"
 
 export default function Search() {
 	const dispatch = useDispatch()

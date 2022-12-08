@@ -1,7 +1,13 @@
-import styles from "./dark-light.module.scss"
+import styles from "./themeSwitch.module.scss"
+import { useSelector, useDispatch } from "react-redux"
 import { useEffect } from "react"
+//data
+import { setTheme } from "/data/pageStatus"
 
 export default function DarkLight() {
+	const dispatch = useDispatch()
+	const themeState = useSelector((state) => state.pageStatus.theme)
+
 	useEffect(() => {
 		const htmlElem = document.getElementsByName("html")[0]
 		const body = document.body
@@ -12,10 +18,12 @@ export default function DarkLight() {
 				body.style.color = "white"
 				body.style.background = "black"
 				// htmlElem.style.colorScheme = "dark"
+				dispatch(setTheme("dark"))
 			} else {
 				body.style.color = "black"
 				body.style.background = "white"
 				// htmlElem.style.colorScheme = "light"
+				dispatch(setTheme("light"))
 			}
 		}
 

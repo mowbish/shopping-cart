@@ -40,6 +40,15 @@ export default function Cursor() {
 						strokeWidth="1.5"
 						strokeOpacity="1"
 					/>
+					<circle
+						cx={cursorDimension / 2}
+						cy={cursorDimension / 2}
+						r={cursorDimension / 2 - 2}
+						fill="none"
+						stroke="black"
+						strokeWidth="1.5"
+						strokeOpacity="1"
+					/>
 				</svg>
 			</div>
 		</>

@@ -3,13 +3,13 @@ import styles from "./head.module.scss"
 //components
 import Brand from "./brand"
 import Account from "./account"
-import DarkLight from "./dark-light"
+import ThemeSwitch from "./themeSwitch"
 
 export default function Head() {
 	return (
 		<>
 			<header className={styles.main}>
-				<DarkLight />
+				<ThemeSwitch />
 				<Brand />
 				<Account />
 			</header>
