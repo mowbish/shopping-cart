@@ -1,4 +1,4 @@
-.main {
+.container {
 	display: inline-flex;
 	position: fixed;
 	z-index: 99;
@@ -11,4 +11,7 @@
 	gap: 15px;
 
 	transition: all 400ms ease-out;
+}
+.close {
+  right: 0px;
 }

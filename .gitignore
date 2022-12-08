@@ -714,7 +714,6 @@ next-env.d.ts
 
 ### VisualStudio Patch ###
 # Additional files built by Visual Studio
-front-end/package-lock.json
 front-end/.next/
 .gitignore
 

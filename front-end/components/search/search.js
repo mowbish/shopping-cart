@@ -11,49 +11,60 @@ export default function Search() {
 	let pageStatus = useSelector((state) => state.pageStatus)
 
 	useEffect(() => {
-		const searchElem = document.getElementById("searchContainer")
+		const searchElem = document.getElementById("searchInput")
+		const closeElem = document.getElementById("closeSearch")
 
-		const clickhandler = () => {
-			// go to store
-			if (pageStatus.status == "home") {
-				window.scroll(0, window.scrollY + window.innerHeight)
-				dispatch(setState("store"))
-			}
-			// go to home
-			else {
-				window.scroll(0, window.scrollY - window.innerHeight)
-				dispatch(setState("home"))
-			}
+		const goToStoreFromHome = () => {
+			if (pageStatus.status == "store") return
+			window.scroll(0, window.scrollY + window.innerHeight)
+			dispatch(setState("store"))
+		}
+		const goToHomeFromStore = () => {
+			console.log("close clicked")
+			if (pageStatus.status == "home") return
+			window.scroll(0, window.scrollY - window.innerHeight)
+			dispatch(setState("home"))
 		}
 
-		document.getElementById("searchInput").addEventListener("click", clickhandler)
-		return () =>
-			document.getElementById("searchInput").removeEventListener("click", clickhandler)
+		searchElem.addEventListener("click", goToStoreFromHome)
+		closeElem.addEventListener("click", goToHomeFromStore)
+		return () => {
+			searchElem.removeEventListener("click", goToStoreFromHome)
+			closeElem.removeEventListener("click", goToHomeFromStore)
+		}
 	}, [pageStatus])
 
 	return (
 		<>
 			<div
 				id="searchContainer"
-				className={styles.main}
+				className={styles.container}
 				style={
 					pageStatus.status === "home"
 						? {
+								width: "50%",
 								top: "90%",
 								left: "50%",
-								transform: "translateX(-50%)",
+								transform: "translateX(-25%)",
 						  }
 						: {
+								width: "100%",
 								top: "0",
 								left: "0",
-								width: "90%",
 								transform: "translateX(0)",
 						  }
 				}
 			>
 				<input id="searchInput" placeholder="Search store" />
-				<button />
 				<SearchComponent name="price" />
+				<button
+					id="closeSearch"
+					style={
+						pageStatus.status === "store" ? { display: "block" } : { display: "none" }
+					}
+				>
+					Close
+				</button>
 			</div>
 		</>
 	)
