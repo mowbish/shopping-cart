@@ -1,5 +1,6 @@
 import styles from "./body.module.scss"
 import Product from "./product"
+import CartButton from "./goToCartButton"
 
 export default function Body() {
 	//test products
@@ -11,8 +12,9 @@ export default function Body() {
 
 	return (
 		<>
-			<main className={styles.main}>
+			<main id="store" className={styles.storeBody}>
 				<div className={styles.productContainer}>{newArray}</div>
+				<CartButton />
 			</main>
 		</>
 	)

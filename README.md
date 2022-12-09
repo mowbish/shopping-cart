@@ -1,6 +1,7 @@
 # Back
 
 Back-end tasks:
+
 - add view and router
 - add CI/CD to projcet
 - add celery
@@ -16,8 +17,8 @@ Back-end tasks:
 - review for models names and fields and fat models
 
 - add serializer, view and routing for each app
----
 
+---
 
 #### account entities:
 
@@ -44,7 +45,7 @@ Back-end tasks:
 
 # Front
 
-## current task: create general framework - create cart page
+### current task: create general framework: create cart page
 
 #### website usage:
 

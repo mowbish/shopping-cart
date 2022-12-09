@@ -1,17 +1,18 @@
 import styles from "./head.module.scss"
-import { useSelector } from "react-redux"
 //components
 import Brand from "./brand"
 import Account from "./account"
 import ThemeSwitch from "./themeSwitch"
+import Search from "/components/search/search"
 
 export default function Head() {
 	return (
 		<>
-			<header className={styles.home}>
+			<header id="home" className={styles.home}>
 				<ThemeSwitch />
 				<Brand />
 				<Account />
+				<Search />
 			</header>
 		</>
 	)
