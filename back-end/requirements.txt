@@ -5,6 +5,7 @@ django-filter==22.1
 django-money==3.0.0
 djangorestframework==3.14.0
 djangorestframework-simplejwt==5.2.2
+drf-yasg==1.21.4
 Markdown==3.4.1
 pillow
 psycopg2
