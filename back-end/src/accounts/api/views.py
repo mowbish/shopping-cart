@@ -12,5 +12,4 @@ class UserModelViewSet(mixins.CreateModelMixin, mixins.UpdateModelMixin,
             self.serializer_class = RetriveUserModelSerializer
         elif self.action == "update":
             self.serializer_class = UpdateUserModelSerializer
-
-        return super().get_serializer_class()
+        return self.serializer_class

@@ -8,9 +8,6 @@ class SignUpUserModelSerializer(serializers.ModelSerializer):
         model = Customer
         fields = ("username", "first_name", "last_name", "email", "password")
 
-    def to_representation(self, instance):
-        # dont return password
-        pass
 
 
 class RetriveUserModelSerializer(serializers.ModelSerializer):
