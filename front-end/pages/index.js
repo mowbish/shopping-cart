@@ -1,10 +1,5 @@
 import { useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
-//components
-import WebHead from "/components/home/head"
-import Body from "/components/store/body"
-import Cart from "/components/cart/cart"
-import Cursor from "/components/cursor"
 //data
 import { setWidth, setHeight } from "../data/pageStatus"
 
@@ -34,11 +29,7 @@ export default function Home() {
 
 	return (
 		<>
-			<Cursor />
-
-			<WebHead />
-			<Body />
-			<Cart />
+            im home
 		</>
 	)
 }

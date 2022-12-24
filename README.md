@@ -20,6 +20,28 @@ Back-end tasks:
 
 ---
 
+# Front
+
+### current task: home
+
+#### website usage:
+
+- check corporation description / contact info
+- check account information
+- compare two or more products or stores
+- check product price / pictures / details
+- filter products
+- buy products
+
+#### main subpages:
+
+- home
+- profile
+- cart
+- search
+- product
+- compare
+
 #### account entities:
 
 - customer
@@ -42,26 +64,3 @@ Back-end tasks:
 - contact
 - ip address
 - product
-
-# Front
-
-### current task: create general framework: create cart page
-
-#### website usage:
-
-- check corporation description / contact info
-- check account information
-- compare two or more products or stores
-- check product price / pictures / details
-- filter products
-- buy products
-
-#### main subpages:
-
-- account
-- contact
-- head
-- body
-- details
-- compare
-- cart
