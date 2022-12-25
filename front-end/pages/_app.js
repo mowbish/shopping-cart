@@ -2,6 +2,7 @@ import "/components/globals.scss"
 import Head from "next/head"
 import allStore from "/data/allStore"
 import { Provider } from "react-redux"
+import { useRouter } from "next/router"
 
 // components
 import Cursor from "/components/cursor"
@@ -9,6 +10,8 @@ import Header from "../components/Header/Header"
 import Footer from "../components/Footer/Footer"
 
 export default function MyApp({ Component, pageProps }) {
+	const router = useRouter()
+    // console.log( router.query.productID)
 	return (
 		<>
 			<Provider store={allStore}>
