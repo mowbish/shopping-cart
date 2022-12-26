@@ -22,7 +22,7 @@ Back-end tasks:
 
 # Front
 
-### current task: home
+### current task: comparing
 
 #### website usage:
 

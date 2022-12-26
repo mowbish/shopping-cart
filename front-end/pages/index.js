@@ -30,8 +30,6 @@ export default function Home(props) {
 
 	return (
 		<>
-			im home
-			<br />
 			{props.products.map((product) => {
 				return (
 					<Link href={`/product/${product.id}`} key={product.id}>

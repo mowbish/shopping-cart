@@ -5,7 +5,6 @@ export default function Header() {
 	return (
 		<>
 			<header id={styles.header}>
-				im header
 				<ul>
 					<li>
 						<Link href="/">Home</Link>
@@ -17,13 +16,13 @@ export default function Header() {
 						<Link href="/compare">compare</Link>
 					</li>
 					<li>
-						<Link href="/product">product</Link>
-					</li>
-					<li>
 						<Link href="/profile">profile</Link>
 					</li>
 					<li>
 						<Link href="/search">search</Link>
+					</li>
+					<li>
+						<Link href="/about">about</Link>
 					</li>
 				</ul>
 			</header>

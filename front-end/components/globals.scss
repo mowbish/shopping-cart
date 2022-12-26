@@ -19,11 +19,11 @@ body {
 	font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu,
 		Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
 	transition: all 400ms ease-out;
-	height: 500vh;  
-    position: relative;
 }
 
 #__next {
+    position: relative;
+	min-height: 100vh;
 }
 
 @media (prefers-color-scheme: dark) {

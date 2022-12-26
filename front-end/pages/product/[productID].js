@@ -5,17 +5,16 @@ export default function ProductID(props) {
 
 	return (
 		<>
-			<h1>im a unique product</h1>
-			<h2>my name is: {props.product.name}</h2>
-			<h2>my status is: {props.product.status}</h2>
-			<h2>my specie is: {props.product.species}</h2>
-			<h2>my gender is: {props.product.gender}</h2>
+			<h2>name: {props.product.name}</h2>
+			<h2>status: {props.product.status}</h2>
+			<h2>specie: {props.product.species}</h2>
+			<h2>gender: {props.product.gender}</h2>
 		</>
 	)
 }
 
 export async function getStaticProps(context) {
-	// console.log(context.params.productID)
+	console.log(context.params.productID)
 
 	const res = await fetch(
 		`https://rickandmortyapi.com/api/character/${context.params.productID}`
