@@ -6,7 +6,6 @@ import { useRouter } from "next/router"
 import { UserProvider } from "@auth0/nextjs-auth0/client"
 
 // components
-import Cursor from "/components/cursor"
 import Header from "../components/Header/Header"
 import Footer from "../components/Footer/Footer"
 
@@ -36,7 +35,6 @@ export default function MyApp({ Component, pageProps }) {
 					<Header />
 					<Component {...pageProps} />
 					<Footer />
-					<Cursor />
 				</Provider>
 			</UserProvider>
 		</>

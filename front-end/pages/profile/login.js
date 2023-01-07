@@ -11,12 +11,12 @@ export default function Login() {
 	return (
 		<>
 			<form method="post" onSubmit={formSubmitHandler}>
-				<label for="uname">
+				<label htmlFor="uname">
 					<b>Username</b>
 				</label>
 				<input type="text" placeholder="Enter Username" name="uname" required />
 
-				<label for="psw">
+				<label htmlFor="psw">
 					<b>Password</b>
 				</label>
 				<input type="password" placeholder="Enter Password" name="psw" required />
@@ -25,7 +25,7 @@ export default function Login() {
 				<label>
 					<input type="checkbox" checked="checked" name="remember" /> Remember me
 				</label>
-				<span class="psw">
+				<span className="psw">
 					Forgot <Link href="./forgot">password?</Link>
 				</span>
 			</form>

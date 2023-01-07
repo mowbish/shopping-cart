@@ -18,13 +18,20 @@ Back-end tasks:
 
 - add serializer, view and routing for each app
 
+- Remove npm run dev from production branch
+
 ---
 
 # Front
 
-### current task: comparing
+### TASKS:
 
-#### website usage:
+- compare items
+- load more items on home screen ( page base - scroll base )
+- add items to cart
+- review items
+
+#### WEBSITE USAGE:
 
 - check corporation description / contact info
 - check account information
@@ -33,7 +40,7 @@ Back-end tasks:
 - filter products
 - buy products
 
-#### main subpages:
+#### SUBPAGES:
 
 - home
 - profile
@@ -42,25 +49,9 @@ Back-end tasks:
 - product
 - compare
 
-#### account entities:
+#### ENTITIES
 
-- customer
-- address
-
-#### common entities:
-
-- baseManager
-- baseModel
-
-#### order entities:
-
-- discount
-- orderitem
-- order
-
-#### product entities:
-
-- category
-- contact
-- ip address
-- product
+- account: customer - address
+- common: baseManager - baseModel
+- order: discount - orderitem - order
+- product: category - contact - ip address - product
