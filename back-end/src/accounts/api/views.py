@@ -10,14 +10,7 @@ class UserModelViewSet(mixins.CreateModelMixin, mixins.UpdateModelMixin,
 
 
     def get_queryset(self):
-        return Customer.objects.filter(id=self.request.user.id).first()
-
-    def get_permissions(self):
-        if self.action == "create":
-            self.permission_classes = None
-        else:
-            self.permission_classes = [IsAuthenticated]
-        return self.permission_classes
+        return Customer.objects.all()
 
     def get_serializer_class(self):
         if self.action == "create":

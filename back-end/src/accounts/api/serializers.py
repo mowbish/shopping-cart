@@ -16,7 +16,8 @@ class SignUpUserModelSerializer(serializers.ModelSerializer):
             last_name=validated_data["last_name"],
             email=validated_data["email"],
         )
-        customer.set_password(validated_data["password"])
+        customer.set_password(raw_password=validated_data["password"])
+        customer.save()
         
         return customer
 
