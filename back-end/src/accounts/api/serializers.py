@@ -2,11 +2,39 @@ from rest_framework import serializers
 from accounts.models import Customer
 from django.contrib.auth.hashers import make_password
 
+
 class SignUpUserModelSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Customer
         fields = ("username", "first_name", "last_name", "email", "password")
+
+    def create(self, validated_data):
+        customer = Customer.objects.create(
+            username=validated_data["username"],
+            first_name=validated_data["first_name"],
+            last_name=validated_data["last_name"],
+            email=validated_data["email"],
+        )
+        customer.set_password(validated_data["password"])
+        return customer
+
+    def validate(self, attrs):
+
+        if Customer.objects.filter(username=attrs['username']).exists():
+            raise serializers.ValidationError("This Username already taken")
+        elif Customer.objects.filter(email=attrs['email']).exists():
+            raise serializers.ValidationError("This email already taken")
+        return super().validate(attrs)
+
+    def to_representation(self, instance):
+
+        return {
+            instance.username: "username",
+            instance.first_name: "first_name",
+            instance.last_name: "last_name",
+            instance.email: "email",
+        }
 
 
 class RetriveUserModelSerializer(serializers.ModelSerializer):
