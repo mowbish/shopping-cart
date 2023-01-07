@@ -6,8 +6,6 @@ from common.basemodels import BaseModel
 
 
 class Customer(AbstractUser):
-    """
-    """
 
     class Meta:
         db_table = _("customers")

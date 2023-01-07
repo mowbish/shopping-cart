@@ -17,6 +17,7 @@ class SignUpUserModelSerializer(serializers.ModelSerializer):
             email=validated_data["email"],
         )
         customer.set_password(validated_data["password"])
+        
         return customer
 
     def validate(self, attrs):
@@ -30,10 +31,10 @@ class SignUpUserModelSerializer(serializers.ModelSerializer):
     def to_representation(self, instance):
 
         return {
-            instance.username: "username",
-            instance.first_name: "first_name",
-            instance.last_name: "last_name",
-            instance.email: "email",
+            "username" : instance.username,
+            "first_name" : instance.first_name,
+            "last_name" : instance.last_name,
+            "email" : instance.email,
         }
 
 
