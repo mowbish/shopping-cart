@@ -1,5 +1,5 @@
 from rest_framework import viewsets, mixins
-from rest_framework.permissions import IsAuthenticated
+from .permissions import IsOwner
 from .serializers import (SignUpUserModelSerializer,
                           RetriveUserModelSerializer, UpdateUserModelSerializer, DestroyUserModelSerializer)
 from accounts.models import Customer
@@ -7,7 +7,8 @@ from accounts.models import Customer
 
 class UserModelViewSet(mixins.CreateModelMixin, mixins.UpdateModelMixin,
                        mixins.RetrieveModelMixin, mixins.DestroyModelMixin, viewsets.GenericViewSet):
-
+    lookup_field = "id"
+    permission_classes = [IsOwner]
 
     def get_queryset(self):
         return Customer.objects.all()
