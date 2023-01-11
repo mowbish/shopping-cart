@@ -1,5 +1,6 @@
 asgiref==3.5.2
 autopep8==2.0.0
+django-cors-headers==3.13.0
 Django==4.1.2
 django-filter==22.1
 django-money==3.0.0
