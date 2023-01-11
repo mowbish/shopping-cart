@@ -675,44 +675,44 @@ FodyWeavers.xsd
 *.sln.iml
 
 # dependencies
-/front-end/node_modules
-/front-end/.pnp
-/front-end/.pnp.js
+front-end/node_modules
+front-end/.pnp
+front-end/.pnp.js
 
 # testing
-/front-end/coverage
-/front-end/test.html/test.html
-/front-end/test.css/test.css
+front-end/coverage
+front-end/test.html
+front-end/test.css
 
 # next.js
-/front-end/.next/
-/front-end/out/
-/front-end/package-lock.json
+front-end/.next/
+front-end/out/
+front-end/package-lock.json
 
 # production
-/front-end/build
+front-end/build
 
 # misc
-/front-end/.DS_Store
-/front-end/*.pem
+front-end/.DS_Store
+front-end/*.pem
 
 # debug
-/front-end/npm-debug.log*
-/front-end/yarn-debug.log*
-/front-end/yarn-error.log*
-/front-end/.pnpm-debug.log*
+front-end/npm-debug.log*
+front-end/yarn-debug.log*
+front-end/yarn-error.log*
+front-end/.pnpm-debug.log*
 
 # local env files
-/front-end/.env*.local
+front-end/.env*.local
 
 # vercel
-/front-end/.vercel
+front-end/.vercel
 
 # typescript
-/front-end/*.tsbuildinfo
-/front-end/next-env.d.ts
+front-end/*.tsbuildinfo
+front-end/next-env.d.ts
 
 ### VisualStudio Patch ###
 # Additional files built by Visual Studio
-/front-end/front-end/.next/
+front-end/.next/
 .gitignore
