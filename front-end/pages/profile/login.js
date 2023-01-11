@@ -2,9 +2,6 @@ import Link from "next/link"
 export default function Login() {
 	const formSubmitHandler = (event) => {
 		event.preventDefault()
-		console.log(event.target)
-
-		console.log()
 		fetch(`${window.location.origin}/api/`)
 	}
 
@@ -21,47 +18,15 @@ export default function Login() {
 				</label>
 				<input type="password" placeholder="Enter Password" name="psw" required />
 
-				<button type="submit">Login</button>
 				<label>
 					<input type="checkbox" checked="checked" name="remember" /> Remember me
-				</label>
+				</label><br/>
 				<span className="psw">
 					Forgot <Link href="./forgot">password?</Link>
 				</span>
+                <br/>
+				<button type="submit">Login</button>
 			</form>
-			<form onSubmit={formSubmitHandler}>
-				<label htmlFor="email">
-					<b>Email</b>
-				</label>
-				<input type="text" placeholder="Enter Email" name="email" required />
-
-				<label htmlFor="psw">
-					<b>Password</b>
-				</label>
-				<input type="password" placeholder="Enter Password" name="psw" required />
-
-				<label htmlFor="psw-repeat">
-					<b>Repeat Password</b>
-				</label>
-				<input type="password" placeholder="Repeat Password" name="psw-repeat" required />
-
-				<label>
-					<input type="checkbox" checked="checked" name="remember" readOnly />
-					Remember me
-				</label>
-
-				<p>
-					By creating an account you agree to our
-					<Link href="/about#terms">Terms</Link> &{" "}
-					<Link href="/about#privacy">Privacy</Link>.
-				</p>
-
-				<button type="submit">Sign Up</button>
-			</form>
-			<Link href="/api/auth/login">Loginnnn</Link>
-			<br />
-			<br />
-			<Link href="/api/auth/logout">Logout</Link>
 		</>
 	)
 }
