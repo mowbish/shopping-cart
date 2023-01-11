@@ -44,16 +44,12 @@ export default function Login() {
 		}
 
 		// fetch data
-		const root = window.location.origin.replace("3", "8")
+		let root = window.location.origin
+		if (process.env.NODE_ENV !== "production")
+			root = window.location.origin.replace("3", "8")
 		fetch(`${root}/api/user/`, {
 			method: "post",
-			mode: "cors",
-			headers: {
-				"Content-Type": "application/json",
-				"Access-Control-Allow-Origin": "*",
-				"cross-origin-opener-policy": "same-origin",
-				"referrer-policy": "same-origin",
-			},
+			headers: { "Content-Type": "application/json" },
 			body: JSON.stringify(data),
 		})
 	}

@@ -32,12 +32,13 @@ export default function Login() {
 			password: list.password.value,
 		}
 
-		console.log(data)
-
 		// fetch data
-		const root = window.location.origin.replace("3", "8")
-		fetch(`${root}/token/`, {
+		let root = window.location.origin
+		if (process.env.NODE_ENV !== "production")
+			root = window.location.origin.replace("3", "8")
+		fetch(`${root}/api/token/`, {
 			method: "post",
+			headers: { "Content-Type": "application/json" },
 			body: JSON.stringify(data),
 		})
 	}
