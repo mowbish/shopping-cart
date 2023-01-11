@@ -6,12 +6,14 @@ export default function Login() {
 
 		// validators
 		let value = list.username.value // username
-		if (!(value.length >= 1 && value.length <= 150)) return alert('username length should be 1-150')
+		if (!(value.length >= 1 && value.length <= 150))
+			return alert("username length should be 1-150")
 		for (let i = 0; i < value.length; i++)
 			if (
 				!(
 					(value[i] >= "a" && value[i] <= "z") ||
 					(value[i] >= "A" && value[i] <= "z") ||
+					(value[i] >= "0" && value[i] <= "9") ||
 					value[i] == "+" ||
 					value[i] == "-" ||
 					value[i] == "_" ||
@@ -19,15 +21,16 @@ export default function Login() {
 					value[i] == "@"
 				)
 			)
-				return alert ('you can only use 0-9 a-z A-Z + - _ . and @ in your username')
+				return alert("you can only use 0-9 a-z A-Z + - _ . and @ in your username")
 		value = list.first_name.value // first name
-		if (!(value.length <= 150)) return alert('first name maximum length is 150')
+		if (!(value.length <= 150)) return alert("first name maximum length is 150")
 		value = list.last_name.value // last name
-		if (!(value.length <= 150)) return alert('last name maximum length is 150')
+		if (!(value.length <= 150)) return alert("last name maximum length is 150")
 		value = list.email.value // email
-		if (!(value.length <= 254)) return alert('email maximum length is 128')
+		if (!(value.length <= 254)) return alert("email maximum length is 128")
 		value = list.password.value // password
-		if (!(value.length >= 1 && value.length <= 128)) return alert('password length should be 1-128')
+		if (!(value.length >= 1 && value.length <= 128))
+			return alert("password length should be 1-128")
 		value = list.passwordR.value // passwordR
 		if (value != list.password.value) return alert("password is not same")
 
