@@ -4,7 +4,7 @@ from .serializers import (SignUpUserModelSerializer,
                           RetriveUserModelSerializer, UpdateUserModelSerializer, DestroyUserModelSerializer,
                           CreateUserAddressModelSerializer)
 from accounts.models import Customer
-
+from rest_framework.permissions import IsAuthenticated
 
 class UserModelViewSet(mixins.CreateModelMixin, mixins.UpdateModelMixin,
                        mixins.RetrieveModelMixin, mixins.DestroyModelMixin, viewsets.GenericViewSet):
@@ -30,7 +30,8 @@ class UserAddressModelViewSet(mixins.CreateModelMixin,
                             #   mixins.UpdateModelMixin, mixins.RetrieveModelMixin, mixins.DestroyModelMixin,
                             viewsets.GenericViewSet
                               ):
-    lookup_field = "id"
+    lookup_field = "customer_id"
+    permission_classes = (IsAuthenticated, )
     def get_serializer_class(self):
         if self.action == "create":
             self.serializer_class = CreateUserAddressModelSerializer

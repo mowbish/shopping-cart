@@ -103,12 +103,16 @@ class CreateUserAddressModelSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         address = Address.objects.create(
+            customer=self.context['request'].user,
             address_name=validated_data["address_name"],
             country=validated_data["country"],
-            state=validated_data["state"],city=validated_data["city"],
+            state=validated_data["state"],
+            city=validated_data["city"],
             address_detail=validated_data["address_detail"],
             postal_code=validated_data["postal_code"]
         )
-        address.customer = self.context['request'].user
         address.save()
-        return validated_data
+        return address
+
+    def validate(self, attrs):
+        return super().validate(attrs)
