@@ -1,7 +1,8 @@
 from rest_framework import viewsets, mixins
 from .permissions import IsOwner
 from .serializers import (SignUpUserModelSerializer,
-                          RetriveUserModelSerializer, UpdateUserModelSerializer, DestroyUserModelSerializer)
+                          RetriveUserModelSerializer, UpdateUserModelSerializer, DestroyUserModelSerializer,
+                          CreateUserAddressModelSerializer)
 from accounts.models import Customer
 
 
@@ -15,11 +16,22 @@ class UserModelViewSet(mixins.CreateModelMixin, mixins.UpdateModelMixin,
 
     def get_serializer_class(self):
         if self.action == "create":
-            self.serializer_class = SignUpUserModelSerializer  
+            self.serializer_class = SignUpUserModelSerializer
         elif self.action == "retrieve":
             self.serializer_class = RetriveUserModelSerializer
         elif self.action == "update":
             self.serializer_class = UpdateUserModelSerializer
         elif self.action == "destroy":
             self.serializer_class = DestroyUserModelSerializer
+        return self.serializer_class
+
+
+class UserAddressModelViewSet(mixins.CreateModelMixin,
+                            #   mixins.UpdateModelMixin, mixins.RetrieveModelMixin, mixins.DestroyModelMixin,
+                            viewsets.GenericViewSet
+                              ):
+    lookup_field = "id"
+    def get_serializer_class(self):
+        if self.action == "create":
+            self.serializer_class = CreateUserAddressModelSerializer
         return self.serializer_class

@@ -34,10 +34,7 @@ class Customer(AbstractUser):
 
 
 class Address(BaseModel):
-    HOME = 'home'
-    OFFICE = 'office'
-    OTHER = 'other'
-
+    
     # Users can have one or many addresses
     customer = models.ForeignKey(
         settings.AUTH_USER_MODEL, on_delete=models.CASCADE)

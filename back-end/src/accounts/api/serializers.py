@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from accounts.models import Customer
+from accounts.models import Customer, Address
 from django.contrib.auth.hashers import make_password
 
 
@@ -18,7 +18,7 @@ class SignUpUserModelSerializer(serializers.ModelSerializer):
         )
         customer.set_password(raw_password=validated_data["password"])
         customer.save()
-        
+
         return customer
 
     def validate(self, attrs):
@@ -32,10 +32,10 @@ class SignUpUserModelSerializer(serializers.ModelSerializer):
     def to_representation(self, instance):
 
         return {
-            "username" : instance.username,
-            "first_name" : instance.first_name,
-            "last_name" : instance.last_name,
-            "email" : instance.email,
+            "username": instance.username,
+            "first_name": instance.first_name,
+            "last_name": instance.last_name,
+            "email": instance.email,
         }
 
 
@@ -90,3 +90,25 @@ class DestroyUserModelSerializer(serializers.ModelSerializer):
 
     def to_representation(self, instance):
         return {"status": "your account deleted successfully"}
+
+
+class CreateUserAddressModelSerializer(serializers.ModelSerializer):
+    customer = serializers.StringRelatedField(many=False)
+
+    class Meta:
+        model = Address
+        fields = (
+            "customer", "address_name", "country", "state", "city", "address_detail", "postal_code"
+        )
+
+    def create(self, validated_data):
+        address = Address.objects.create(
+            address_name=validated_data["address_name"],
+            country=validated_data["country"],
+            state=validated_data["state"],city=validated_data["city"],
+            address_detail=validated_data["address_detail"],
+            postal_code=validated_data["postal_code"]
+        )
+        address.customer = self.context['request'].user
+        address.save()
+        return validated_data
