@@ -114,5 +114,10 @@ class CreateUserAddressModelSerializer(serializers.ModelSerializer):
         address.save()
         return address
 
-    def validate(self, attrs):
-        return super().validate(attrs)
+
+class ListUserAddressModelSerializer(serializers.ModelSerializer):
+    
+    class Meta:
+        model = Address
+        fields = ("address_name", "country", "state",
+                  "city", "address_detail", "postal_code",)

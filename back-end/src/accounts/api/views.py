@@ -2,9 +2,10 @@ from rest_framework import viewsets, mixins
 from .permissions import IsOwner
 from .serializers import (SignUpUserModelSerializer,
                           RetriveUserModelSerializer, UpdateUserModelSerializer, DestroyUserModelSerializer,
-                          CreateUserAddressModelSerializer)
-from accounts.models import Customer
+                          CreateUserAddressModelSerializer, ListUserAddressModelSerializer)
+from accounts.models import Customer, Address
 from rest_framework.permissions import IsAuthenticated
+
 
 class UserModelViewSet(mixins.CreateModelMixin, mixins.UpdateModelMixin,
                        mixins.RetrieveModelMixin, mixins.DestroyModelMixin, viewsets.GenericViewSet):
@@ -27,12 +28,20 @@ class UserModelViewSet(mixins.CreateModelMixin, mixins.UpdateModelMixin,
 
 
 class UserAddressModelViewSet(mixins.CreateModelMixin,
-                            #   mixins.UpdateModelMixin, mixins.RetrieveModelMixin, mixins.DestroyModelMixin,
-                            viewsets.GenericViewSet
+                              #   mixins.UpdateModelMixin, mixins.DestroyModelMixin,
+                            #   mixins.RetrieveModelMixin,
+                              mixins.ListModelMixin,
+                              viewsets.GenericViewSet
                               ):
-    lookup_field = "customer_id"
+    lookup_field = "customer__id"
     permission_classes = (IsAuthenticated, )
+    
+    def get_queryset(self):
+        return Address.objects.filter(customer=self.request.user)
+    
     def get_serializer_class(self):
         if self.action == "create":
             self.serializer_class = CreateUserAddressModelSerializer
+        elif self.action == "list":
+            self.serializer_class = ListUserAddressModelSerializer
         return self.serializer_class

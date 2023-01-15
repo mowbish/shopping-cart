@@ -34,7 +34,7 @@ class Customer(AbstractUser):
 
 
 class Address(BaseModel):
-    
+
     # Users can have one or many addresses
     customer = models.ForeignKey(
         settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
@@ -51,4 +51,4 @@ class Address(BaseModel):
         verbose_name_plural = _("Addresses")
 
     def __str__(self):
-        return f'{self.address}'
+        return f'{self.address_name}'
