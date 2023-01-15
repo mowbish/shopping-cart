@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
+from django.contrib.gis.geos import Point
 from django.utils.translation import gettext_lazy as _
 from conf import settings
 from common.basemodels import BaseModel
@@ -13,7 +14,7 @@ class Customer(AbstractUser):
         verbose_name_plural = _('Customers')
 
     def get_username(self):
-        return self.email
+        return self.username
 
     def __str__(self):
         if self.is_staff or self.is_superuser:
@@ -50,6 +51,8 @@ class Address(BaseModel):
     post_code = models.CharField(_("Post_code"), max_length=12, )
     address_type = models.CharField(
         _("Address_type"), max_length=6, choices=ADDRESS_TYPE, default=HOME)
+    geo_lat = models.BigIntegerField(_("geo_lat"))
+    geo_long = models.BigIntegerField(_("geo_long"))
 
     class Meta:
         db_table = _("addresses")
