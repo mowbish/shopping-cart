@@ -13,7 +13,7 @@ class Customer(AbstractUser):
         verbose_name_plural = _('Customers')
 
     def get_username(self):
-        return self.email
+        return self.username
 
     def __str__(self):
         if self.is_staff or self.is_superuser:
@@ -37,19 +37,16 @@ class Address(BaseModel):
     HOME = 'home'
     OFFICE = 'office'
     OTHER = 'other'
-    ADDRESS_TYPE = [(HOME, _('Home')), (OFFICE, _('Office')),
-                    (OTHER, _('Other')), ]
 
     # Users can have one or many addresses
     customer = models.ForeignKey(
         settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    address = models.TextField(_("Address"))
-    country = models.CharField(_("Country"), max_length=30, )
-    state = models.CharField(_("State"), max_length=150, )
-    city = models.CharField(_("City"), max_length=150, )
-    post_code = models.CharField(_("Post_code"), max_length=12, )
-    address_type = models.CharField(
-        _("Address_type"), max_length=6, choices=ADDRESS_TYPE, default=HOME)
+    address_name = models.CharField(_("address_name"), max_length=30, help_text="Home, Office, ...")
+    country = models.CharField(_("country"), max_length=30, null=True, blank=True)
+    state = models.CharField(_("state"), max_length=150, )
+    city = models.CharField(_("city"), max_length=150, )
+    address_detail = models.TextField(_("address_detail"))
+    postal_code = models.CharField(_("postal_code"), max_length=35, )
 
     class Meta:
         db_table = _("addresses")
