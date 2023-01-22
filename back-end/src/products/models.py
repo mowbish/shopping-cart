@@ -28,22 +28,6 @@ class Category(BaseModel):
         super(Category, self).save(*args, **kwargs)
 
 
-class Contact(BaseModel):
-    name = models.CharField(_('name'), max_length=150, null=True, blank=True)
-    email = models.EmailField(
-        _('email'), max_length=150, null=True, blank=True)
-    subject = models.CharField(_('subject'), max_length=100)
-    message = models.TextField(_('message'),)
-
-    class Meta:
-        db_table = _('contacts')
-        verbose_name = _('Contact')
-        verbose_name_plural = _('Contacts')
-
-    def __str__(self):
-        return f'{self.name}'
-
-
 class IPaddress(BaseModel):
     ip_address = models.GenericIPAddressField(_('ip_address'))
 
@@ -76,4 +60,3 @@ class Product(BaseModel):
 
     def __str__(self):
         return f'{self.name}'
-    
