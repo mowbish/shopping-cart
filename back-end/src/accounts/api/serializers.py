@@ -2,6 +2,8 @@ from rest_framework import serializers
 from accounts.models import Customer, Address
 from django.contrib.auth.hashers import make_password
 
+# Not Tested
+
 
 class SignUpUserModelSerializer(serializers.ModelSerializer):
 
@@ -38,6 +40,8 @@ class SignUpUserModelSerializer(serializers.ModelSerializer):
             "email": instance.email,
         }
 
+# Not Tested
+
 
 class RetriveUserModelSerializer(serializers.ModelSerializer):
 
@@ -45,6 +49,8 @@ class RetriveUserModelSerializer(serializers.ModelSerializer):
         model = Customer
         fields = ("first_name", "last_name", "username", "email",
                   "date_joined", "last_login", "is_staff")
+
+# Not Tested
 
 
 class UpdateUserModelSerializer(serializers.ModelSerializer):
@@ -60,6 +66,8 @@ class UpdateUserModelSerializer(serializers.ModelSerializer):
         elif attrs["email"] in Customer.objects.all().exists():
             raise serializers.ValidationError("This email already taken")
         return super().validate(attrs)
+
+# Not Tested
 
 
 class DestroyUserModelSerializer(serializers.ModelSerializer):
@@ -92,6 +100,7 @@ class DestroyUserModelSerializer(serializers.ModelSerializer):
         return {"status": "your account deleted successfully"}
 
 
+# Not Tested
 class CreateUserAddressModelSerializer(serializers.ModelSerializer):
     customer = serializers.StringRelatedField(many=False)
 
@@ -114,10 +123,36 @@ class CreateUserAddressModelSerializer(serializers.ModelSerializer):
         address.save()
         return address
 
-
-class ListUserAddressModelSerializer(serializers.ModelSerializer):
-    
+# Not Tested
+class UpdateUserAddressModelSerializer(serializers.ModelSerializer):
     class Meta:
         model = Address
         fields = ("address_name", "country", "state",
                   "city", "address_detail", "postal_code",)
+
+
+
+# Not Tested
+class ListUserAddressModelSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Address
+        fields = ("address_name", "country", "state",
+                  "city", "address_detail", "postal_code",)
+
+
+# Not Tested
+class RetrieveUserAddressModelSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Address
+        fields = ("address_name", "country", "state",
+                  "city", "address_detail", "postal_code",)
+
+
+# Not Tested
+class DestroyUserAddressModelSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Address
+        fields = ()
+
