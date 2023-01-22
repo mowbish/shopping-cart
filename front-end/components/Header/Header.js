@@ -10,19 +10,7 @@ export default function Header() {
 						<Link href="/">Home</Link>
 					</li>
 					<li>
-						<Link href="/cart">cart</Link>
-					</li>
-					<li>
-						<Link href="/compare">compare</Link>
-					</li>
-					<li>
 						<Link href="/profile">profile</Link>
-					</li>
-					<li>
-						<Link href="/search">search</Link>
-					</li>
-					<li>
-						<Link href="/about">about</Link>
 					</li>
 				</ul>
 			</header>

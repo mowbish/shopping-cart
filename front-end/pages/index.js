@@ -1,48 +1,42 @@
 import Link from "next/link"
 import Image from "next/image"
-import { useEffect } from "react"
-import { useDispatch, useSelector } from "react-redux"
+import { useDispatch } from "react-redux"
 //data
-import { setWidth, setHeight } from "../data/pageStatus"
+import { addItem, removeItem } from "../data/compare"
 
 export default function Home(props) {
 	const dispatch = useDispatch()
-	const height = useSelector((state) => state.pageStatus.height)
-	const pageStatus = useSelector((state) => state.pageStatus.status)
 
-	// upload size
-	useEffect(() => {
-		document.body.onresize = () => {
-			dispatch(setHeight(window.innerHeight))
-			dispatch(setWidth(window.innerWidth))
-		}
-	}, [])
-	// resize handler
-	useEffect(() => {
-		document.children[0].style.scrollBehavior = "auto"
+	const updateCompareList = (e) => {
+		const temp = ""
+		for (let i = 10; i < e.target.parentNode.id.length; i++)
+			temp += e.target.parentNode.id[i]
 
-		if (pageStatus === "home") window.scrollTo(0, 0)
-		else if (pageStatus === "store") window.scrollTo(0, window.innerHeight)
-		else if (pageStatus === "cart") window.scrollTo(0, 2 * window.innerHeight)
-
-		document.children[0].style.scrollBehavior = "smooth"
-	}, [height])
+		e.target.checked ? dispatch(addItem(temp)) : dispatch(removeItem(temp))
+	}
 
 	return (
 		<>
 			{props.products.map((product) => {
 				return (
-					<Link href={`/product/${product.id}`} key={product.id}>
-						<div style={{ border: "1px solid white", width: "33%" }}>
+					<div
+						id={`productId-${product.id}`}
+						style={{ border: "1px solid white", width: "33%" }}
+						key={product.id}
+					>
+						<Link href={`/product/${product.id}`}>
 							<Image
 								src={product.image}
 								width="100px"
 								height="100px"
 								alt={product.name}
 							/>
+						</Link>
+						<Link href={`/product/${product.id}`}>
 							<h1>{product.name}</h1>
-						</div>
-					</Link>
+						</Link>
+						<input type="checkbox" name="remember" onChange={updateCompareList} />
+					</div>
 				)
 			})}
 		</>
@@ -50,12 +44,12 @@ export default function Home(props) {
 }
 
 export async function getStaticProps() {
-	const res = await fetch("https://rickandmortyapi.com/api/character")
-	const data = await res.json()
-	const dataArray = await data.results
+	// const res = await fetch("")
+	// const data = await res.json()
+	// const dataArray = await data.results
 	return {
 		props: {
-			products: dataArray,
+			products: [],
 		},
 		revalidate: 3600,
 	}
