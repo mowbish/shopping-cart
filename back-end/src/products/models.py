@@ -2,7 +2,7 @@ from django.db import models
 from djmoney.models.fields import MoneyField
 from django.utils.translation import gettext_lazy as _
 from common.basemodels import BaseModel
-
+from products.managers import ProductManager
 
 class Category(BaseModel):
     name = models.CharField(_('name'), max_length=100)
@@ -45,7 +45,7 @@ class Product(BaseModel):
     description = models.TextField(_('description'), )
     base_image = models.ImageField(
         _('image'), upload_to=f'{BaseModel.id}-{name}/product_base_image')
-    number_of_product = models.PositiveSmallIntegerField(_('number_of_product'),
+    count_of_product = models.PositiveSmallIntegerField(_('number_of_product'),
                                                          blank=True, null=True)
     price = MoneyField(_('price'), max_digits=10, decimal_places=2,
                        default_currency='USD')
@@ -53,6 +53,7 @@ class Product(BaseModel):
         "Category", on_delete=models.CASCADE, related_name='products')
     is_active = models.BooleanField(default=True)
     views = models.ManyToManyField(IPaddress, blank=True)
+    objects = ProductManager()
 
     class Meta:
         db_table = _('products')
