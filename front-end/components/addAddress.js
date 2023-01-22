@@ -32,6 +32,7 @@ export default function AddAddress(
 	fetch(`${root}/api/user-address/`, {
 		method: "post",
 		headers: { "Content-Type": "application/json" },
+		Authentication: `Bearer ${localStorage.getItem("access")}`,
 		body: JSON.stringify(data),
 	})
 		.then((res) => res.json())

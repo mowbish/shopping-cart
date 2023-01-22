@@ -1,6 +1,7 @@
 import lengthCheck from "./lengthCheck"
+import refresher from "./refresher"
 
-export default function login(username, password) {
+export default function login(username, password, router) {
 	// username validator
 	lengthCheck(username, "username", 1, 150)
 	for (let i = 0; i < username.length; i++)
@@ -36,7 +37,18 @@ export default function login(username, password) {
 		headers: { "Content-Type": "application/json" },
 		body: JSON.stringify(data),
 	})
-		.then((res) => res.json())
-		.then((data) => data)
+		.then((res) => {
+			if (res.ok) return res.json()
+		})
+		.then((data) => {
+			updateToken(data, router)
+			setInterval(refresher(localStorage.getItem("refresh")), 3300000)
+		})
 		.catch((err) => console.error(err))
+}
+
+function updateToken(data, router) {
+	localStorage.setItem("access", data.access)
+	localStorage.setItem("refresh", data.refresh)
+	router.push("/")
 }

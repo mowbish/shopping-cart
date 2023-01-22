@@ -1,13 +1,18 @@
+import { useDispatch } from "react-redux"
 import Link from "next/link"
-import login from "../../components/Login"
+import login from "../../components/login"
 import Input from "../../components/Input"
+import { useRouter } from "next/router"
 
 export default function Login() {
+	const dispatch = useDispatch()
+	const router = useRouter()
+
 	const formSubmitHandler = (event) => {
 		event.preventDefault()
 		const list = event.target.children
 
-		login(list.username.value, list.password.value)
+		login(list.username.value, list.password.value, router)
 	}
 
 	return (
