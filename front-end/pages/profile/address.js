@@ -1,6 +1,6 @@
 import Link from "next/link"
 import login from "../../components/Login"
-import Input from "../../components/Input"
+import Input from "../../components/input"
 
 export default function Login() {
 	const formSubmitHandler = (event) => {
@@ -14,16 +14,20 @@ export default function Login() {
 		<>
 			<form method="post" onSubmit={formSubmitHandler}>
 				<Input
-					label="Username"
+					label="uname"
 					placeHolder="Enter Username"
 					name="username"
-					required="true"
+					type="text"
+					required="required"
 				/>
 
-				<label htmlFor="psw">
-					<b>Password</b>
-				</label>
-				<input type="password" placeholder="Enter Password" name="password" required />
+				<Input
+					label="psw"
+					placeHolder="Enter Password"
+					name="password"
+					type="password"
+					required="required"
+				/>
 
 				<label>
 					<input type="checkbox" checked="checked" name="remember" /> Remember me

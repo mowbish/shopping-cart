@@ -7,8 +7,8 @@ const initialState = {
 	height: undefined,
 }
 
-export const pageStatus = createSlice({
-	name: "pageStatus",
+export const window = createSlice({
+	name: "window",
 	initialState,
 	reducers: {
 		setState: (state, action) => ({ ...state, status: action.payload }),
@@ -18,5 +18,5 @@ export const pageStatus = createSlice({
 	},
 })
 
-export const { setState, setTheme, setWidth, setHeight } = pageStatus.actions
-export default pageStatus.reducer
+export const { setState, setTheme, setWidth, setHeight } = window.actions
+export default window.reducer
