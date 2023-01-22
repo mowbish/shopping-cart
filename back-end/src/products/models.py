@@ -28,22 +28,6 @@ class Category(BaseModel):
         super(Category, self).save(*args, **kwargs)
 
 
-class Contact(BaseModel):
-    name = models.CharField(_('name'), max_length=150, null=True, blank=True)
-    email = models.EmailField(
-        _('email'), max_length=150, null=True, blank=True)
-    subject = models.CharField(_('subject'), max_length=100)
-    message = models.TextField(_('message'),)
-
-    class Meta:
-        db_table = _('contacts')
-        verbose_name = _('Contact')
-        verbose_name_plural = _('Contacts')
-
-    def __str__(self):
-        return f'{self.name}'
-
-
 class IPaddress(BaseModel):
     ip_address = models.GenericIPAddressField(_('ip_address'))
 
@@ -59,13 +43,14 @@ class IPaddress(BaseModel):
 class Product(BaseModel):
     name = models.CharField(_('name'), max_length=150)
     description = models.TextField(_('description'), )
-    image = models.ImageField(_('image'), upload_to='product_images')
+    base_image = models.ImageField(
+        _('image'), upload_to=f'{BaseModel.id}-{name}/product_base_image')
     number_of_product = models.PositiveSmallIntegerField(_('number_of_product'),
                                                          blank=True, null=True)
     price = MoneyField(_('price'), max_digits=10, decimal_places=2,
                        default_currency='USD')
     category = models.ForeignKey(
-        Category, on_delete=models.CASCADE, related_name='products')
+        "Category", on_delete=models.CASCADE, related_name='products')
     is_active = models.BooleanField(default=True)
     views = models.ManyToManyField(IPaddress, blank=True)
 
@@ -76,4 +61,17 @@ class Product(BaseModel):
 
     def __str__(self):
         return f'{self.name}'
-    
+
+
+class ProductImages(models.Model):
+    product = models.ForeignKey("Product", on_delete=models.CASCADE)
+    images = models.ImageField(
+        _("images"), upload_to="f'{BaseModel.id}-{name}/product_images")
+
+    def __str__(self):
+        return self.product.name
+
+    class Meta:
+        db_table = _('product_images')
+        verbose_name = _('ProductImage')
+        verbose_name_plural = _('ProductImages')
