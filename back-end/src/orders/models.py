@@ -5,10 +5,11 @@ from accounts.models import Address
 from products.models import Product
 from djmoney.models.fields import MoneyField
 from common.basemodels import BaseModel
+from orders.choices import ORDER_STATUS
 
 
 class Discount(BaseModel):
-    
+
     """
         Here we dont inherit from BaseModel, 
         because we should have create time and expire time for
@@ -22,7 +23,6 @@ class Discount(BaseModel):
     expire_date = models.DateTimeField(_("Expire_date"))
     amount = models.PositiveSmallIntegerField(_("Amount"))
     code = models.CharField(_("Code"), max_length=50)
-
 
     class Meta:
         db_table = _('discounts')
@@ -47,28 +47,23 @@ class OrderItem(BaseModel):
 
 
 class Order(BaseModel):
-    READY_TO_SHIP = 'ready_to_ship'
-    SENDING = 'sending'
-    SENT = 'sent'
-    STATUS = [
-        (READY_TO_SHIP, _('ready_to_ship')),
-        (SENDING, _('sending')),
-        (SENT, _('sent')),
-    ]
 
-    customer = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, related_name='orders')
+    customer = models.ForeignKey(
+        settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, related_name='orders')
     address = models.ForeignKey(Address, on_delete=models.SET_NULL, null=True)
     products = models.ManyToManyField(OrderItem)
     status = models.CharField(
         max_length=15,
-        choices=STATUS,
-        default=READY_TO_SHIP,
+        choices=ORDER_STATUS,
+        default=ORDER_STATUS.READY_TO_SHIP,
     )
     delivery_method = models.CharField(max_length=30)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
-    total_price = MoneyField(max_digits=10, decimal_places=2, default_currency='USD')
-    discount = models.OneToOneField(Discount, on_delete=models.RESTRICT, null=True, blank=True)
+    total_price = MoneyField(
+        max_digits=10, decimal_places=2, default_currency='USD')
+    discount = models.OneToOneField(
+        Discount, on_delete=models.RESTRICT, null=True, blank=True)
     total_price_with_discount = MoneyField(max_digits=10, decimal_places=2, default_currency='USD', blank=True,
                                            null=True)
 
