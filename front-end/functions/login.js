@@ -12,7 +12,6 @@ export default function login(username, password, router) {
 				(username[i] >= "0" && username[i] <= "9") ||
 				username[i] == "+" ||
 				username[i] == "-" ||
-				username[i] == "" ||
 				username[i] == "." ||
 				username[i] == "@"
 			)

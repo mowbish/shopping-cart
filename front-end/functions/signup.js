@@ -19,7 +19,6 @@ export default function Signup(
 				(username[i] >= "0" && username[i] <= "9") ||
 				username[i] == "+" ||
 				username[i] == "-" ||
-				username[i] == "" ||
 				username[i] == "." ||
 				username[i] == "@"
 			)
