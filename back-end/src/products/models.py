@@ -3,6 +3,7 @@ from djmoney.models.fields import MoneyField
 from django.utils.translation import gettext_lazy as _
 from common.basemodels import BaseModel
 from products.managers import ProductManager
+from products.choices import COLOR_CHOICES
 
 class Category(BaseModel):
     name = models.CharField(_('name'), max_length=100)
@@ -43,15 +44,19 @@ class IPaddress(BaseModel):
 class Product(BaseModel):
     name = models.CharField(_('name'), max_length=150)
     description = models.TextField(_('description'), )
+    features = models.JSONField(_("features"),)
+    color = models.CharField(_("color"), null=True,
+                             blank=True, choices=COLOR_CHOICES, max_length=50)
     base_image = models.ImageField(
         _('image'), upload_to=f'{BaseModel.id}-{name}/product_base_image')
     count_of_product = models.PositiveSmallIntegerField(_('number_of_product'),
-                                                         blank=True, null=True)
+                                                        blank=True, null=True)
     price = MoneyField(_('price'), max_digits=10, decimal_places=2,
                        default_currency='USD')
     category = models.ForeignKey(
         "Category", on_delete=models.CASCADE, related_name='products')
     is_active = models.BooleanField(default=True)
+
     views = models.ManyToManyField(IPaddress, blank=True)
     objects = ProductManager()
 
