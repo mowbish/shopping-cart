@@ -55,7 +55,7 @@ class Order(BaseModel):
     status = models.CharField(
         max_length=15,
         choices=ORDER_STATUS,
-        default=ORDER_STATUS.READY_TO_SHIP,
+        default="READY_TO_SHIP",
     )
     delivery_method = models.CharField(max_length=30)
     created = models.DateTimeField(auto_now_add=True)

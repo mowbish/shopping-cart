@@ -5,7 +5,6 @@ from common.basemodels import BaseModel
 from products.managers import ProductManager
 from products.choices import COLOR_CHOICES
 
-
 class Category(BaseModel):
     name = models.CharField(_('name'), max_length=100)
     parent = models.ForeignKey(
@@ -47,7 +46,7 @@ class Product(BaseModel):
     description = models.TextField(_('description'), )
     features = models.JSONField(_("features"),)
     color = models.CharField(_("color"), null=True,
-                             blank=True, choices=COLOR_CHOICES, max_length=20)
+                             blank=True, choices=COLOR_CHOICES, max_length=50)
     base_image = models.ImageField(
         _('image'), upload_to=f'{BaseModel.id}-{name}/product_base_image')
     count_of_product = models.PositiveSmallIntegerField(_('number_of_product'),

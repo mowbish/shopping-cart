@@ -1,4 +1,4 @@
-from rest_framework import viewsets, mixins
+from rest_framework import viewsets, mixins, exceptions
 from .permissions import IsOwner, IsAddressOwner
 from .serializers import (SignUpUserModelSerializer,
                           RetriveUserModelSerializer, UpdateUserModelSerializer, DestroyUserModelSerializer,
@@ -11,10 +11,12 @@ from rest_framework.permissions import IsAuthenticated
 
 class UserModelViewSet(mixins.CreateModelMixin, mixins.UpdateModelMixin,
                        mixins.RetrieveModelMixin, mixins.DestroyModelMixin, viewsets.GenericViewSet):
-    lookup_field = "id"
+    lookup_field = "username"
     permission_classes = [IsOwner]
-
+    
     def get_queryset(self):
+        if not Customer.objects.filter(username=self.request.user.username).exists():
+            raise exceptions.ValidationError("User with this username not found!")
         return Customer.objects.all()
 
     def get_serializer_class(self):

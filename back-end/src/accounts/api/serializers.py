@@ -1,4 +1,4 @@
-from rest_framework import serializers
+from rest_framework import serializers, exceptions
 from accounts.models import Customer, Address
 from django.contrib.auth.hashers import make_password
 
@@ -47,9 +47,8 @@ class RetriveUserModelSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Customer
-        fields = ("first_name", "last_name", "username", "email",
-                  "date_joined", "last_login", "is_staff")
-
+        fields = ("is_active",)
+    
 # Not Tested
 
 

@@ -19,8 +19,7 @@ ALLOWED_HOSTS = [
     '127.0.0.1',
     # '111.222.333.444',
     # 'mywebsite.example'
-    ]
-
+]
 
 
 # Application definition
@@ -41,7 +40,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'djmoney',
     'drf_yasg',
-    
+
 
 ]
 
@@ -107,7 +106,8 @@ REST_FRAMEWORK = {
     'DEFAULT_THROTTLE_RATES': {
         'anon': '100/day',
         'user': '1000/day'
-    }
+    },
+    # 'DEFAULT_PAGINATION_CLASS': {'apps.core.pagination.StandardResultsSetPagination'},
 }
 
 # Password validation
@@ -156,14 +156,14 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTH_USER_MODEL = 'accounts.Customer'
 
 CORS_ORIGIN_ALLOW_ALL = False
-CORS_ALLOW_CREDENTIALS = True # to accept cookies via ajax request
+CORS_ALLOW_CREDENTIALS = True  # to accept cookies via ajax request
 CORS_ORIGIN_WHITELIST = (
-  'http://localhost:8000',
-  'http://localhost:3000',
-  'http://localhost:3001',
+    'http://localhost:8000',
+    'http://localhost:3000',
+    'http://localhost:3001',
 )
 
 SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(minutes=60),
     'REFRESH_TOKEN_LIFETIME': timedelta(days=30),
-  }
+}
