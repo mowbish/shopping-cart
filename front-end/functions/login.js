@@ -1,14 +1,7 @@
-import login from "./login"
-import lengthCheck from "./lengthCheck"
+import lengthCheck from "../functions/lengthCheck"
+import refresher from "./refresher"
 
-export default function Signup(
-	username,
-	firstname,
-	lastname,
-	email,
-	password,
-	passwordReapet
-) {
+export default function login(username, password, router) {
 	// username validator
 	lengthCheck(username, "username", 1, 150)
 	for (let i = 0; i < username.length; i++)
@@ -25,42 +18,37 @@ export default function Signup(
 			)
 		)
 			return alert("you can only use 0-9 a-z A-Z + - _ . and @ in your username")
-	lengthCheck(firstname, "firstname", 0, 150)
-	lengthCheck(lastname, "lastname", 0, 150)
-	lengthCheck(email, "email", 0, 254)
+
+	// password validator
 	lengthCheck(password, "password", 1, 128)
-	if (passwordReapet != password) return alert("password is not same") // password repeat validator
 
 	// save data in object to stringify
 	const data = {
 		username,
-		first_name: firstname,
-		last_name: lastname,
-		email,
 		password,
 	}
 
 	// fetch data
-	let status
 	let root = window.location.origin
 	if (process.env.NODE_ENV !== "production")
 		root = window.location.origin.replace("3", "8")
-	fetch(`${root}/api/user/`, {
+	fetch(`${root}/api/token/`, {
 		method: "post",
 		headers: { "Content-Type": "application/json" },
 		body: JSON.stringify(data),
 	})
 		.then((res) => {
-			status = res.status
-			return res.json()
+			if (res.ok) return res.json()
 		})
 		.then((data) => {
-			if (status == 200 || status == 201) login(username, password)
-			else
-				Object.entries(data).forEach((entry) => {
-					const [key, value] = entry
-					alert(value)
-				})
+			updateToken(data, router)
+			setInterval(refresher(localStorage.getItem("refresh")), 3300000)
 		})
 		.catch((err) => console.error(err))
+}
+
+function updateToken(data, router) {
+	localStorage.setItem("access", data.access)
+	localStorage.setItem("refresh", data.refresh)
+	router.push("/")
 }

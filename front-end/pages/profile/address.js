@@ -1,5 +1,5 @@
 import Link from "next/link"
-import addAddress from "../../components/addAddress"
+import addAddress from "../../functions/addAddress"
 import Input from "../../components/input"
 
 export default function Login() {

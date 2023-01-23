@@ -8,12 +8,12 @@ export default function AddAddress(
 	address_detail,
 	postal_code
 ) {
-	if (lengthCheck(address_name, "address_name", 1, 30)) return
-	if (lengthCheck(country, "country", 0, 30)) return
-	if (lengthCheck(state, "state", 1, 150)) return
-	if (lengthCheck(city, "city", 1, 150)) return
-	if (lengthCheck(address_detail, "address_detail", 1, 0)) return
-	if (lengthCheck(postal_code, "postal_code", 1, 35)) return
+	// if (lengthCheck(address_name, "address_name", 1, 30)) return
+	// if (lengthCheck(country, "country", 0, 30)) return
+	// if (lengthCheck(state, "state", 1, 150)) return
+	// if (lengthCheck(city, "city", 1, 150)) return
+	// if (lengthCheck(address_detail, "address_detail", 1, 0)) return
+	// if (lengthCheck(postal_code, "postal_code", 1, 35)) return
 
 	// save data in object to stringify
 	const data = {
@@ -31,11 +31,14 @@ export default function AddAddress(
 		root = window.location.origin.replace("3", "8")
 	fetch(`${root}/api/user-address/`, {
 		method: "post",
-		headers: { "Content-Type": "application/json" },
-		Authentication: `Bearer ${localStorage.getItem("access")}`,
+		headers: {
+			"Content-Type": "application/json",
+			Authorization: "Bearer " + localStorage.getItem("access"),
+		},
 		body: JSON.stringify(data),
 	})
-		.then((res) => res.json())
-		.then((data) => console.log(data))
+		.then((res) => {
+			if (res.ok) return res.json()
+		})
 		.catch((err) => console.error(err))
 }

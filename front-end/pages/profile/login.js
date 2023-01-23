@@ -1,6 +1,6 @@
 import { useDispatch } from "react-redux"
 import Link from "next/link"
-import login from "../../components/login"
+import login from "../../functions/login"
 import Input from "../../components/Input"
 import { useRouter } from "next/router"
 

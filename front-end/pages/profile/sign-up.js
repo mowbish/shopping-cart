@@ -1,5 +1,5 @@
 import Link from "next/link"
-import signup from "../../components/signup"
+import signup from "../../functions/signup"
 import Input from "../../components/input"
 import { useDispatch } from "react-redux"
 
