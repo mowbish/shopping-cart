@@ -1,12 +1,12 @@
 from rest_framework import viewsets, mixins, status
-from .permissions import IsOwner, IsAddressOwner
+from .permissions import IsOwner
 from .serializers import (SignUpUserModelSerializer,
                           RetriveUserModelSerializer, UpdateUserModelSerializer, DestroyUserModelSerializer,
                           CreateUserAddressModelSerializer, ListUserAddressModelSerializer,
                           RetrieveUserAddressModelSerializer, DestroyUserAddressModelSerializer,
                           UpdateUserAddressModelSerializer)
 from accounts.models import Customer, Address
-from rest_framework.permissions import IsAuthenticated, AllowAny
+from rest_framework.permissions import AllowAny
 from rest_framework.decorators import action
 from rest_framework.response import Response
 
@@ -52,8 +52,8 @@ class UserModelViewSet(mixins.UpdateModelMixin,
 class UserAddressModelViewSet(mixins.CreateModelMixin, mixins.UpdateModelMixin,
                               mixins.DestroyModelMixin, mixins.RetrieveModelMixin,
                               mixins.ListModelMixin, viewsets.GenericViewSet):
-    lookup_field = "id"
-    permission_classes = (IsAuthenticated, IsAddressOwner)
+    lookup_field = "postal_code"
+    permission_classes = (IsOwner)
 
     def get_queryset(self):
         return Address.objects.filter(customer=self.request.user)
