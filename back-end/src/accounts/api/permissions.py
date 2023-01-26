@@ -1,4 +1,4 @@
-from rest_framework.permissions import BasePermission, SAFE_METHODS
+from rest_framework.permissions import BasePermission
 
 
 class IsOwner(BasePermission):
@@ -8,18 +8,12 @@ class IsOwner(BasePermission):
 
     def has_permission(self, request, view):
 
-        if view.action == "create" or request.method in SAFE_METHODS:
-            return True
-
         return bool(request.user and request.user.is_authenticated)
-        
 
     def has_object_permission(self, request, view, obj):
 
-        if view.action == "create" or request.method in SAFE_METHODS:
-            return True
-
         return bool(obj.username == request.user.username)
+
 
 class IsAddressOwner(BasePermission):
     """
@@ -32,7 +26,6 @@ class IsAddressOwner(BasePermission):
             return True
 
         return bool(request.user and request.user.is_authenticated)
-        
 
     def has_object_permission(self, request, view, obj):
 
