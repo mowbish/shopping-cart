@@ -1,5 +1,5 @@
 from rest_framework import viewsets, mixins, status
-from .permissions import IsOwner
+from .permissions import IsOwner, IsAddressOwner
 from .serializers import (SignUpUserModelSerializer,
                           RetriveUserModelSerializer, UpdateUserModelSerializer, DestroyUserModelSerializer,
                           CreateUserAddressModelSerializer, ListUserAddressModelSerializer,
@@ -30,14 +30,14 @@ class UserModelViewSet(mixins.UpdateModelMixin,
         return self.serializer_class
 
     @action(detail=False, methods=["POST"], permission_classes=[AllowAny])
-    def sign_up(self, request, *args, **kwargs):
+    def sign_up_create(self, request, *args, **kwargs):
         serializer = SignUpUserModelSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         serializer.save()
         return Response({"data": serializer.data})
 
     @action(detail=False, methods=["GET"], permission_classes=[AllowAny])
-    def is_exists(self, request, *args, **kwargs):
+    def is_exists_read(self, request, *args, **kwargs):
         target_customer = request.query_params['username']
         queryset = Customer.objects.filter(username=target_customer)
         if not queryset.exists():
@@ -53,7 +53,7 @@ class UserAddressModelViewSet(mixins.CreateModelMixin, mixins.UpdateModelMixin,
                               mixins.DestroyModelMixin, mixins.RetrieveModelMixin,
                               mixins.ListModelMixin, viewsets.GenericViewSet):
     lookup_field = "postal_code"
-    permission_classes = (IsOwner)
+    permission_classes = (IsAddressOwner,)
 
     def get_queryset(self):
         return Address.objects.filter(customer=self.request.user)
