@@ -30,7 +30,7 @@ class UserModelViewSet(mixins.CreateModelMixin, mixins.UpdateModelMixin,
             self.serializer_class = DestroyUserModelSerializer
         return self.serializer_class
 
-    @action(detail=False, methods=["GET"], lookup_field="ali")
+    @action(detail=False, methods=["GET"])
     def is_exists(self, request, *args, **kwargs):
         target_customer = request.query_params['username']
         queryset = Customer.objects.filter(username=target_customer)
