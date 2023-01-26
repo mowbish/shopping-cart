@@ -5,6 +5,7 @@ from common.basemodels import BaseModel
 from products.managers import ProductManager
 from products.choices import COLOR_CHOICES
 
+
 class Category(BaseModel):
     name = models.CharField(_('name'), max_length=100)
     parent = models.ForeignKey(
@@ -27,18 +28,6 @@ class Category(BaseModel):
             parent = parent.parent
 
         super(Category, self).save(*args, **kwargs)
-
-
-class IPaddress(BaseModel):
-    ip_address = models.GenericIPAddressField(_('ip_address'))
-
-    class Meta:
-        db_table = _('ip_addresses')
-        verbose_name = _('ip_address')
-        verbose_name_plural = _('IPaddress')
-
-    def __str__(self):
-        return f'{self.ip_address}'
 
 
 class Product(BaseModel):
