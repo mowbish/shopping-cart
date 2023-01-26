@@ -1,22 +1,22 @@
-from rest_framework import viewsets, mixins, exceptions
+from rest_framework import viewsets, mixins, status
 from .permissions import IsOwner, IsAddressOwner
 from .serializers import (SignUpUserModelSerializer,
                           RetriveUserModelSerializer, UpdateUserModelSerializer, DestroyUserModelSerializer,
                           CreateUserAddressModelSerializer, ListUserAddressModelSerializer,
-                          RetrieveUserAddressModelSerializer, DestroyUserAddressModelSerializer, 
+                          RetrieveUserAddressModelSerializer, DestroyUserAddressModelSerializer,
                           UpdateUserAddressModelSerializer)
 from accounts.models import Customer, Address
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.decorators import action
+from rest_framework.response import Response
 
 
 class UserModelViewSet(mixins.CreateModelMixin, mixins.UpdateModelMixin,
                        mixins.RetrieveModelMixin, mixins.DestroyModelMixin, viewsets.GenericViewSet):
     lookup_field = "username"
     permission_classes = [IsOwner]
-    
+
     def get_queryset(self):
-        if not Customer.objects.filter(username=self.request.user.username).exists():
-            raise exceptions.ValidationError("User with this username not found!")
         return Customer.objects.all()
 
     def get_serializer_class(self):
@@ -29,6 +29,17 @@ class UserModelViewSet(mixins.CreateModelMixin, mixins.UpdateModelMixin,
         elif self.action == "destroy":
             self.serializer_class = DestroyUserModelSerializer
         return self.serializer_class
+
+    @action(detail=False, methods=["GET"])
+    def is_exists(self, request, *args, **kwargs):
+        target_customer = request.query_params['username']
+        queryset = Customer.objects.filter(username=target_customer)
+        if not queryset.exists():
+            return Response({"is_active": False}, status=status.HTTP_404_NOT_FOUND)
+        serializer = RetriveUserModelSerializer(queryset.first(), many=False, data={
+                                                "username": target_customer})
+        serializer.is_valid(raise_exception=True)
+        return Response({"is_active": serializer.data["is_active"]})
 
 
 class UserAddressModelViewSet(mixins.CreateModelMixin, mixins.UpdateModelMixin,

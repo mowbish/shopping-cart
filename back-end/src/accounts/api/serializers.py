@@ -47,8 +47,9 @@ class RetriveUserModelSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Customer
-        fields = ("is_active",)
-    
+        fields = ("first_name", "last_name", "username", "email", "is_active")
+
+
 # Not Tested
 
 
@@ -123,12 +124,13 @@ class CreateUserAddressModelSerializer(serializers.ModelSerializer):
         return address
 
 # Not Tested
+
+
 class UpdateUserAddressModelSerializer(serializers.ModelSerializer):
     class Meta:
         model = Address
         fields = ("address_name", "country", "state",
                   "city", "address_detail", "postal_code",)
-
 
 
 # Not Tested
@@ -154,4 +156,3 @@ class DestroyUserAddressModelSerializer(serializers.ModelSerializer):
     class Meta:
         model = Address
         fields = ()
-
