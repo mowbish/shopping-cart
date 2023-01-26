@@ -17,7 +17,7 @@ class UserModelViewSet(mixins.UpdateModelMixin,
     permission_classes = [IsOwner]
 
     def get_queryset(self):
-        return Customer.objects.all()
+        return Customer.objects.filter(username=self.request.user.username)
 
     def get_serializer_class(self):
 
@@ -30,7 +30,7 @@ class UserModelViewSet(mixins.UpdateModelMixin,
         return self.serializer_class
 
     @action(detail=False, methods=["POST"], permission_classes=[AllowAny])
-    def sign_up_create(self, request, *args, **kwargs):
+    def sign_up_create(self, request):
         serializer = SignUpUserModelSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         serializer.save()

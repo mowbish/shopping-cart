@@ -4,7 +4,7 @@ from django.utils.translation import gettext_lazy as _
 from common.basemodels import BaseModel
 from products.managers import ProductManager
 from products.choices import COLOR_CHOICES
-
+from accounts.models import IPaddress
 
 class Category(BaseModel):
     name = models.CharField(_('name'), max_length=100)
