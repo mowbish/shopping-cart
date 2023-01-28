@@ -1,6 +1,6 @@
 # Prices_of_Digital_Currencies
 
-[![python](https://img.icons8.com/color/48/000000/python.png/)](https://www.python.org/)
+[![python](https://img.icons8.com/color/48/000000/python.png)](https://www.python.org/)
 [![django](https://img.icons8.com/color/48/000000/django.png)](https://www.djangoproject.com/)
 [![DRF](https://img.icons8.com/color/48/000000/api.png)](https://www.django-rest-framework.org/)
 
