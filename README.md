@@ -1,4 +1,4 @@
-# Prices_of_Digital_Currencies
+# shopping-cart
 
 [![python](https://img.icons8.com/color/48/000000/python.png)](https://www.python.org/)
 [![django](https://img.icons8.com/color/48/000000/django.png)](https://www.djangoproject.com/)
