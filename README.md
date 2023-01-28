@@ -3,6 +3,13 @@
 [![python](https://img.icons8.com/color/48/000000/python.png)](https://www.python.org/)
 [![django](https://img.icons8.com/color/48/000000/django.png)](https://www.djangoproject.com/)
 [![DRF](https://img.icons8.com/color/48/000000/api.png)](https://www.django-rest-framework.org/)
+[![JS](https://img.icons8.com/color/48/000000/js.png)](https://www.javascript.com/)
+[![NextJS](https://img.icons8.com/color/48/000000/nextjs.png)](https://nextjs.org/)
+[![HTML](https://img.icons8.com/color/48/000000/html.png)](https://html.com/)
+[![CSS](https://img.icons8.com/color/48/000000/css.png)](https://developer.mozilla.org/en-US/docs/Web/CSS)
+[![Docker](https://img.icons8.com/color/48/000000/docker.png)](https://www.docker.com/)
+[![Nginx](https://img.icons8.com/color/48/000000/nginx.png)](https://www.nginx.com/)
+
 
 #### Project Structure
 ---
