@@ -31,7 +31,7 @@
 │       │   ├── __init__.py
 │       │   ├── migrations
 │       │   │   └── __init__.py
-│       │   |
+│       │   │
 │       │   ├── models.py
 │       │   ├── tests.py
 │       │   └── views.py
