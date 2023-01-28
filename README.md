@@ -1,3 +1,174 @@
+# Prices_of_Digital_Currencies
+
+[![python](https://img.icons8.com/color/48/000000/python.png/)](https://www.python.org/)
+[![django](https://img.icons8.com/color/48/000000/django.png)](https://www.djangoproject.com/)
+[![DRF](https://img.icons8.com/color/48/000000/api.png)](https://www.django-rest-framework.org/)
+
+#### Project Structure
+---
+
+```shell
+├── back-end
+│   ├── Dockerfile
+│   ├── requirements.txt
+│   └── src
+│       ├── accounts
+│       │   ├── admin.py
+│       │   ├── api
+│       │   │   ├── permissions.py
+│       │   │   ├── serializers.py
+│       │   │   ├── urls.py
+│       │   │   └── views.py
+│       │   │
+│       │   ├── apps.py
+│       │   ├── __init__.py
+│       │   ├── migrations
+│       │   │   └── __init__.py
+│       │   |
+│       │   ├── models.py
+│       │   ├── tests.py
+│       │   └── views.py
+│       │
+│       ├── common
+│       │   ├── basemodels.py
+│       │   └── utils.py
+│       │
+│       ├── conf
+│       │   ├── asgi.py
+│       │   ├── __init__.py
+│       │   ├── settings.py
+│       │   ├── urls.py
+│       │   └── wsgi.py
+│       │
+│       ├── manage.py
+│       │
+│       ├── orders
+│       │   ├── admin.py
+│       │   ├── api
+│       │   │   └── urls.py
+│       │   ├── apps.py
+│       │   ├── choices.py
+│       │   ├── __init__.py
+│       │   ├── migrations
+│       │   │   └── __init__.py
+│       │   ├── models.py
+│       │   ├── test.py
+│       │   └── views.py
+│       │
+│       └── products
+│           ├── admin.py
+│           ├── api
+│           │   ├── serializers.py
+│           │   ├── urls.py
+│           │   └── views.py
+│           │
+│           ├── apps.py
+│           ├── choices.py
+│           ├── __init__.py
+│           ├── managers.py
+│           ├── migrations
+│           │   └── __init__.py
+│           │
+│           ├── models.py
+│           ├── test.py
+│           └── views.py
+│ 
+├── front-end
+│   ├── components
+│   │   ├── globals.scss
+│   │   ├── Header
+│   │   │   ├── Header.js
+│   │   │   └── Header.module.scss
+│   │   └── input.js
+│   ├── data
+│   │   ├── allStore.js
+│   │   ├── compare.js
+│   │   ├── user.js
+│   │   └── window.js
+│   ├── Dockerfile
+│   ├── functions
+│   │   ├── addAddress.js
+│   │   ├── lengthCheck.js
+│   │   ├── login.js
+│   │   ├── refresher.js
+│   │   └── signup.js
+│   ├── next.config.js
+│   ├── package.json
+│   ├── package-lock.json
+│   ├── pages
+│   │   ├── _app.js
+│   │   ├── _document.js
+│   │   ├── index.js
+│   │   └── profile
+│   │       ├── address
+│   │       │   └── index.js
+│   │       ├── index.js
+│   │       ├── login.js
+│   │       └── sign-up.js
+│   └── public
+│       ├── account.svg
+│       ├── favicon.ico
+│       ├── Untitled.png
+│       └── vercel.svg
+├── docker-compose.yml
+└── README.md
+
+```
+
+## Installation
+---
+
+First of all open the terminal or CMD and enter:
+
+```shell
+git clone https://github.com/mowbish/shopping-cart.git
+```
+
+After that go into the project folder and  create a virtual env
+
+
+| Windows | Linux |
+| --- | --- |
+| ``> cd shopping-cart\  `` | ``$ cd shopping-cart/`` |
+| ``> python -m venv venv `` | ``$ virtualenv venv`` |
+| ``> venv\scripts\activate`` | ``$ source venv/bin/activate`` |
+
+after activating venv now install requirements
+
+```shell
+pip install -r requirements.txt
+```
+
+Now enter this command:
+
+```bash
+python manage.py makemigrations
+```
+
+Now migrate all with this command:
+
+```bash
+python manage.py migrate
+```
+
+At the end you can run project with:
+
+```bash
+python manage.py runserver
+```
+### Also Rout's of project:
+
+first of all go to the:
+
+`http://127.0.0.1:8000/`
+
+after that you can go to this rout's
+
++ `http://127.0.0.1:8000/`
++ `http://127.0.0.1:8000/signup`
+
+Enjoy it ;)
+
 #### WEBSITE USAGE:
 
 - check corporation description / contact info
