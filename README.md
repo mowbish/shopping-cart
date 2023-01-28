@@ -16,11 +16,12 @@
 
 ### Docker
 
-First of clone repo:
+First of all clone repo:
 
 ```shell
 git clone https://github.com/mowbish/shopping-cart.git
 ```
+
 next step: cd to cloned project in terminal or cmd:
 
 | Windows | Linux |
@@ -34,63 +35,44 @@ sudo docker-compose up --build
 ```
 
 Wait a few minutes
+
 well done! :D
+
 you can see project in this route:
 
 + `http://127.0.0.1:8000/`
 
 notic: Only the first time you need to hit `--build` in `docker-compose` command and after the first time it is no longer necessary
 
+---
 
+### Custom (Back-end)-if you don't want Docker
 
-First of all open the terminal or CMD and enter:
+clone repo:
 
 ```shell
 git clone https://github.com/mowbish/shopping-cart.git
 ```
 
-After that go into the project folder and  create a virtual env
+Now, if you haven't installed ‍‍‍`Python virtualenv`, you should install it
+After that go into the project folder and create a virtual env
 
 
 | Windows | Linux |
 | --- | --- |
-| ``> cd shopping-cart\  `` | ``$ cd shopping-cart/`` |
+| ``> cd shopping-cart\back-end\src  `` | ``$ cd shopping-cart/back-end/src`` |
 | ``> python -m venv venv `` | ``$ virtualenv venv`` |
 | ``> venv\scripts\activate`` | ``$ source venv/bin/activate`` |
+| ``> pip install -r ..\requirements.txt`` | ``$ pip3 install -r ../requirements.txt`` |
+| ``> python manage.py makemigrations`` | ``$ python3 manage.py makemigrations`` |
+| ``> python manage.py migrate`` | ``$ python3 manage.py migrate`` |
+| ``> python manage.py runserver`` | ``$ python3 manage.py runserver`` |
 
-after activating venv now install requirements
 
-```shell
-pip install -r requirements.txt
-```
-
-Now enter this command:
-
-```bash
-python manage.py makemigrations
-```
-
-Now migrate all with this command:
-
-```bash
-python manage.py migrate
-```
-
-At the end you can run project with:
-
-```bash
-python manage.py runserver
-```
 ### Also Rout's of project:
 
-first of all go to the:
-
-`http://127.0.0.1:8000/`
-
-after that you can go to this rout's
-
 + `http://127.0.0.1:8000/`
-+ `http://127.0.0.1:8000/signup`
++ `http://127.0.0.1:8000/swagger/`
 
 Enjoy it ;)
 
