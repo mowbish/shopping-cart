@@ -2,8 +2,8 @@
 
 [![python](https://img.icons8.com/color/48/000000/python.png)](https://www.python.org/)
 [![django](https://img.icons8.com/color/48/000000/django.png)](https://www.djangoproject.com/)
-[![DRF](https://img.icons8.com/color/48/000000/api.png)](https://www.django-rest-framework.org/)
 [![Docker](https://img.icons8.com/color/48/000000/docker.png)](https://www.docker.com/)
+[![DRF](https://img.icons8.com/color/48/000000/api.png)](https://www.django-rest-framework.org/)
 [![Nginx](https://img.icons8.com/color/48/000000/nginx.png)](https://www.nginx.com/)
 [![NextJS](https://img.icons8.com/color/48/000000/nextjs.png)](https://nextjs.org/)
 [![HTML](https://img.icons8.com/color/48/000000/html.png)](https://html.com/)
