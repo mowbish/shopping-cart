@@ -13,7 +13,7 @@ class AllProductsModelSerializer(serializers.ModelSerializer):
     class Meta:
         model = Product
         fields = ("name", "color", "base_image",
-                  "count_of_product", "price", "category")
+                  "stock_count", "price", "category")
 
 class ProductImagesModelSerializer(serializers.ModelSerializer):
     class Meta:
@@ -27,5 +27,5 @@ class RetriveProductsModelSerializer(serializers.ModelSerializer):
     class Meta:
         model = Product
         fields = ("name", "description", "features", "color", "base_image",
-                  "count_of_product", "price", "category", "is_active", "views", "product_images")
+                  "stock_count", "price", "category", "extant", "views", "product_images")
 

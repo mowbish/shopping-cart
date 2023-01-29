@@ -8,7 +8,7 @@ class ProductModelViewSet(
         mixins.RetrieveModelMixin,
         viewsets.GenericViewSet):
     def get_queryset(self):
-        return Product.objects.exclude(Q(count_of_product=None) | Q(count_of_product=0) | Q(is_active=False))
+        return Product.objects.exclude(Q(stock_count=None) | Q(stock_count=0) | Q(extant=False))
 
     def get_serializer_class(self):
         if self.action == "list":

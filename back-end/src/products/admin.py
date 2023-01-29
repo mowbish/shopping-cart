@@ -5,11 +5,11 @@ from products.models import Product, ProductImages, Category
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
     list_display = ("name", "color", "base_image",
-                    "count_of_product", "price", "category")
-    search_fields = ("color", "category", "price", "count_of_product")
+                    "stock_count", "price", "category")
+    search_fields = ("color", "category", "price", "stock_count")
     empty_value_display = '-empty-'
     ordering = ('created_at',)
-    list_filter = ("color", "category", "price", "count_of_product")
+    list_filter = ("color", "category", "price", "stock_count")
 
 
 @admin.register(ProductImages)

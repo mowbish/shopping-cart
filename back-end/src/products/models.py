@@ -32,20 +32,20 @@ class Category(BaseModel):
 
 class Product(BaseModel):
     name = models.CharField(_('name'), max_length=150)
-    
     description = models.TextField(_('description'), )
     features = models.JSONField(_("features"),)
     color = models.CharField(_("color"), null=True,
                              blank=True, choices=COLOR_CHOICES, max_length=50)
     base_image = models.ImageField(
         _('image'), upload_to='product_base_images', max_length=500)
-    count_of_product = models.PositiveSmallIntegerField(_('number_of_product'),
-                                                        blank=True, null=True)
+    stock_count = models.PositiveSmallIntegerField(_('stock_count'),
+                                                   blank=True, null=True)
     price = MoneyField(_('price'), max_digits=10, decimal_places=2,
                        default_currency='USD')
     category = models.ForeignKey(
         "Category", on_delete=models.CASCADE, related_name='products')
-    is_active = models.BooleanField(default=True)
+
+    extant = models.BooleanField(default=False)
 
     views = models.ManyToManyField(IPaddress, blank=True)
 

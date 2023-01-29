@@ -81,6 +81,6 @@ class Order(BaseModel):
     def __str__(self):
         return f'{self.customer}'
 
-    # def reduce_the_count_of_products(self):
+    # def reduce_the_stock_counts(self):
     #     if self.payment_status == "SUCCESS":
     #         self.products.cou -= self
