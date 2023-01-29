@@ -123,6 +123,10 @@ class CreateUserAddressModelSerializer(serializers.ModelSerializer):
         address.save()
         return address
 
+    def validate(self, attrs):
+        if Address.objects.filter(postal_code=attrs["postal_code"]).exists():
+            raise exceptions.ValidationError("This postal code already exists.")
+        return super().validate(attrs)
 # Not Tested
 
 

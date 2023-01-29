@@ -43,7 +43,7 @@ class Address(BaseModel):
     state = models.CharField(_("state"), max_length=150, )
     city = models.CharField(_("city"), max_length=150, )
     address_detail = models.TextField(_("address_detail"))
-    postal_code = models.CharField(_("postal_code"), max_length=35, )
+    postal_code = models.CharField(_("postal_code"), max_length=35, unique=True)
 
     class Meta:
         db_table = _("addresses")

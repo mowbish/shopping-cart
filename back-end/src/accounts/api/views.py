@@ -58,7 +58,8 @@ class UserAddressModelViewSet(mixins.CreateModelMixin, mixins.UpdateModelMixin,
     def get_queryset(self):
         if self.action == "list":
             return Address.objects.select_related("customer").filter(customer=self.request.user)
-        return Address.objects.filter(customer=self.request.user)
+        else:
+            return Address.objects.filter(customer=self.request.user)
 
     def get_serializer_class(self):
         if self.action == "create":
