@@ -5,7 +5,7 @@ from accounts.models import Address
 from products.models import Product
 from djmoney.models.fields import MoneyField
 from common.basemodels import BaseModel
-from orders.choices import ORDER_STATUS
+from orders.choices import SENDING_STATUS, PAYMENT_STATUS
 
 
 class Discount(BaseModel):
@@ -34,7 +34,8 @@ class Discount(BaseModel):
 
 
 class OrderItem(BaseModel):
-    product_name = models.CharField(max_length=150)
+    product = models.ForeignKey(
+        Product, on_delete=models.CASCADE)
     quantity = models.SmallIntegerField()
 
     class Meta:
@@ -52,19 +53,24 @@ class Order(BaseModel):
         settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, related_name='orders')
     address = models.ForeignKey(Address, on_delete=models.SET_NULL, null=True)
     products = models.ManyToManyField(OrderItem)
-    status = models.CharField(
+    sendig_status = models.CharField(
+        _("sendig_status"),
         max_length=15,
-        choices=ORDER_STATUS,
+        choices=SENDING_STATUS,
         default="READY_TO_SHIP",
     )
-    delivery_method = models.CharField(max_length=30)
-    created = models.DateTimeField(auto_now_add=True)
-    updated = models.DateTimeField(auto_now=True)
+    payment_status = models.CharField(
+        _("Expipayment_statusre_date"),
+        max_length=200,
+        choices=PAYMENT_STATUS,
+        default="ADDED_TO_CART"
+    )
+    delivery_method = models.CharField(_("delivery_method"), max_length=30)
     total_price = MoneyField(
-        max_digits=10, decimal_places=2, default_currency='USD')
+        _("total_price"), max_digits=10, decimal_places=2, default_currency='USD')
     discount = models.OneToOneField(
         Discount, on_delete=models.RESTRICT, null=True, blank=True)
-    total_price_with_discount = MoneyField(max_digits=10, decimal_places=2, default_currency='USD', blank=True,
+    total_price_with_discount = MoneyField(_("total_price_with_discount"), max_digits=10, decimal_places=2, default_currency='USD', blank=True,
                                            null=True)
 
     class Meta:
@@ -75,4 +81,6 @@ class Order(BaseModel):
     def __str__(self):
         return f'{self.customer}'
 
-    def 
+    # def reduce_the_count_of_products(self):
+    #     if self.payment_status == "SUCCESS":
+    #         self.products.cou -= self

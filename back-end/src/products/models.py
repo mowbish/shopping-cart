@@ -32,6 +32,7 @@ class Category(BaseModel):
 
 class Product(BaseModel):
     name = models.CharField(_('name'), max_length=150)
+    
     description = models.TextField(_('description'), )
     features = models.JSONField(_("features"),)
     color = models.CharField(_("color"), null=True,
