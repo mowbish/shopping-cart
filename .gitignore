@@ -687,7 +687,6 @@ front-end/test.css
 # next.js
 front-end/.next/
 front-end/out/
-front-end/package-lock.json
 
 # production
 front-end/build
@@ -716,3 +715,5 @@ front-end/next-env.d.ts
 # Additional files built by Visual Studio
 front-end/.next/
 .gitignore
+.vscode/settings.json
+*/package-lock.json

@@ -1,7 +1,7 @@
 import { useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { addAddress, removeAddress } from "../../../data/user"
-import AddAddress from "../../../functions/AddAddress"
+import AddAddress from "../../../functions/profile/addAddress"
 import Input from "../../../components/input"
 
 export default function Address() {
