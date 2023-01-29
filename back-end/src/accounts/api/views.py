@@ -29,15 +29,15 @@ class UserModelViewSet(mixins.UpdateModelMixin,
             self.serializer_class = DestroyUserModelSerializer
         return self.serializer_class
 
-    @action(detail=False, methods=["POST"], permission_classes=[AllowAny])
-    def sign_up_create(self, request):
+    @action(detail=False, methods=["POST"], permission_classes=[AllowAny], url_path="sign-up")
+    def sign_up(self, request):
         serializer = SignUpUserModelSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         serializer.save()
         return Response({"data": serializer.data})
 
-    @action(detail=False, methods=["GET"], permission_classes=[AllowAny])
-    def is_exists_read(self, request, *args, **kwargs):
+    @action(detail=False, methods=["GET"], permission_classes=[AllowAny], url_path="is-exists")
+    def is_exists(self, request, *args, **kwargs):
         target_customer = request.query_params['username']
         queryset = Customer.objects.filter(username=target_customer)
         if not queryset.exists():
@@ -56,6 +56,8 @@ class UserAddressModelViewSet(mixins.CreateModelMixin, mixins.UpdateModelMixin,
     permission_classes = (IsAddressOwner,)
 
     def get_queryset(self):
+        if self.action == "list":
+            return Address.objects.select_related("customer").filter(customer=self.request.user)
         return Address.objects.filter(customer=self.request.user)
 
     def get_serializer_class(self):
