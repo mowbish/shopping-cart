@@ -34,7 +34,8 @@ class Discount(BaseModel):
 
 
 class OrderItem(BaseModel):
-    product_name = models.CharField(max_length=150)
+    product = models.ForeignKey(
+        Product, on_delete=models.CASCADE)
     quantity = models.SmallIntegerField()
 
     class Meta:
@@ -47,7 +48,7 @@ class OrderItem(BaseModel):
 
 
 class Order(BaseModel):
-    
+
     customer = models.ForeignKey(
         settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, related_name='orders')
     address = models.ForeignKey(Address, on_delete=models.SET_NULL, null=True)
@@ -62,7 +63,7 @@ class Order(BaseModel):
         _("Expipayment_statusre_date"),
         max_length=200,
         choices=PAYMENT_STATUS,
-        default="ADDED_TO_CART"    
+        default="ADDED_TO_CART"
     )
     delivery_method = models.CharField(_("delivery_method"), max_length=30)
     total_price = MoneyField(
