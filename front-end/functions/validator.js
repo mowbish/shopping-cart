@@ -1,4 +1,8 @@
-import lengthCheck from "./lengthCheck"
+export function lengthCheck(variable, name, min, max) {
+	if (!(variable.length >= min && variable.length <= max))
+		alert(`${name} length should be ${min}-${max}`)
+	return true
+}
 
 export default function validator(type, variable) {
 	switch (type) {

@@ -1,18 +1,19 @@
 import { useState } from "react"
 import Link from "next/link"
 import { useRouter } from "next/router"
+import { useDispatch } from "react-redux"
 import Input from "../components/input"
-import loginHandler from "../functions/profile/login"
-import signupHandler from "../functions/profile/signup"
+import loginHandler, { signup as signupHandler } from "../functions/api/account"
 
 function Login({ username }) {
 	const router = useRouter()
+	const dispatch = useDispatch()
 
 	const submitHandler = (event) => {
 		event.preventDefault()
 		const list = event.target.children
 
-		loginHandler(router, list.username.value, list.password.value)
+		loginHandler(router, dispatch, list.username.value, list.password.value)
 	}
 
 	return (
@@ -50,6 +51,7 @@ function Login({ username }) {
 
 function Signup({ username }) {
 	const router = useRouter()
+	const dispatch = useDispatch()
 
 	const inputData = [
 		{
@@ -118,6 +120,7 @@ function Signup({ username }) {
 
 		signupHandler(
 			router,
+			dispatch,
 			list.username.value,
 			list.first_name.value,
 			list.last_name.value,
