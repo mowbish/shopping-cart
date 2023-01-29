@@ -4,7 +4,6 @@ from django.utils.translation import gettext_lazy as _
 from common.basemodels import BaseModel
 from products.choices import COLOR_CHOICES
 from accounts.models import IPaddress
-from conf.settings import BASE_DIR
 
 
 class Category(BaseModel):

@@ -5,9 +5,7 @@ from django.db.models import Q
 
 class ProductModelViewSet(
         mixins.ListModelMixin,
-        # mixins.UpdateModelMixin,
         mixins.RetrieveModelMixin,
-        # mixins.DestroyModelMixin,
         viewsets.GenericViewSet):
     def get_queryset(self):
         return Product.objects.exclude(Q(count_of_product=None) | Q(count_of_product=0) | Q(is_active=False))
