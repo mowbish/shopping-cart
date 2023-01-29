@@ -2,9 +2,10 @@ from django.db import models
 from djmoney.models.fields import MoneyField
 from django.utils.translation import gettext_lazy as _
 from common.basemodels import BaseModel
-from products.managers import ProductManager
 from products.choices import COLOR_CHOICES
 from accounts.models import IPaddress
+from conf.settings import BASE_DIR
+
 
 class Category(BaseModel):
     name = models.CharField(_('name'), max_length=100)
@@ -37,7 +38,7 @@ class Product(BaseModel):
     color = models.CharField(_("color"), null=True,
                              blank=True, choices=COLOR_CHOICES, max_length=50)
     base_image = models.ImageField(
-        _('image'), upload_to=f'{BaseModel.id}-{name}/product_base_image')
+        _('image'), upload_to='product_base_images', max_length=500)
     count_of_product = models.PositiveSmallIntegerField(_('number_of_product'),
                                                         blank=True, null=True)
     price = MoneyField(_('price'), max_digits=10, decimal_places=2,
@@ -47,7 +48,6 @@ class Product(BaseModel):
     is_active = models.BooleanField(default=True)
 
     views = models.ManyToManyField(IPaddress, blank=True)
-    objects = ProductManager()
 
     class Meta:
         db_table = _('products')
@@ -61,7 +61,7 @@ class Product(BaseModel):
 class ProductImages(models.Model):
     product = models.ForeignKey("Product", on_delete=models.CASCADE)
     images = models.ImageField(
-        _("images"), upload_to="f'{BaseModel.id}-{name}/product_images")
+        _("images"), upload_to="product_images", max_length=500)
 
     def __str__(self):
         return self.product.name

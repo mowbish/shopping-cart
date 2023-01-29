@@ -1,6 +1,7 @@
 from rest_framework import viewsets, mixins
 from products.api.serializers import AllProductsModelSerializer, RetriveProductsModelSerializer
 from products.models import Product
+from django.db.models import Q
 
 class ProductModelViewSet(
         mixins.ListModelMixin,
@@ -9,7 +10,7 @@ class ProductModelViewSet(
         # mixins.DestroyModelMixin,
         viewsets.GenericViewSet):
     def get_queryset(self):
-        return Product.objects.all()
+        return Product.objects.exclude(Q(count_of_product=None) | Q(count_of_product=0) | Q(is_active=False))
 
     def get_serializer_class(self):
         if self.action == "list":
