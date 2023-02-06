@@ -1,8 +1,7 @@
 import validator from "../validator"
-import { setLoged } from "../../data/user"
+import { setIsLoged } from "../../data/user"
 
 //######################################### sign up
-
 export function signup(
 	router,
 	dispatch,
@@ -13,11 +12,11 @@ export function signup(
 	password,
 	passwordRepeat
 ) {
-	validator("username", username)
-	validator("password", password)
-	validator("firstname", firstname)
-	validator("lastname", lastname)
-	validator("email", email)
+	validator(username)
+	validator(password)
+	validator(firstname)
+	validator(lastname)
+	validator(email)
 
 	if (passwordRepeat != password) return alert("password is not same") // password repeat validator
 
@@ -45,7 +44,7 @@ export function signup(
 			return res.json()
 		})
 		.then((data) => {
-			if (status == 200 || status == 201) login(router, dispatch, username, password)
+			if (status == 200 || status == 201) login(router, username, password)
 			else
 				Object.entries(data).forEach((entry) => {
 					const [key, value] = entry
@@ -56,10 +55,9 @@ export function signup(
 }
 
 //######################################### log in
-
-export default function login(router, dispatch, username, password) {
-	validator("username", username)
-	validator("password", password)
+export default function login(router, username, password) {
+	validator(username)
+    validator(password )
 
 	// save data in object to stringify
 	const data = {
@@ -81,9 +79,9 @@ export default function login(router, dispatch, username, password) {
 		})
 		.then((data) => {
 			updateToken(data)
-			dispatch(setLoged(true))
-			router.push("/")
+			localStorage.setItem("lastLoged", new Date().getTime())
 			setInterval(refresher(localStorage.getItem("refresh")), 3300000)
+			router.push("/")
 		})
 		.catch((err) => console.error(err))
 }
@@ -98,15 +96,20 @@ export function refresher(refreshToekn) {
 	let root = window.location.origin
 	if (process.env.NODE_ENV !== "production")
 		root = window.location.origin.replace("3", "8")
-	fetch(`${root}/api/user-address`, {
+	fetch(`${root}/api/token/refresh/`, {
 		method: "post",
 		headers: { "Content-Type": "application/json" },
 		body: JSON.stringify(data),
 	})
 		.then((res) => {
+			console.log(res)
 			if (res.ok) return res.json()
 		})
-		.then((data) => updateToken(data))
+		.then((data) => {
+			console.log(data)
+			updateToken(data)
+			localStorage.setItem("lastLoged", new Date().getTime())
+		})
 		.catch((err) => console.error(err))
 }
 
@@ -116,7 +119,6 @@ export function updateToken(data) {
 }
 
 //######################################### show profile
-
 export function showProfile() {
 	const id = 1
 
@@ -140,7 +142,6 @@ export function showProfile() {
 }
 
 //######################################### add address
-
 export function addAddress(
 	address_name,
 	country,

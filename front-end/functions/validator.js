@@ -4,7 +4,9 @@ export function lengthCheck(variable, name, min, max) {
 	return true
 }
 
-export default function validator(type, variable) {
+export default function validator(variable) {
+	const type = Object.keys({ variable })[0]
+
 	switch (type) {
 		case "username":
 			for (let i = 0; i < variable.length; i++)

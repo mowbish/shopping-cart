@@ -13,8 +13,10 @@ function Login({ username }) {
 		event.preventDefault()
 		const list = event.target.children
 
-		loginHandler(router, dispatch, list.username.value, list.password.value)
+		loginHandler(router, list.username.value, list.password.value)
 	}
+
+	const changehandler = () => {}
 
 	return (
 		<>
@@ -36,7 +38,13 @@ function Login({ username }) {
 				/>
 
 				<label>
-					<input type="checkbox" checked="checked" name="remember" /> Remember me
+					<input
+						type="checkbox"
+						checked="checked"
+						onChange={changehandler}
+						name="remember"
+                    />
+					Remember me
 				</label>
 				<br />
 				<span className="psw">

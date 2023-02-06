@@ -1,7 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit"
 
 const initialState = {
-	loged: undefined,
 	account: {
 		username: undefined,
 		first_name: undefined,
@@ -25,7 +24,6 @@ export const user = createSlice({
 	name: "user",
 	initialState,
 	reducers: {
-		setLoged: (state, action) => ({ ...state, loged: action.payload }),
 		setUsername: (state, action) => ({
 			...state,
 			account: { ...state.account, username: action.payload },
@@ -72,7 +70,6 @@ export const user = createSlice({
 })
 
 export const {
-	setLoged,
 	setUsername,
 	setFirstName,
 	setLastname,

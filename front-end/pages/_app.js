@@ -1,15 +1,14 @@
-import "/components/globals.scss"
+import "bootstrap/dist/css/bootstrap.css"
+import "../styles/fontawesome.min.css"
+import "../styles/slick-theme.min.css"
+import "../styles/slick.min.css"
+import "../styles/templatemo.min.css"
 import Head from "next/head"
 import allStore from "/data/allStore"
 import { Provider } from "react-redux"
-import { useRouter } from "next/router"
-
-// components
-import Header from "../components/Header/Header"
+import Layout from "../components/layout"
 
 export default function MyApp({ Component, pageProps }) {
-	const router = useRouter()
-	// console.log( router.query.productID)
 	return (
 		<>
 			<Provider store={allStore}>
@@ -29,8 +28,10 @@ export default function MyApp({ Component, pageProps }) {
 					/>
 					<title>Sadra Yavar</title>
 				</Head>
-				<Header />
-				<Component {...pageProps} />
+
+				<Layout>
+					<Component {...pageProps} />
+				</Layout>
 			</Provider>
 		</>
 	)
