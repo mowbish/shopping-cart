@@ -1,26 +1,33 @@
 import { useEffect } from "react"
-import { useDispatch, useSelector } from "react-redux"
+import { useDispatch } from "react-redux"
+import { setIsLoged, setUsername } from "../data/user"
+import { updateToken } from "../functions/api/account"
 
 import PageIndex from "../components/pageIndex"
 
-export default function Home(props) {
-	const dispatch = useDispatch()
+export default function Home() {
+	const database = useDispatch()
 
 	useEffect(() => {
-		if (sessionStorage.getItem("firstLoad") == "true") return
-		sessionStorage.setItem("firstLoad", true)
-		console.log("first load")
+		const now = new Date().getTime()
+		const lastLog = localStorage.getItem("lastLog")
+		const timeLimit = 3420000
 
-		const lastLoged = localStorage.getItem("lastLoged")
-		const currentTime = new Date().getTime()
+		if (lastLog == null) {
+			database(setIsLoged(false))
+		} else {
+			if (now - lastLog >= timeLimit) {
+				const username = localStorage.getItem("username")
+				database(setUsername(username))
+				database(setIsLoged(false))
+			} else {
+				database(setIsLoged(true))
 
-		if (lastLoged !== undefined && lastLoged !== null) {
-			const pastTime = currentTime - lastLoged
-
-			if (pastTime <= 3300000) sessionStorage.setItem("isLoged", true)
-			else sessionStorage.setItem("isLoged", false)
-
-			console.log("set first load")
+				const updateAfter = timeLimit - (now - lastLog) - 300000
+				if (updateAfter > 120000)
+					setTimeout(() => updateToken(localStorage.getItem("refresh")), updateAfter)
+				else updateToken(localStorage.getItem("refresh"))
+			}
 		}
 	}, [])
 

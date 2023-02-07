@@ -1,12 +1,12 @@
 import { createSlice } from "@reduxjs/toolkit"
 
 const initialState = {
+	isLoged: undefined,
 	account: {
 		username: undefined,
 		first_name: undefined,
 		last_name: undefined,
 		email: undefined,
-		password: undefined,
 	},
 	address: [
 		// {
@@ -24,6 +24,7 @@ export const user = createSlice({
 	name: "user",
 	initialState,
 	reducers: {
+		setIsLoged: (state, action) => ({ ...state, isLoged: action.payload }),
 		setUsername: (state, action) => ({
 			...state,
 			account: { ...state.account, username: action.payload },
@@ -39,10 +40,6 @@ export const user = createSlice({
 		setEmail: (state, action) => ({
 			...state,
 			account: { ...state.account, email: action.payload },
-		}),
-		setPassword: (state, action) => ({
-			...state,
-			account: { ...state.account, password: action.payload },
 		}),
 		addAddress: (state, action) => {
 			let canAdd = true
@@ -70,11 +67,11 @@ export const user = createSlice({
 })
 
 export const {
+	setIsLoged,
 	setUsername,
 	setFirstName,
 	setLastname,
 	setEmail,
-	setPassword,
 	addAddress,
 	removeAddress,
 } = user.actions

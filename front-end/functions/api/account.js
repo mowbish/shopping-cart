@@ -1,10 +1,16 @@
 import validator from "../validator"
-import { setIsLoged } from "../../data/user"
+import root from "./webLink"
 
-//######################################### sign up
-export function signup(
+export async function doesExist(username) {
+	// fetch data
+	const res = await fetch(`${root()}/api/user/is-exists/?username=${username}`)
+	const data = await res.json()
+
+	if (data.is_active) return true
+	else return false
+}
+export async function signup(
 	router,
-	dispatch,
 	username,
 	firstname,
 	lastname,
@@ -17,11 +23,10 @@ export function signup(
 	validator(firstname)
 	validator(lastname)
 	validator(email)
-
 	if (passwordRepeat != password) return alert("password is not same") // password repeat validator
 
 	// save data in object to stringify
-	const data = {
+	const body = {
 		username,
 		first_name: firstname,
 		last_name: lastname,
@@ -29,96 +34,62 @@ export function signup(
 		password,
 	}
 
-	// fetch data
-	let status
-	let root = window.location.origin
-	if (process.env.NODE_ENV !== "production")
-		root = window.location.origin.replace("3", "8")
-	fetch(`${root}/api/user/sign-up/`, {
+	// fetch
+	const headers = {
 		method: "post",
 		headers: { "Content-Type": "application/json" },
-		body: JSON.stringify(data),
-	})
-		.then((res) => {
-			status = res.status
-			return res.json()
-		})
-		.then((data) => {
-			if (status == 200 || status == 201) login(router, username, password)
-			else
-				Object.entries(data).forEach((entry) => {
-					const [key, value] = entry
-					alert(value)
-				})
-		})
-		.catch((err) => console.error(err))
-}
+		body: JSON.stringify(body),
+	}
+	const res = await fetch(`${root()}/api/user/sign-up/`, headers)
+	const status = res.status
 
-//######################################### log in
-export default function login(router, username, password) {
+	// data
+	const data = await res.json()
+
+	if (!(status == 200 || status == 201)) {
+		Object.entries(data).forEach((error) => alert(error[1]))
+		return
+	}
+
+	localStorage.setItem("username", username)
+
+	login(router, username, password)
+}
+export default async function login(router, username, password) {
 	validator(username)
-    validator(password )
+	validator(password)
 
-	// save data in object to stringify
-	const data = {
-		username,
-		password,
-	}
-
-	// fetch data
-	let root = window.location.origin
-	if (process.env.NODE_ENV !== "production")
-		root = window.location.origin.replace("3", "8")
-	fetch(`${root}/api/token/`, {
+	// fetch
+	const headers = {
 		method: "post",
 		headers: { "Content-Type": "application/json" },
-		body: JSON.stringify(data),
-	})
-		.then((res) => {
-			if (res.ok) return res.json()
-		})
-		.then((data) => {
-			updateToken(data)
-			localStorage.setItem("lastLoged", new Date().getTime())
-			setInterval(refresher(localStorage.getItem("refresh")), 3300000)
-			router.push("/")
-		})
-		.catch((err) => console.error(err))
-}
-
-export function refresher(refreshToekn) {
-	// save data in object to stringify
-	const data = {
-		refreshToekn,
+		body: JSON.stringify({ username, password }),
 	}
+	const res = await fetch(`${root()}/api/token/`, headers)
+	const data = await res.json()
 
-	// fetch data
-	let root = window.location.origin
-	if (process.env.NODE_ENV !== "production")
-		root = window.location.origin.replace("3", "8")
-	fetch(`${root}/api/token/refresh/`, {
-		method: "post",
-		headers: { "Content-Type": "application/json" },
-		body: JSON.stringify(data),
-	})
-		.then((res) => {
-			console.log(res)
-			if (res.ok) return res.json()
-		})
-		.then((data) => {
-			console.log(data)
-			updateToken(data)
-			localStorage.setItem("lastLoged", new Date().getTime())
-		})
-		.catch((err) => console.error(err))
-}
-
-export function updateToken(data) {
 	localStorage.setItem("access", data.access)
 	localStorage.setItem("refresh", data.refresh)
-}
+	localStorage.setItem("lastLog", new Date().getTime())
+	setTimeout(() => updateToken(localStorage.getItem("refresh")), 3420000)
 
-//######################################### show profile
+	router.push("/")
+}
+export async function updateToken(refreshToken) {
+	const headers = {
+		method: "post",
+		headers: { "Content-Type": "application/json" },
+		body: JSON.stringify({ refreshToken }),
+	}
+	const res = await fetch(`${root()}/api/token/refresh/`, headers)
+	const data = res.json()
+
+	localStorage.setItem("access", data.access)
+	localStorage.setItem("refresh", data.refresh)
+	localStorage.setItem("lastLog", new Date().getTime())
+
+	setTimeout(() => updateToken(localStorage.getItem("refresh")), 3420000)
+}
 export function showProfile() {
 	const id = 1
 
@@ -140,8 +111,6 @@ export function showProfile() {
 		})
 		.catch((err) => console.error(err))
 }
-
-//######################################### add address
 export function addAddress(
 	address_name,
 	country,
