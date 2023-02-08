@@ -1,7 +1,4 @@
 import Link from "next/link"
-import Image from "next/image"
-import { useEffect, useState } from "react"
-import { useSelector } from "react-redux"
 
 function Loader() {
 	return (

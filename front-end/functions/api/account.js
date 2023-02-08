@@ -1,5 +1,5 @@
 import validator from "../validator"
-import root from "./webLink"
+import { storage, root } from "../main"
 
 export async function doesExist(username) {
 	// fetch data
@@ -10,13 +10,13 @@ export async function doesExist(username) {
 	else return false
 }
 export async function signup(
-	router,
 	username,
 	firstname,
 	lastname,
 	email,
 	password,
-	passwordRepeat
+	passwordRepeat,
+	remember
 ) {
 	validator(username)
 	validator(password)
@@ -25,7 +25,6 @@ export async function signup(
 	validator(email)
 	if (passwordRepeat != password) return alert("password is not same") // password repeat validator
 
-	// save data in object to stringify
 	const body = {
 		username,
 		first_name: firstname,
@@ -33,33 +32,25 @@ export async function signup(
 		email,
 		password,
 	}
-
-	// fetch
 	const headers = {
 		method: "post",
 		headers: { "Content-Type": "application/json" },
 		body: JSON.stringify(body),
 	}
 	const res = await fetch(`${root()}/api/user/sign-up/`, headers)
-	const status = res.status
-
-	// data
 	const data = await res.json()
 
-	if (!(status == 200 || status == 201)) {
+	if (!res.ok) {
 		Object.entries(data).forEach((error) => alert(error[1]))
 		return
 	}
 
-	localStorage.setItem("username", username)
-
-	login(router, username, password)
+	return login(username, password, remember)
 }
-export default async function login(router, username, password) {
+export default async function login(username, password, remember) {
 	validator(username)
 	validator(password)
 
-	// fetch
 	const headers = {
 		method: "post",
 		headers: { "Content-Type": "application/json" },
@@ -68,13 +59,20 @@ export default async function login(router, username, password) {
 	const res = await fetch(`${root()}/api/token/`, headers)
 	const data = await res.json()
 
-	localStorage.setItem("access", data.access)
-	localStorage.setItem("refresh", data.refresh)
-	localStorage.setItem("username", username)
-	localStorage.setItem("lastLog", new Date().getTime())
-	setTimeout(() => updateToken(localStorage.getItem("refresh")), 3420000)
+	localStorage.setItem("remember", remember)
 
-	router.push("/")
+	if (res.ok) {
+		storage().setItem("access", data.access)
+		storage().setItem("refresh", data.refresh)
+		storage().setItem("username", username)
+		storage().setItem("lastLog", new Date().getTime())
+		storage().setItem("isLoged", true)
+		setTimeout(() => updateToken(storage().getItem("refresh")), 3420000)
+
+		return true
+	} else {
+		return false
+	}
 }
 export async function updateToken(refreshToken) {
 	const headers = {
@@ -85,72 +83,9 @@ export async function updateToken(refreshToken) {
 	const res = await fetch(`${root()}/api/token/refresh/`, headers)
 	const data = res.json()
 
-	localStorage.setItem("access", data.access)
-	localStorage.setItem("refresh", data.refresh)
-	localStorage.setItem("lastLog", new Date().getTime())
+	storage().setItem("access", data.access)
+	storage().setItem("refresh", data.refresh)
+	storage().setItem("lastLog", new Date().getTime())
 
-	setTimeout(() => updateToken(localStorage.getItem("refresh")), 3420000)
-}
-export function showProfile() {
-	const id = 1
-
-	// fetch data
-	let root = window.location.origin
-	if (process.env.NODE_ENV !== "production")
-		root = window.location.origin.replace("3", "8")
-	fetch(`${root}/api/user/${id}/`, {
-		headers: {
-			"Content-Type": "application/json",
-			Authorization: "Bearer " + localStorage.getItem("access"),
-		},
-	})
-		.then((res) => {
-			if (res.ok) return res.json()
-		})
-		.then((data) => {
-			console.log("this is data: ", data)
-		})
-		.catch((err) => console.error(err))
-}
-export function addAddress(
-	address_name,
-	country,
-	state,
-	city,
-	address_detail,
-	postal_code
-) {
-	// if (lengthCheck(address_name, "address_name", 1, 30)) return
-	// if (lengthCheck(country, "country", 0, 30)) return
-	// if (lengthCheck(state, "state", 1, 150)) return
-	// if (lengthCheck(city, "city", 1, 150)) return
-	// if (lengthCheck(address_detail, "address_detail", 1, 0)) return
-	// if (lengthCheck(postal_code, "postal_code", 1, 35)) return
-
-	// save data in object to stringify
-	const data = {
-		address_name,
-		country,
-		state,
-		city,
-		address_detail,
-		postal_code,
-	}
-
-	// fetch data
-	let root = window.location.origin
-	if (process.env.NODE_ENV !== "production")
-		root = window.location.origin.replace("3", "8")
-	fetch(`${root}/api/user-address/`, {
-		method: "post",
-		headers: {
-			"Content-Type": "application/json",
-			Authorization: "Bearer " + localStorage.getItem("access"),
-		},
-		body: JSON.stringify(data),
-	})
-		.then((res) => {
-			if (res.ok) return res.json()
-		})
-		.catch((err) => console.error(err))
+	setTimeout(() => updateToken(storage().getItem("refresh")), 3420000)
 }
