@@ -13,13 +13,6 @@ function Loader() {
 	)
 }
 function Header() {
-	const isLoged = useSelector((store) => store.user.isLoged)
-	const [accountButton, setAccountButton] = useState("")
-
-	useEffect(() => {
-		isLoged ? setAccountButton("/profile") : setAccountButton("/login")
-	}, [isLoged])
-
 	return (
 		<>
 			<nav className="navbar navbar-expand-lg navbar-light shadow">
@@ -95,7 +88,7 @@ function Header() {
 									</span>
 								</div>
 							</Link>
-							<Link href={accountButton}>
+							<Link href="/profile">
 								<div className="nav-icon position-relative text-decoration-none">
 									<i className="fa fa-fw fa-user text-dark mr-3"></i>
 									<span className="position-absolute top-0 left-100 translate-middle badge rounded-pill bg-light text-dark">

@@ -70,6 +70,7 @@ export default async function login(router, username, password) {
 
 	localStorage.setItem("access", data.access)
 	localStorage.setItem("refresh", data.refresh)
+	localStorage.setItem("username", username)
 	localStorage.setItem("lastLog", new Date().getTime())
 	setTimeout(() => updateToken(localStorage.getItem("refresh")), 3420000)
 
