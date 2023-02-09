@@ -46,13 +46,17 @@ notic: Only the first time you need to hit `--build` in `docker-compose` command
 
 ---
 
-### Custom (Back-end)-if you don't want Docker
+### Custom - if you don't want Docker
 
 clone repo:
 
 ```shell
 git clone https://github.com/mowbish/shopping-cart.git
 ```
+<br>
+<br>
+
+### Back-end
 
 Now, if you haven't installed ‍‍‍`Python virtualenv`, you should install it
 After that go into the project folder and create a virtual env
@@ -67,14 +71,36 @@ After that go into the project folder and create a virtual env
 | ``> python manage.py makemigrations`` | ``$ python3 manage.py makemigrations`` |
 | ``> python manage.py migrate`` | ``$ python3 manage.py migrate`` |
 | ``> python manage.py runserver`` | ``$ python3 manage.py runserver`` |
+<br>
+<br>
+### Front-end
+First install [Node.js](https://nodejs.org/en/download/) to use NPM.
 
+| Then install the dependencies |
+| --- |
+| ``> cd shopping-cart\front-end  `` |
+| ``> npm install `` |
+
+| then build and run the website |
+| --- |
+| ``> npm run build`` |
+| ``> npm start`` |
+
+| Or run it for development purpose |
+| --- |
+| ``> npm run dev`` |
+
+<br>
+<br>
 
 ### Also Rout's of project:
 
 + `http://127.0.0.1:8000/`
 + `http://127.0.0.1:8000/swagger/`
++ `http://127.0.0.1:3000/`(front)
 
 Enjoy it ;)
+<br>
 
 #### Project Structure
 ---
