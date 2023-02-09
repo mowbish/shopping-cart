@@ -215,7 +215,7 @@ Enjoy it ;)
 
 #### Project Detail:
 
-This project on `Agile` method
+This project is developing under the `Agile` method
 
 Agile is an iterative approach to project management and software development that helps teams deliver value to their customers faster and with fewer headaches. Instead of betting everything on a "big bang" launch, an agile team delivers work in small, but consumable, increments
 
