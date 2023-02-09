@@ -1,12 +1,9 @@
 export function lengthCheck(variable, name, min, max) {
-	if (!(variable.length >= min && variable.length <= max))
-		alert(`${name} length should be ${min}-${max}`)
+	if (!(variable.length >= min && variable.length <= max)) alert(`${name} length should be ${min}-${max}`)
 	return true
 }
 
-export default function validator(variable) {
-	const type = Object.keys({ variable })[0]
-
+export default function validator(variable, type) {
 	switch (type) {
 		case "username":
 			for (let i = 0; i < variable.length; i++)

@@ -9,6 +9,7 @@ import { Provider } from "react-redux"
 import Layout from "../components/layout"
 import { useEffect } from "react"
 import { storage } from "../functions/main"
+import { updateToken } from "../functions/api/account"
 
 export default function MyApp({ Component, pageProps }) {
 	// check (and set) being loged or not (in first load)

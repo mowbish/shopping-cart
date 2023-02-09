@@ -10,11 +10,11 @@ export async function doesExist(username) {
 	else return false
 }
 export async function signup(username, firstname, lastname, email, password, passwordRepeat, remember) {
-	validator(username)
-	validator(password)
-	validator(firstname)
-	validator(lastname)
-	validator(email)
+	if (!validator(username, "username")) return
+	if (!validator(password, "password")) return
+	if (!validator(firstname, "firstname")) return
+	if (!validator(lastname, "lastname")) return
+	if (!validator(email, "email")) return
 	if (passwordRepeat != password) return alert("password is not same") // password repeat validator
 
 	const body = {
@@ -24,12 +24,12 @@ export async function signup(username, firstname, lastname, email, password, pas
 		email,
 		password,
 	}
-	const headers = {
+	const options = {
 		method: "post",
-		headers: { "Content-Type": "application/json" },
 		body: JSON.stringify(body),
+		headers: { "Content-Type": "application/json" },
 	}
-	const res = await fetch(`${root()}/api/user/sign-up/`, headers)
+	const res = await fetch(`${root()}/api/user/sign-up/`, options)
 	const data = await res.json()
 
 	if (!res.ok) {
@@ -39,16 +39,16 @@ export async function signup(username, firstname, lastname, email, password, pas
 
 	return login(username, password, remember)
 }
-export default async function login(username, password, remember) {
-	validator(username)
-	validator(password)
+export async function login(username, password, remember) {
+	if (!validator(username, "username")) return
+	if (!validator(password, "password")) return
 
-	const headers = {
+	const options = {
 		method: "post",
-		headers: { "Content-Type": "application/json" },
 		body: JSON.stringify({ username, password }),
+		headers: { "Content-Type": "application/json" },
 	}
-	const res = await fetch(`${root()}/api/token/`, headers)
+	const res = await fetch(`${root()}/api/token/`, options)
 	const data = await res.json()
 
 	localStorage.setItem("remember", remember)
@@ -67,12 +67,12 @@ export default async function login(username, password, remember) {
 	}
 }
 export async function updateToken(refreshToken) {
-	const headers = {
+	const options = {
 		method: "post",
-		headers: { "Content-Type": "application/json" },
 		body: JSON.stringify({ refreshToken }),
+		headers: { "Content-Type": "application/json" },
 	}
-	const res = await fetch(`${root()}/api/token/refresh/`, headers)
+	const res = await fetch(`${root()}/api/token/refresh/`, options)
 	const data = res.json()
 
 	storage().setItem("access", data.access)
@@ -82,15 +82,56 @@ export async function updateToken(refreshToken) {
 	setTimeout(() => updateToken(storage().getItem("refresh")), 3420000)
 }
 export async function logout() {
-	const headers = {}
-	const res = await fetch(`${root()}/api-auth/logout/`, headers)
+	const options = {}
+	const res = await fetch(`${root()}/api-auth/logout/`, options)
 	return res.ok
 }
-export async function remove(username) {
-	const headers = {
+export async function remove() {
+	const username = storage().getItem("username")
+
+	const options = {
 		method: "DELETE",
 		headers: { Authorization: "Bearer " + storage().getItem("access") },
 	}
-	const res = await fetch(`${root()}/api/user/${username}/`, headers)
+	const res = await fetch(`${root()}/api/user/${username}/`, options)
 	return res.ok
+}
+export async function getUser() {
+	const username = storage().getItem("username")
+
+	const options = {
+		headers: { Authorization: "Bearer " + storage().getItem("access") },
+	}
+	const res = await fetch(`${root()}/api/user/${username}/`, options)
+
+	if (res.ok) return await res.json()
+	else alert("couldnt get user data")
+
+	return await res.json()
+}
+export async function updateUser(username, firstname, lastname, email) {
+	if (!validator(username, "username")) return
+	if (!validator(firstname, "firstname")) return
+	if (!validator(lastname, "lastname")) return
+	if (!validator(email, "email")) return
+
+	const body = {
+		username,
+		first_name: firstname,
+		last_name: lastname,
+		email,
+	}
+
+	const oldUsername = storage().getItem("username")
+	const options = {
+		method: "PUT",
+		body: JSON.stringify(body),
+		headers: { Authorization: "Bearer " + storage().getItem("access"), "Content-Type": "application/json" },
+	}
+	const res = await fetch(`${root()}/api/user/${oldUsername}/`, options)
+
+	if (res.ok) {
+		storage().setItem("username", username)
+		return await res.json()
+	} else alert("couldnt update user")
 }

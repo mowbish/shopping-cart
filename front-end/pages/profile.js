@@ -1,14 +1,18 @@
 import { useRouter } from "next/router"
 import { useDispatch, useSelector } from "react-redux"
-import { storage, root } from "../functions/main"
+import { setAccount } from "../data/user"
+import { storage } from "../functions/main"
 import { useEffect, useState } from "react"
 import Link from "next/link"
 import Input from "../components/input"
-import loginApi, {
+import {
+	login as loginApi,
 	signup as signupApi,
 	doesExist as existApi,
 	logout as logoutApi,
 	remove as removeApi,
+	getUser as getUserApi,
+	updateUser as updateUserApi,
 } from "../functions/api/account"
 
 function Login({ username }) {
@@ -179,7 +183,45 @@ function CheckExistance() {
 }
 
 function Profile() {
+	const database = useDispatch()
+	const account = useSelector((store) => store.user.account)
 	const router = useRouter()
+	const [userData, setUserData] = useState()
+
+	// get the data at first load and save them in the database
+	useEffect(() => {
+		async function temp() {
+			const newAccount = await getUserApi()
+			delete newAccount.is_active
+			database(setAccount(newAccount))
+		}
+		temp()
+	}, [])
+
+	// set new data in ui when the data changes
+	useEffect(() => {
+		const form = Object.entries(account).map((key) => {
+			return (
+				<>
+					<Input label={key[0]} required="required" name={key[0]} placeHolder={key[0]} value={key[1]} />
+					<br />
+				</>
+			)
+		})
+		form.push(<button onClick={updateUser}>Update user</button>)
+
+		setUserData(form)
+	}, [account])
+
+	function updateUser(event) {
+		event.preventDefault()
+		const { username, first_name, last_name, email } = event.target.parentElement.children
+
+		// console.log(await updateUserApi(username.value, first_name.value, last_name.value, email.value))
+
+		console.log(username.value, first_name.value, last_name.value, email.value)
+		updateUserApi(username.value, first_name.value, last_name.value, email.value)
+	}
 
 	async function logout() {
 		if (logoutApi()) {
@@ -192,9 +234,7 @@ function Profile() {
 		router.push("/")
 	}
 	async function remove() {
-		const username = storage().getItem("username")
-
-		if (removeApi(username)) {
+		if (removeApi()) {
 			;["access", "refresh", "lastLog", "username", "remember"].forEach((key) => storage().removeItem(key))
 			sessionStorage.setItem("isLoged", false)
 		} else alert("couldnt remove account")
@@ -203,6 +243,9 @@ function Profile() {
 	}
 	return (
 		<>
+			<form>{userData}</form>
+			<br />
+			<br />
 			<button onClick={logout}>Log out</button>
 			<button onClick={remove}>delete profile</button>
 		</>
@@ -210,10 +253,11 @@ function Profile() {
 }
 
 export default function FirstView() {
-	const [ui, setUi] = useState(<Profile />)
+	const [ui, setUi] = useState()
 
 	useEffect(() => {
 		const isLoged = sessionStorage.getItem("isLoged") === "true" ? true : false
+
 		if (isLoged) setUi(<Profile />)
 		else setUi(<CheckExistance />)
 	}, [])
