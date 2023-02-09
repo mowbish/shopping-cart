@@ -1,10 +1,10 @@
 import { useRouter } from "next/router"
 import { useDispatch, useSelector } from "react-redux"
-import { setAccount } from "../data/user"
-import { storage } from "../functions/main"
+import { setAccount } from "../../data/user"
+import { storage } from "../../functions/main"
 import { useEffect, useState } from "react"
 import Link from "next/link"
-import Input from "../components/input"
+import Input from "../../components/input"
 import {
 	login as loginApi,
 	signup as signupApi,
@@ -13,7 +13,7 @@ import {
 	remove as removeApi,
 	getUser as getUserApi,
 	updateUser as updateUserApi,
-} from "../functions/api/account"
+} from "../../functions/api/account"
 
 function Login({ username }) {
 	const router = useRouter()
@@ -217,9 +217,6 @@ function Profile() {
 		event.preventDefault()
 		const { username, first_name, last_name, email } = event.target.parentElement.children
 
-		// console.log(await updateUserApi(username.value, first_name.value, last_name.value, email.value))
-
-		console.log(username.value, first_name.value, last_name.value, email.value)
 		updateUserApi(username.value, first_name.value, last_name.value, email.value)
 	}
 
@@ -248,6 +245,9 @@ function Profile() {
 			<br />
 			<button onClick={logout}>Log out</button>
 			<button onClick={remove}>delete profile</button>
+			<br />
+			<br />
+			<Link href="./profile/address">addresses</Link>
 		</>
 	)
 }

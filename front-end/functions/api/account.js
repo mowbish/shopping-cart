@@ -73,7 +73,7 @@ export async function updateToken(refreshToken) {
 		headers: { "Content-Type": "application/json" },
 	}
 	const res = await fetch(`${root()}/api/token/refresh/`, options)
-	const data = res.json()
+	const data = await res.json()
 
 	storage().setItem("access", data.access)
 	storage().setItem("refresh", data.refresh)

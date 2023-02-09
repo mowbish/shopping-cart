@@ -24,19 +24,7 @@ export const user = createSlice({
 	initialState,
 	reducers: {
 		setAccount: (state, action) => ({ ...state, account: action.payload }),
-		addAddress: (state, action) => {
-			let canAdd = true
-
-			state.address.forEach((address) => {
-				if (address.postal_code == action.payload[0].postal_code) canAdd = false
-			})
-
-			if (canAdd)
-				return {
-					...state,
-					address: [...state.address, ...action.payload],
-				}
-		},
+		addAddress: (state, action) => ({ ...state, address: [...state.address, action.payload] }),
 		removeAddress: (state, action) => {
 			let addressArray = []
 
