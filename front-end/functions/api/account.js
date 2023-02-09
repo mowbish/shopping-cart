@@ -9,15 +9,7 @@ export async function doesExist(username) {
 	if (data.is_active) return true
 	else return false
 }
-export async function signup(
-	username,
-	firstname,
-	lastname,
-	email,
-	password,
-	passwordRepeat,
-	remember
-) {
+export async function signup(username, firstname, lastname, email, password, passwordRepeat, remember) {
 	validator(username)
 	validator(password)
 	validator(firstname)
@@ -66,7 +58,7 @@ export default async function login(username, password, remember) {
 		storage().setItem("refresh", data.refresh)
 		storage().setItem("username", username)
 		storage().setItem("lastLog", new Date().getTime())
-		storage().setItem("isLoged", true)
+		sessionStorage.setItem("isLoged", true)
 		setTimeout(() => updateToken(storage().getItem("refresh")), 3420000)
 
 		return true
@@ -88,4 +80,17 @@ export async function updateToken(refreshToken) {
 	storage().setItem("lastLog", new Date().getTime())
 
 	setTimeout(() => updateToken(storage().getItem("refresh")), 3420000)
+}
+export async function logout() {
+	const headers = {}
+	const res = await fetch(`${root()}/api-auth/logout/`, headers)
+	return res.ok
+}
+export async function remove(username) {
+	const headers = {
+		method: "DELETE",
+		headers: { Authorization: "Bearer " + storage().getItem("access") },
+	}
+	const res = await fetch(`${root()}/api/user/${username}/`, headers)
+	return res.ok
 }

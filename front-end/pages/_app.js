@@ -28,11 +28,7 @@ export default function MyApp({ Component, pageProps }) {
 				sessionStorage.setItem("isLoged", true)
 
 				const updateAfter = timeLimit - (now - lastLog) - 300000
-				if (updateAfter > 120000)
-					setTimeout(
-						() => updateToken(storage().getItem("refresh")),
-						updateAfter
-					)
+				if (updateAfter > 120000) setTimeout(() => updateToken(storage().getItem("refresh")), updateAfter)
 				else updateToken(storage().getItem("refresh"))
 			}
 		}
@@ -51,10 +47,7 @@ export default function MyApp({ Component, pageProps }) {
 					/>
 					<meta name="author" content="Sadra Yavar" />
 					<meta name="Resource-type" content="Document" />
-					<meta
-						name="viewport"
-						content="width=device-width, height=device-height, initial-scale=1.0"
-					/>
+					<meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0" />
 					<title>Sadra Yavar</title>
 				</Head>
 

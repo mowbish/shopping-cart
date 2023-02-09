@@ -7,6 +7,8 @@ import Input from "../components/input"
 import loginApi, {
 	signup as signupApi,
 	doesExist as existApi,
+	logout as logoutApi,
+	remove as removeApi,
 } from "../functions/api/account"
 
 function Login({ username }) {
@@ -18,39 +20,17 @@ function Login({ username }) {
 		event.preventDefault()
 		const { username, password, rememberLoginCheck } = event.target.children
 
-		const loged = loginApi(
-			username.value,
-			password.value,
-			rememberLoginCheck.checked
-		)
+		const loged = loginApi(username.value, password.value, rememberLoginCheck.checked)
 
 		if (loged) router.push("/")
 	}
 	const rememberHandler = () => setCheckbox((prev) => !prev)
 	return (
 		<form onSubmit={submitHandler}>
-			<Input
-				label="username"
-				placeHolder="enter your username"
-				name="username"
-				type="text"
-				value={username}
-				required
-			/>
-			<Input
-				label="Password"
-				placeHolder="enter your password"
-				name="password"
-				type="password"
-				required
-			/>
+			<Input label="username" placeHolder="enter your username" name="username" type="text" value={username} required />
+			<Input label="Password" placeHolder="enter your password" name="password" type="password" required />
 
-			<input
-				type="checkbox"
-				checked={checkbox}
-				onChange={rememberHandler}
-				id="rememberLoginCheck"
-			/>
+			<input type="checkbox" checked={checkbox} onChange={rememberHandler} id="rememberLoginCheck" />
 			<label htmlFor="rememberLoginCheck">Remember me</label>
 			<br />
 			<span className="psw">
@@ -149,12 +129,7 @@ function Signup({ username }) {
 		<form onSubmit={submitHandler}>
 			{inputList}
 			<br />
-			<input
-				type="checkbox"
-				checked={checkbox}
-				onChange={rememberHandler}
-				id="rememberSignCheck"
-			/>
+			<input type="checkbox" checked={checkbox} onChange={rememberHandler} id="rememberSignCheck" />
 			<label htmlFor="rememberSignCheck">Remember me</label>
 			<p>
 				By creating an account you agree to our
@@ -207,12 +182,8 @@ function Profile() {
 	const router = useRouter()
 
 	async function logout() {
-		const headers = {}
-		const res = await fetch(`${root()}/api-auth/logout/`, headers)
-		if (res.ok) {
-			;["access", "refresh", "lastLog"].forEach((key) =>
-				storage().removeItem(key)
-			)
+		if (logoutApi()) {
+			;["access", "refresh", "lastLog"].forEach((key) => storage().removeItem(key))
 			sessionStorage.setItem("isLoged", false)
 		} else {
 			alert("couldnt log out")
@@ -220,15 +191,29 @@ function Profile() {
 
 		router.push("/")
 	}
+	async function remove() {
+		const username = storage().getItem("username")
 
-	return <button onClick={logout}>Log out</button>
+		if (removeApi(username)) {
+			;["access", "refresh", "lastLog", "username", "remember"].forEach((key) => storage().removeItem(key))
+			sessionStorage.setItem("isLoged", false)
+		} else alert("couldnt remove account")
+
+		router.push("/")
+	}
+	return (
+		<>
+			<button onClick={logout}>Log out</button>
+			<button onClick={remove}>delete profile</button>
+		</>
+	)
 }
 
 export default function FirstView() {
 	const [ui, setUi] = useState(<Profile />)
 
 	useEffect(() => {
-		const isLoged = storage().getItem("isLoged") === "true" ? true : false
+		const isLoged = sessionStorage.getItem("isLoged") === "true" ? true : false
 		if (isLoged) setUi(<Profile />)
 		else setUi(<CheckExistance />)
 	}, [])
