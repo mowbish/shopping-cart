@@ -1,50 +1,23 @@
-import validator from "../validator"
-import { storage, root } from "../main"
+import { api, validator } from "../main"
 
 export async function getAddress() {
-	const options = {
-		headers: { Authorization: "Bearer " + storage().getItem("access"), "Content-Type": "application/json" },
-	}
-	const res = await fetch(`${root()}/api/user-address`, options)
+	const [res, data] = await api("/api/user-address")
 
-	if (res.ok) return await res.json()
-	else alert("Couldn't get address list")
+	if (res.ok) return data
+	else return false
 }
-export async function addAddress(address_name, country, state, city, address_detail, postal_code) {
-	const valid =
-		validator(address_name, "addressName") &&
-		validator(country, "country") &&
-		validator(state, "state") &&
-		validator(city, "city") &&
-		validator(address_detail, "addressDetail") &&
-		validator(postal_code, "postalCode")
+export async function addAddress(passedData) {
+	const valid = validator(passedData)
 	if (!valid) return false
 
-	const body = {
-		address_name,
-		country,
-		state,
-		city,
-		address_detail,
-		postal_code,
-	}
-	const options = {
-		method: "POST",
-		body: JSON.stringify(body),
-		headers: { Authorization: "Bearer " + storage().getItem("access"), "Content-Type": "application/json" },
-	}
-	const res = await fetch(`${root()}/api/user-address/`, options)
+	const [res, data] = await api("/api/user-address/", "POST", passedData)
 
 	if (res.ok) return true
-	else return await res.json()
+	else return false
 }
 export async function removeAddress(postal_code) {
-	const options = {
-		method: "DELETE",
-		headers: { Authorization: "Bearer " + storage().getItem("access"), "Content-Type": "application/json" },
-	}
-	const res = await fetch(`${root()}/api/user-address/${postal_code}`, options)
+	const [res, data] = await fetch(`/api/user-address/${postal_code}`, "DELETE")
 
 	if (res.ok) return true
-	else alert("could not delete address")
+	else return false
 }

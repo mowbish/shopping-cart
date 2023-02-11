@@ -1,137 +1,90 @@
-import validator from "../validator"
-import { storage, root } from "../main"
+import { storage, api, validator } from "../main"
 
 export async function doesExist(username) {
-	// fetch data
-	const res = await fetch(`${root()}/api/user/is-exists/?username=${username}`)
-	const data = await res.json()
+	const [res, data] = await api(`/api/user/is-exists/?username=${username}`)
 
-	if (data.is_active) return true
+	if (res.ok) return true
 	else return false
 }
-export async function signup(username, firstname, lastname, email, password, passwordRepeat, remember) {
-	if (!validator(username, "username")) return
-	if (!validator(password, "password")) return
-	if (!validator(firstname, "firstname")) return
-	if (!validator(lastname, "lastname")) return
-	if (!validator(email, "email")) return
-	if (passwordRepeat != password) return alert("password is not same") // password repeat validator
+export async function signup(passedData) {
+	const { passwordRepeat, remember, ...body } = passedData
 
-	const body = {
-		username,
-		first_name: firstname,
-		last_name: lastname,
-		email,
-		password,
-	}
-	const options = {
-		method: "post",
-		body: JSON.stringify(body),
-		headers: { "Content-Type": "application/json" },
-	}
-	const res = await fetch(`${root()}/api/user/sign-up/`, options)
-	const data = await res.json()
-
-	if (!res.ok) {
-		Object.entries(data).forEach((error) => alert(error[1]))
-		return
+	// validation
+	const valid = validator(body)
+	if (!valid) return false
+	if (passedData.passwordRepeat != passedData.password) {
+		alert("second password doesnt match the first one")
+		return false
 	}
 
-	return login(username, password, remember)
+	const [res, data] = await api("/api/user/sign-up/", "POST", body, false)
+
+	if (!res.ok) return false
+	else return login(passedData.username, passedData.password, remember)
 }
 export async function login(username, password, remember) {
-	if (!validator(username, "username")) return
-	if (!validator(password, "password")) return
+	const valid = validator({ username, password })
+	if (!valid) return false
 
-	const options = {
-		method: "post",
-		body: JSON.stringify({ username, password }),
-		headers: { "Content-Type": "application/json" },
-	}
-	const res = await fetch(`${root()}/api/token/`, options)
-	const data = await res.json()
+	const [res, data] = await api("/api/token/", "POST", { username, password }, false)
 
 	localStorage.setItem("remember", remember)
 
 	if (res.ok) {
-		storage().setItem("access", data.access)
-		storage().setItem("refresh", data.refresh)
-		storage().setItem("username", username)
-		storage().setItem("lastLog", new Date().getTime())
+		;[
+			["access", data.access],
+			["refresh", data.refresh],
+			["username", username],
+			["lastLog", new Date().getTime()],
+		].forEach((array) => {
+			storage().setItem(array[0], array[1])
+		})
+
 		sessionStorage.setItem("isLoged", true)
 		setTimeout(() => updateToken(storage().getItem("refresh")), 3420000)
 
 		return true
-	} else {
-		return false
-	}
+	} else return false
 }
-export async function updateToken(refreshToken) {
-	const options = {
-		method: "post",
-		body: JSON.stringify({ refreshToken }),
-		headers: { "Content-Type": "application/json" },
-	}
-	const res = await fetch(`${root()}/api/token/refresh/`, options)
-	const data = await res.json()
+export async function updateToken(refresh) {
+	const [res, data] = await api("/api/token/refresh/", "POST", { refresh }, false)
 
-	storage().setItem("access", data.access)
-	storage().setItem("refresh", data.refresh)
-	storage().setItem("lastLog", new Date().getTime())
+	if (res.ok) {
+		storage().setItem("access", data.access)
+		storage().setItem("lastLog", new Date().getTime())
 
-	setTimeout(() => updateToken(storage().getItem("refresh")), 3420000)
+		setTimeout(() => updateToken(storage().getItem("refresh")), 3420000)
+		return true
+	} else return false
 }
 export async function logout() {
-	const options = {}
-	const res = await fetch(`${root()}/api-auth/logout/`, options)
+	const [res, data] = await api("/api-auth/logout/")
 	return res.ok
 }
 export async function remove() {
 	const username = storage().getItem("username")
 
-	const options = {
-		method: "DELETE",
-		headers: { Authorization: "Bearer " + storage().getItem("access") },
-	}
-	const res = await fetch(`${root()}/api/user/${username}/`, options)
+	const [res, data] = await api(`/api/user/${username}/`, "DELETE")
+
 	return res.ok
 }
 export async function getUser() {
 	const username = storage().getItem("username")
 
-	const options = {
-		headers: { Authorization: "Bearer " + storage().getItem("access") },
-	}
-	const res = await fetch(`${root()}/api/user/${username}/`, options)
+	const [res, data] = await api(`/api/user/${username}/`)
 
 	if (res.ok) return await res.json()
-	else alert("couldnt get user data")
-
-	return await res.json()
+	else return false
 }
-export async function updateUser(username, firstname, lastname, email) {
-	if (!validator(username, "username")) return
-	if (!validator(firstname, "firstname")) return
-	if (!validator(lastname, "lastname")) return
-	if (!validator(email, "email")) return
+export async function updateUser(passedData) {
+	const valid = validator(passedData)
+	if (!valid) return false
 
-	const body = {
-		username,
-		first_name: firstname,
-		last_name: lastname,
-		email,
-	}
-
-	const oldUsername = storage().getItem("username")
-	const options = {
-		method: "PUT",
-		body: JSON.stringify(body),
-		headers: { Authorization: "Bearer " + storage().getItem("access"), "Content-Type": "application/json" },
-	}
-	const res = await fetch(`${root()}/api/user/${oldUsername}/`, options)
+	const username = storage().getItem("username")
+	const [res, data] = await api(`/api/user/${username}/`, "PUT", passedData)
 
 	if (res.ok) {
-		storage().setItem("username", username)
+		storage().setItem("username", passedData.username)
 		return await res.json()
-	} else alert("couldnt update user")
+	} else return false
 }
