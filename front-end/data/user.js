@@ -6,7 +6,6 @@ const initialState = {
 		first_name: undefined,
 		last_name: undefined,
 		email: undefined,
-		password: undefined,
 	},
 	address: [
 		// {
@@ -24,39 +23,8 @@ export const user = createSlice({
 	name: "user",
 	initialState,
 	reducers: {
-		setUsername: (state, action) => ({
-			...state,
-			account: { ...state.account, username: action.payload },
-		}),
-		setFirstName: (state, action) => ({
-			...state,
-			account: { ...state.account, first_name: action.payload },
-		}),
-		setLastname: (state, action) => ({
-			...state,
-			account: { ...state.account, last_name: action.payload },
-		}),
-		setEmail: (state, action) => ({
-			...state,
-			account: { ...state.account, email: action.payload },
-		}),
-		setPassword: (state, action) => ({
-			...state,
-			account: { ...state.account, password: action.payload },
-		}),
-		addAddress: (state, action) => {
-			let canAdd = true
-
-			state.address.forEach((address) => {
-				if (address.postal_code == action.payload[0].postal_code) canAdd = false
-			})
-
-			if (canAdd)
-				return {
-					...state,
-					address: [...state.address, ...action.payload],
-				}
-		},
+		setAccount: (state, action) => ({ ...state, account: action.payload }),
+		addAddress: (state, action) => ({ ...state, address: [...state.address, action.payload] }),
 		removeAddress: (state, action) => {
 			let addressArray = []
 
@@ -69,13 +37,5 @@ export const user = createSlice({
 	},
 })
 
-export const {
-	setUsername,
-	setFirstName,
-	setLastname,
-	setEmail,
-	setPassword,
-	addAddress,
-	removeAddress,
-} = user.actions
+export const { setAccount, addAddress, removeAddress } = user.actions
 export default user.reducer

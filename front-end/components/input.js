@@ -4,6 +4,7 @@ export default function Input({
 	name,
 	type = "text",
 	required = false,
+	value = false,
 }) {
 	let temp = (
 		<label htmlFor={name}>
@@ -11,18 +12,41 @@ export default function Input({
 		</label>
 	)
 
-	if (required == false)
-		return (
-			<>
-				{temp}
-				<input type={type} placeholder={placeHolder} name={name} />
-			</>
-		)
-	else
-		return (
-			<>
-				{temp}
-				<input type={type} placeholder={placeHolder} name={name} required />
-			</>
-		)
+	if (required == false) {
+		if (value == false)
+			return (
+				<>
+					{temp}
+					<input type={type} placeholder={placeHolder} name={name} />
+				</>
+			)
+		else
+			return (
+				<>
+					{temp}
+					<input type={type} placeholder={placeHolder} name={name} defaultValue={value} />
+				</>
+			)
+	} else {
+		if (value == false)
+			return (
+				<>
+					{temp}
+					<input type={type} placeholder={placeHolder} name={name} required />
+				</>
+			)
+		else
+			return (
+				<>
+					{temp}
+					<input
+						type={type}
+						placeholder={placeHolder}
+						name={name}
+						defaultValue={value}
+						required
+					/>
+				</>
+			)
+	}
 }
