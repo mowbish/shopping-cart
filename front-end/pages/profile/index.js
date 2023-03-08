@@ -1,48 +1,44 @@
 import { useRouter } from "next/router"
 import { useDispatch, useSelector } from "react-redux"
-import { setAccount } from "../../data/user"
+import { setAccountDb } from "../../data/user"
 import { storage } from "../../functions/main"
 import { useEffect, useState } from "react"
 import Link from "next/link"
-import Input from "../../components/input"
+import LoginComp from "../../components/profile/login"
+import CheckExistanceComp from "../../components/profile/checkExistance"
+import SingupComp from "../../components/profile/signup"
+import Input from "../../components/misc/input"
 import {
-	login as loginApi,
-	signup as signupApi,
-	doesExist as existApi,
-	logout as logoutApi,
-	remove as removeApi,
-	getUser as getUserApi,
-	updateUser as updateUserApi,
-} from "../../functions/api/account"
+	loginApi,
+	signupApi,
+	userExistApi,
+	logoutApi,
+	removeUserApi,
+	getUserApi,
+	updateUserApi,
+} from "../../functions/account"
 
 function Login({ username }) {
 	const router = useRouter()
 	const [checkbox, setCheckbox] = useState(true)
 	const database = useDispatch()
 
-	function submitHandler(event) {
+	async function submitHandler(event) {
 		event.preventDefault()
 		const { username, password, rememberLoginCheck } = event.target.children
 
-		const loged = loginApi(username.value, password.value, rememberLoginCheck.checked)
+		const result = await loginApi(username.value, password.value, rememberLoginCheck.checked)
 
-		if (loged) router.push("/")
+		if (result == true) router.push("/")
 	}
 	const rememberHandler = () => setCheckbox((prev) => !prev)
 	return (
-		<form onSubmit={submitHandler}>
-			<Input label="username" placeHolder="enter your username" name="username" type="text" value={username} required />
-			<Input label="Password" placeHolder="enter your password" name="password" type="password" required />
-
-			<input type="checkbox" checked={checkbox} onChange={rememberHandler} id="rememberLoginCheck" />
-			<label htmlFor="rememberLoginCheck">Remember me</label>
-			<br />
-			<span className="psw">
-				Forgot <Link href="./forgot">password?</Link>
-			</span>
-
-			<button type="submit">Log In</button>
-		</form>
+		<LoginComp
+			submitHandler={submitHandler}
+			username={username}
+			checkbox={checkbox}
+			rememberHandler={rememberHandler}
+		/>
 	)
 }
 function Signup({ username }) {
@@ -111,37 +107,27 @@ function Signup({ username }) {
 		)
 	})
 
-	function submitHandler(event) {
+	async function submitHandler(event) {
 		event.preventDefault()
-		//prettier-ignore
-		const {username,first_name,last_name,email,password,passwordRepeat,rememberSignCheck} = event.target.children
+		const { username, first_name, last_name, email, password, passwordRepeat, rememberSignCheck } =
+			event.target.children
+		const data = {
+			username: username.value,
+			first_name: first_name.value,
+			last_name: last_name.value,
+			email: email.value,
+			password: password.value,
+			passwordRepeat: passwordRepeat.value,
+			remember: rememberSignCheck.checked,
+		}
 
-		const loged = signupApi(
-			username.value,
-			first_name.value,
-			last_name.value,
-			email.value,
-			password.value,
-			passwordRepeat.value,
-			rememberSignCheck.checked
-		)
+		const result = await signupApi(data)
 
-		if (loged) router.push("/")
+		if (result == true) router.push("/")
 	}
-	const rememberHandler = () => setCheckbox((prev) => !prev)
+
 	return (
-		<form onSubmit={submitHandler}>
-			{inputList}
-			<br />
-			<input type="checkbox" checked={checkbox} onChange={rememberHandler} id="rememberSignCheck" />
-			<label htmlFor="rememberSignCheck">Remember me</label>
-			<p>
-				By creating an account you agree to our
-				<Link href="/about#terms">Terms</Link>
-				<Link href="/about#privacy">Privacy</Link>.
-			</p>
-			<button type="submit">Sign Up</button>
-		</form>
+		<SingupComp submitHandler={submitHandler} inputList={inputList} checkbox={checkbox} setCheckbox={setCheckbox} />
 	)
 }
 function CheckExistance() {
@@ -154,7 +140,7 @@ function CheckExistance() {
 					event.preventDefault()
 					const username = event.target.children.username.value
 
-					const doesExist = await existApi(username)
+					const doesExist = await userExistApi(username)
 					if (doesExist) setUi(<Login username={username} />)
 					else setUi(<Signup username={username} />)
 				}}
@@ -191,24 +177,35 @@ function Profile() {
 	// get the data at first load and save them in the database
 	useEffect(() => {
 		async function temp() {
+			if (account.username !== undefined) return
+
 			const newAccount = await getUserApi()
-			delete newAccount.is_active
-			database(setAccount(newAccount))
+			if (newAccount.is_active == true) {
+				delete newAccount.is_active
+				database(setAccountDb(newAccount))
+			}
 		}
 		temp()
 	}, [])
 
 	// set new data in ui when the data changes
 	useEffect(() => {
+		let i = 0
 		const form = Object.entries(account).map((key) => {
 			return (
 				<>
-					<Input label={key[0]} required="required" name={key[0]} placeHolder={key[0]} value={key[1]} />
+					<Input
+						key={`uniqueKeyForUserDataInput-${++i}`}
+						label={key[0]}
+						required="required"
+						name={key[0]}
+						placeHolder={key[0]}
+						value={key[1]}
+					/>
 					<br />
 				</>
 			)
 		})
-		form.push(<button onClick={updateUser}>Update user</button>)
 
 		setUserData(form)
 	}, [account])
@@ -216,40 +213,33 @@ function Profile() {
 	function updateUser(event) {
 		event.preventDefault()
 		const { username, first_name, last_name, email } = event.target.parentElement.children
+		const dataObj = {
+			username: username.value,
+			first_name: first_name.value,
+			last_name: last_name.value,
+			email: email.value,
+		}
 
-		updateUserApi(username.value, first_name.value, last_name.value, email.value)
+		updateUserApi(dataObj)
 	}
 
 	async function logout() {
-		if (logoutApi()) {
-			;["access", "refresh", "lastLog"].forEach((key) => storage().removeItem(key))
-			sessionStorage.setItem("isLoged", false)
-		} else {
-			alert("couldnt log out")
-		}
-
-		router.push("/")
+		const result = await logoutApi()
+		if (result == true) router.push("/")
+		else alert("couldnt log out")
 	}
+
 	async function remove() {
-		if (removeApi()) {
+		if (await removeUserApi()) {
 			;["access", "refresh", "lastLog", "username", "remember"].forEach((key) => storage().removeItem(key))
 			sessionStorage.setItem("isLoged", false)
-		} else alert("couldnt remove account")
 
-		router.push("/")
+			database(setAccountDb({ username: undefined }))
+
+			router.push("/")
+		} else alert("couldnt remove account")
 	}
-	return (
-		<>
-			<form>{userData}</form>
-			<br />
-			<br />
-			<button onClick={logout}>Log out</button>
-			<button onClick={remove}>delete profile</button>
-			<br />
-			<br />
-			<Link href="./profile/address">addresses</Link>
-		</>
-	)
+	return <CheckExistanceComp userData={userData} updateUser={updateUser} logout={logout} remove={remove} />
 }
 
 export default function FirstView() {

@@ -5,32 +5,53 @@ function fetchOption(method, body, authorization, content) {
 	const whatToReturn = { method, headers: {} }
 
 	// set body
+
 	if (body !== false) whatToReturn.body = JSON.stringify(body)
 
 	// authorization
 	if (authorization) whatToReturn.headers.Authorization = "Bearer " + storage().getItem("access")
 
-	if (content === "aj") whatToReturn.headers = { ...whatToReturn.headers, "Content-Type": "application/json" }
+	// content type
+	if (content !== false) {
+		if (content === "aj") whatToReturn.headers = { ...whatToReturn.headers, "Content-Type": "application/json" }
+	}
 
+	// final result
 	return whatToReturn
 }
-export async function api(url, method = "GET", body = false, authorization = true, content = "aj") {
+export async function api(
+	url,
+	acceptedResponseCodes = [200],
+	authorization = false,
+	method = "GET",
+	body = false,
+	content = false
+) {
 	// set root
 	let root = window.location.origin
 	if (process.env.NODE_ENV !== "production") root = window.location.origin.replace("3", "8")
+
+	// check body validation
+	if (body !== false) {
+		const valid = validator(body)
+		if (valid == false) return [{ ok: false }, ""]
+	}
 
 	// set options
 	const options = fetchOption(method, body, authorization, content)
 
 	// fetch
-	const result = await fetch(root + url, options)
-	const data = await result.json()
+	const res = await fetch(root + "/" + url, options)
+
+	const data = method != "DELETE" && (await res.json())
 
 	// manage errors
-	if (!result.ok) Object.entries(dataPack).forEach((entry) => alert(entry[1]))
+	let raiseError = true
+	acceptedResponseCodes.forEach((code) => res.status == code && (raiseError = false))
+	if (raiseError) Object.entries(data).forEach((entry) => alert(entry[1]))
 
-	// return result
-	return [result, data]
+	// return res
+	return [res, data]
 }
 export function validator(data) {
 	let dataIsValid = true
@@ -46,6 +67,8 @@ export function validator(data) {
 
 function singleValidator(variable, type) {
 	switch (type) {
+		case "refresh":
+			return true
 		case "username":
 			for (let i = 0; i < variable.length; i++)
 				if (
@@ -115,7 +138,7 @@ function singleValidator(variable, type) {
 			return false
 
 		default:
-			alert("validator couldnt detect value key")
+			alert("validator couldnt detect value key of " + type + " : ", variable)
 			return false
 	}
 }

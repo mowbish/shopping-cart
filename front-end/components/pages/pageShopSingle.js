@@ -286,7 +286,7 @@ function Article() {
 						<div className="p-2 pb-3">
 							<div className="product-wap card rounded-0">
 								<div className="card rounded-0">
-									<img className="card-img rounded-0 img-fluid" src="/img/shop_08.jpg" />
+									<img heig className="card-img rounded-0 img-fluid" src="/img/shop_08.jpg" />
 									<div className="card-img-overlay rounded-0 product-overlay d-flex align-items-center justify-content-center">
 										<ul className="list-unstyled">
 											<li>
@@ -692,7 +692,7 @@ function Article() {
 						<div className="p-2 pb-3">
 							<div className="product-wap card rounded-0">
 								<div className="card rounded-0">
-									<img className="card-img rounded-0 img-fluid" src="/img/shop_11.jpg" />
+									<img height='100 px' className="card-img rounded-0 img-fluid" src="/img/shop_11.jpg" />
 									<div className="card-img-overlay rounded-0 product-overlay d-flex align-items-center justify-content-center">
 										<ul className="list-unstyled">
 											<li>
@@ -750,7 +750,7 @@ function Article() {
 						<div className="p-2 pb-3">
 							<div className="product-wap card rounded-0">
 								<div className="card rounded-0">
-									<img className="card-img rounded-0 img-fluid" src="/img/shop_08.jpg" />
+									<img height='100 px' className="card-img rounded-0 img-fluid" src="/img/shop_08.jpg" />
 									<div className="card-img-overlay rounded-0 product-overlay d-flex align-items-center justify-content-center">
 										<ul className="list-unstyled">
 											<li>
@@ -808,7 +808,7 @@ function Article() {
 						<div className="p-2 pb-3">
 							<div className="product-wap card rounded-0">
 								<div className="card rounded-0">
-									<img className="card-img rounded-0 img-fluid" src="/img/shop_09.jpg" />
+									<img height='100 px' className="card-img rounded-0 img-fluid" src="/img/shop_09.jpg" />
 									<div className="card-img-overlay rounded-0 product-overlay d-flex align-items-center justify-content-center">
 										<ul className="list-unstyled">
 											<li>
@@ -866,7 +866,7 @@ function Article() {
 						<div className="p-2 pb-3">
 							<div className="product-wap card rounded-0">
 								<div className="card rounded-0">
-									<img className="card-img rounded-0 img-fluid" src="/img/shop_10.jpg" />
+									<img height='100 px' className="card-img rounded-0 img-fluid" src="/img/shop_10.jpg" />
 									<div className="card-img-overlay rounded-0 product-overlay d-flex align-items-center justify-content-center">
 										<ul className="list-unstyled">
 											<li>
@@ -924,7 +924,7 @@ function Article() {
 						<div className="p-2 pb-3">
 							<div className="product-wap card rounded-0">
 								<div className="card rounded-0">
-									<img className="card-img rounded-0 img-fluid" src="/img/shop_11.jpg" />
+									<img height='100 px' className="card-img rounded-0 img-fluid" src="/img/shop_11.jpg" />
 									<div className="card-img-overlay rounded-0 product-overlay d-flex align-items-center justify-content-center">
 										<ul className="list-unstyled">
 											<li>
