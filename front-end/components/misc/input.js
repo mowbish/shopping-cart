@@ -1,11 +1,4 @@
-export default function Input({
-	label,
-	placeHolder,
-	name,
-	type = "text",
-	required = false,
-	value = false,
-}) {
+export default function Input({ label, placeHolder, name, type = "text", required = false, value = false }) {
 	let temp = (
 		<label htmlFor={name}>
 			<b>{label}</b>
@@ -39,13 +32,7 @@ export default function Input({
 			return (
 				<>
 					{temp}
-					<input
-						type={type}
-						placeholder={placeHolder}
-						name={name}
-						defaultValue={value}
-						required
-					/>
+					<input type={type} placeholder={placeHolder} name={name} defaultValue={value} required />
 				</>
 			)
 	}

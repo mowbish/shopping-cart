@@ -1,4 +1,4 @@
-import PageIndex from "../components/pageIndex"
+import PageIndex from "../components/pages/pageIndex"
 
 export default function Home() {
 	return <PageIndex />
