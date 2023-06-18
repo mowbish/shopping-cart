@@ -9,7 +9,7 @@ from accounts.models import Customer, Address
 from rest_framework.permissions import AllowAny
 from rest_framework.decorators import action
 from rest_framework.response import Response
-
+from rest_framework_simplejwt.tokens import RefreshToken
 
 class UserModelViewSet(mixins.UpdateModelMixin,
                        mixins.RetrieveModelMixin, mixins.DestroyModelMixin, viewsets.GenericViewSet):
@@ -47,6 +47,20 @@ class UserModelViewSet(mixins.UpdateModelMixin,
         serializer.is_valid(raise_exception=True)
 
         return Response({"is_active": serializer.data["is_active"]})
+    
+    @action(detail=False, methods=["POST"], permission_classes=[IsOwner], url_path="logout")
+    def logout(self, request):
+        try:
+            refresh_token = request.data.get('refresh_token')
+            print(request.data)
+            if refresh_token:
+                token = RefreshToken(refresh_token)
+                token.blacklist()
+                return Response({"data": "Logout succesfull"})
+            else:
+                return Response({"error": "Invalid token."}, status=400)
+        except Exception as e:
+            return Response({"error": "Invalid token.", "detail":str(e)}, status=400)
 
 
 class UserAddressModelViewSet(mixins.CreateModelMixin, mixins.UpdateModelMixin,
