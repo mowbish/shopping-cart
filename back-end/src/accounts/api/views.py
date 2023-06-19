@@ -1,3 +1,4 @@
+import datetime
 from rest_framework import viewsets, mixins, status
 from .permissions import IsOwner, IsAddressOwner
 from .serializers import (SignUpUserModelSerializer,
@@ -52,10 +53,10 @@ class UserModelViewSet(mixins.UpdateModelMixin,
     def logout(self, request):
         try:
             refresh_token = request.data.get('refresh_token')
-            print(request.data)
             if refresh_token:
-                token = RefreshToken(refresh_token)
+                token = RefreshToken(token=refresh_token)
                 token.blacklist()
+                # token.access_token.set_exp(datetime.timedelta(seconds=1))
                 return Response({"data": "Logout succesfull"})
             else:
                 return Response({"error": "Invalid token."}, status=400)

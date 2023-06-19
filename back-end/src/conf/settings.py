@@ -40,7 +40,9 @@ INSTALLED_APPS = [
     'rest_framework',
     'djmoney',
     'drf_yasg',
+    'rest_framework_simplejwt',
 
+    'rest_framework_simplejwt.token_blacklist',
 
 ]
 
@@ -173,7 +175,10 @@ CORS_ORIGIN_WHITELIST = (
 )
 
 SIMPLE_JWT = {
-    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=60),
+    'ACCESS_TOKEN_LIFETIME': timedelta(seconds=35),
     'REFRESH_TOKEN_LIFETIME': timedelta(days=30),
-    "UPDATE_LAST_LOGIN": True
+    'ROTATE_REFRESH_TOKENS': False,
+    'BLACKLIST_AFTER_ROTATION': True,
+    'UPDATE_LAST_LOGIN': False,
+
 }
