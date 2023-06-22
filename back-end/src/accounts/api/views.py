@@ -18,7 +18,7 @@ class UserModelViewSet(mixins.UpdateModelMixin,
     permission_classes = [IsOwner]
 
     def get_queryset(self):
-        return Customer.objects.filter(username=self.request.user.username)
+        return Customer.objects.filter(username=self.request.user.username, is_active=True)
 
     def get_serializer_class(self):
 
