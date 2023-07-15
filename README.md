@@ -42,7 +42,7 @@ you can see project in this route:
 
 + `http://127.0.0.1:8000/`
 
-notic: Only the first time you need to hit `--build` in `docker-compose` command and after the first time it is no longer necessary
+notic: Only the first time you need to hit `--build` in `docker-compose` command and after the that, it is no longer necessary to do it.
 
 ---
 
@@ -93,7 +93,7 @@ First install [Node.js](https://nodejs.org/en/download/) to use NPM.
 <br>
 <br>
 
-### Also Rout's of project:
+### Also the project rout's are:
 
 + `http://127.0.0.1:8000/`
 + `http://127.0.0.1:8000/swagger/`
@@ -218,21 +218,3 @@ Enjoy it ;)
 This project is developing under the `Agile` method
 
 Agile is an iterative approach to project management and software development that helps teams deliver value to their customers faster and with fewer headaches. Instead of betting everything on a "big bang" launch, an agile team delivers work in small, but consumable, increments
-
-#### WEBSITE USAGE:
-
-- check corporation description / contact info
-- check account information
-- compare two or more products
-- check product price / pictures / details
-- filter products
-- buy products
-
-#### SUBPAGES:
-
-- home
-- profile
-- cart
-- search
-- product
-- compare
