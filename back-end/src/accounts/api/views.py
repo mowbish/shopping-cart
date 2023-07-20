@@ -37,6 +37,13 @@ class UserModelViewSet(mixins.UpdateModelMixin,
         serializer.save()
         return Response({"data": serializer.data})
 
+    @action(detail=False, methods=["POST"], permission_classes=[AllowAny], url_path="admin/sign-up")
+    def sign_up(self, request):
+        serializer = SignUpUserModelSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response({"data": serializer.data})
+
     @action(detail=False, methods=["GET"], permission_classes=[AllowAny], url_path="is-exists")
     def is_exists(self, request, *args, **kwargs):
         target_customer = request.query_params['username']
