@@ -9,8 +9,10 @@ class SignUpUserModelSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Customer
-        fields = ("username", "first_name", "last_name", "email", "password", "is_staff")
-
+        fields = ("username", "first_name", "last_name", "email", "password",
+                  "is_staff", "is_active")
+        extra_kwargs = {'password': {'write_only': True},
+                        'is_active': {'read_only': True}}
     def create(self, validated_data):
         customer = Customer.objects.create(
             username=validated_data["username"],
@@ -18,6 +20,7 @@ class SignUpUserModelSerializer(serializers.ModelSerializer):
             last_name=validated_data["last_name"],
             email=validated_data["email"],
             is_staff=validated_data["is_staff"],
+            is_active=validated_data["is_active"],
         )
         customer.set_password(raw_password=validated_data["password"])
         customer.save()
@@ -25,21 +28,31 @@ class SignUpUserModelSerializer(serializers.ModelSerializer):
         return customer
 
     def validate(self, attrs):
-
-        if Customer.objects.filter(username=attrs['username']).exists():
+        """
+        If someone is_staff=True, his account will be disabled until the
+        superuser checks him and activates his account.
+        """
+        
+        is_staff = attrs.get('is_staff', False)
+        if is_staff:
+            attrs['is_active'] = False
+        elif Customer.objects.filter(username=attrs['username']).exists():
             raise serializers.ValidationError("This Username already taken")
         elif Customer.objects.filter(email=attrs['email']).exists():
             raise serializers.ValidationError("This email already taken")
         return super().validate(attrs)
 
     def to_representation(self, instance):
-
-        return {
-            "username": instance.username,
-            "first_name": instance.first_name,
-            "last_name": instance.last_name,
-            "email": instance.email,
-        }
+        if instance.is_staff == True:
+            return {
+                "data": "Your request to create an admin account will be reviewed."}
+        else:
+            return {
+                "data": {
+                    "username": instance.username,
+                    "first_name": instance.first_name,
+                    "last_name": instance.last_name,
+                    "email": instance.email,}}
 
 # Not Tested
 
