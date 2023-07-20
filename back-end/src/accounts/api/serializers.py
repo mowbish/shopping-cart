@@ -9,8 +9,8 @@ class SignUpUserModelSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Customer
-        fields = ("username", "first_name", "last_name", "email", "password",
-                  "is_staff", "is_active")
+        fields = ("username", "first_name", "last_name", "email",
+                  "password", "is_staff", "is_active")
         extra_kwargs = {'password': {'write_only': True},
                         'is_active': {'read_only': True}}
     def create(self, validated_data):
@@ -45,7 +45,7 @@ class SignUpUserModelSerializer(serializers.ModelSerializer):
     def to_representation(self, instance):
         if instance.is_staff == True:
             return {
-                "data": "Your request to create an admin account will be reviewed."}
+                "data": "request to create an admin accoun will be reviewed."}
         else:
             return {
                 "data": {
