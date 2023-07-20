@@ -67,8 +67,8 @@ class UserModelViewSet(mixins.UpdateModelMixin,
                 return Response({"data": "Logout succesfull"})
             else:
                 return Response({"error": "Invalid token."}, status=400)
-        except Exception as e:
-            return Response({"error": "Invalid token.", "detail":str(e)}, status=400)
+        except Exception:
+            return Response({"error": "Invalid token."}, status=400)
 
 
 class UserAddressModelViewSet(mixins.CreateModelMixin, mixins.UpdateModelMixin,
