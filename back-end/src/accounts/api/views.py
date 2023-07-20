@@ -32,6 +32,10 @@ class UserModelViewSet(mixins.UpdateModelMixin,
 
     @action(detail=False, methods=["POST"], permission_classes=[AllowAny], url_path="sign-up")
     def sign_up(self, request):
+        """
+        frontend developer should know that i used one route for admin user and normal user
+        signup and differences between admin and normal user signup is just "is_staff" field
+        """
         serializer = SignUpUserModelSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         serializer.save()
