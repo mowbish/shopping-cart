@@ -12,26 +12,6 @@ class Customer(AbstractUser):
         verbose_name = _('Customer')
         verbose_name_plural = _('Customers')
 
-    def get_username(self):
-        return self.username
-
-    def __str__(self):
-        if self.is_staff or self.is_superuser:
-            return self.username
-        return self.email or '<anonymous>'
-
-    def get_full_name(self):
-        full_name = super(Customer, self).get_full_name()
-        if full_name:
-            return full_name
-        return self.get_short_name()
-
-    def get_short_name(self):
-        short_name = super(Customer, self).get_short_name()
-        if short_name:
-            return short_name
-        return self.email
-
 
 class Address(BaseModel):
 
