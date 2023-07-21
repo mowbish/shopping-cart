@@ -1,5 +1,5 @@
 from django.contrib import admin
-from accounts.models import Customer, Address, IPaddress
+from accounts.models import Customer, Address
 
 
 @admin.register(Customer)
@@ -20,11 +20,3 @@ class CustomerAdmin(admin.ModelAdmin):
                     "city", "address_detail",)
     empty_value_display = '-empty-'
     ordering = ('created_at',)
-
-@admin.register(IPaddress)
-class CustomerAdmin(admin.ModelAdmin):
-    list_display = ("ip_address",)
-    search_fields = ("ip_address",)
-    empty_value_display = '-empty-'
-    ordering = ('created_at',)
-

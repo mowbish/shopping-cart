@@ -44,14 +44,3 @@ class Address(BaseModel):
     def __str__(self):
         return f'{self.address_name}'
 
-class IPaddress(BaseModel):
-    ip_address = models.GenericIPAddressField(_('ip_address'))
-
-    class Meta:
-        db_table = _('ip_addresses')
-        verbose_name = _('ip_address')
-        verbose_name_plural = _('IPaddress')
-
-    def __str__(self):
-        return f'{self.ip_address}'
-

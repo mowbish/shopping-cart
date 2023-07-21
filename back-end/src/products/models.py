@@ -3,7 +3,6 @@ from djmoney.models.fields import MoneyField
 from django.utils.translation import gettext_lazy as _
 from common.basemodels import BaseModel
 from products.choices import COLOR_CHOICES
-from accounts.models import IPaddress
 
 
 class Category(BaseModel):
@@ -44,10 +43,8 @@ class Product(BaseModel):
                        default_currency='USD')
     category = models.ForeignKey(
         "Category", on_delete=models.CASCADE, related_name='products')
-
     extant = models.BooleanField(default=False)
-
-    views = models.ManyToManyField(IPaddress, blank=True)
+    views = models.BigIntegerField(_("views"), blank=True)
 
     class Meta:
         db_table = _('products')
@@ -70,3 +67,4 @@ class ProductImages(models.Model):
         db_table = _('product_images')
         verbose_name = _('ProductImage')
         verbose_name_plural = _('ProductImages')
+
