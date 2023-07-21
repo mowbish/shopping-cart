@@ -6,11 +6,22 @@ from common.basemodels import BaseModel
 
 
 class Customer(AbstractUser):
-
+    
+    avatar = models.ImageField(
+        _("avatar"),
+        upload_to='avatars',
+        blank=True,
+        null=True,)
+    
     class Meta:
         db_table = _("customers")
         verbose_name = _('Customer')
         verbose_name_plural = _('Customers')
+
+    def __str__(self):
+        if self.is_superuser:
+            return self.username
+        return self.user_id
 
 
 class Address(BaseModel):
