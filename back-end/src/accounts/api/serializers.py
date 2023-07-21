@@ -11,8 +11,7 @@ class SignUpUserModelSerializer(serializers.ModelSerializer):
         model = Customer
         fields = ("username", "first_name", "last_name", "email",
                   "password", "is_staff", "is_active")
-        extra_kwargs = {'password': {'write_only': True},
-                        'is_active': {'read_only': True}}
+
     def create(self, validated_data):
         customer = Customer.objects.create(
             username=validated_data["username"],

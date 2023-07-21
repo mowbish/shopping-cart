@@ -11,18 +11,21 @@ from rest_framework.permissions import AllowAny
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework_simplejwt.tokens import RefreshToken
+from drf_yasg.utils import swagger_auto_schema
+from drf_yasg import openapi
 
-class UserModelViewSet(mixins.UpdateModelMixin,
-                       mixins.RetrieveModelMixin, mixins.DestroyModelMixin, viewsets.GenericViewSet):
+
+class UserModelViewSet(viewsets.ModelViewSet):
     lookup_field = "username"
-    permission_classes = [IsOwner]
-
+    # permission_classes = [IsOwner]
+    
     def get_queryset(self):
         return Customer.objects.filter(username=self.request.user.username, is_active=True)
 
     def get_serializer_class(self):
-
-        if self.action == "retrieve":
+        if self.action == "create":
+            self.serializer_class = SignUpUserModelSerializer
+        elif self.action == "retrieve":
             self.serializer_class = RetriveUserModelSerializer
         elif self.action == "update":
             self.serializer_class = UpdateUserModelSerializer
@@ -30,16 +33,16 @@ class UserModelViewSet(mixins.UpdateModelMixin,
             self.serializer_class = DestroyUserModelSerializer
         return self.serializer_class
 
-    @action(detail=False, methods=["POST"], permission_classes=[AllowAny], url_path="sign-up")
-    def sign_up(self, request):
-        """
-        frontend developer should know that i used one route for admin user and normal user
-        signup and differences between admin and normal user signup is just "is_staff" field
-        """
-        serializer = SignUpUserModelSerializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        serializer.save()
-        return Response({"data": serializer.data})
+    # @action(detail=False, methods=["POST"], permission_classes=[AllowAny], url_path="sign-up")
+    # def sign_up(self, request):
+    #     """
+    #     frontend developer should know that i used one route for admin user and normal user
+    #     signup and differences between admin and normal user signup is just "is_staff" field
+    #     """
+    #     serializer = SignUpUserModelSerializer(data=request.data)
+    #     serializer.is_valid(raise_exception=True)
+    #     serializer.save()
+    #     return Response({"data": serializer.data})
 
     @action(detail=False, methods=["GET"], permission_classes=[AllowAny], url_path="is-exists")
     def is_exists(self, request, *args, **kwargs):
@@ -52,8 +55,13 @@ class UserModelViewSet(mixins.UpdateModelMixin,
         serializer.is_valid(raise_exception=True)
 
         return Response({"is_active": serializer.data["is_active"]})
-    
-    @action(detail=False, methods=["POST"], permission_classes=[IsOwner], url_path="logout")
+
+
+    @swagger_auto_schema(
+            methods=['POST'], request_body=openapi.Schema(type=openapi.TYPE_OBJECT, properties={
+                "refresh_token": openapi.Schema(type=openapi.TYPE_STRING)}),
+                responses={200: "Logout succesfull", 400:"Invalid token."})
+    @action(detail=False, methods=["POST"],permission_classes=[AllowAny], url_path="logout")
     def logout(self, request):
         try:
             refresh_token = request.data.get('refresh_token')
@@ -61,7 +69,7 @@ class UserModelViewSet(mixins.UpdateModelMixin,
                 token = RefreshToken(token=refresh_token)
                 token.blacklist()
                 # token.access_token.set_exp(datetime.timedelta(seconds=1))
-                return Response({"data": "Logout succesfull"})
+                return Response({"data": "Logout succesfull"}, status=200)
             else:
                 return Response({"error": "Invalid token."}, status=400)
         except Exception:

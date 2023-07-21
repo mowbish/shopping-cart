@@ -11,11 +11,12 @@ from drf_yasg import openapi
 from django.conf import settings
 from django.conf.urls.static import static
 
+
 schema_view = get_schema_view(
     openapi.Info(
         title="Snippets API",
         default_version='v1',
-        description="Test description",
+        description="nothing to say",
         terms_of_service="https://www.google.com/policies/terms/",
         contact=openapi.Contact(email="contact@snippets.local"),
         license=openapi.License(name="BSD License"),
