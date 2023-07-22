@@ -33,7 +33,7 @@ jobs:
     - name: Commit formatted code
       run: |
           git add .
-          git commit -m "CI Black: change styles of code"
+          git commit -m "CI Black: change styles of code automatically"
           
     - name: Push changes
       uses: ad-m/github-push-action@master
