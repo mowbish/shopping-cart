@@ -26,28 +26,28 @@ services:
             /app/src/manage.py test &&
             /app/src/manage.py runserver 0:8000"
   
-  front-end:
-    restart: always
-#    command : npm start
-    container_name: front-end
+#   front-end:
+#     restart: always
+# #    command : npm start
+#     container_name: front-end
 
-    build:
-      context: ./front-end/
-      dockerfile: Dockerfile
+#     build:
+#       context: ./front-end/
+#       dockerfile: Dockerfile
 
-    ports:
-      - "3000:3000"
-      - "3001:3001"
+#     ports:
+#       - "3000:3000"
+#       - "3001:3001"
 
-    stdin_open: true
-    depends_on:
-      - back-end
-    networks:
-      - db-net  
+#     stdin_open: true
+#     depends_on:
+#       - back-end
+#     networks:
+#       - db-net  
 
-networks:
-  db-net:
-    driver: bridge
+# networks:
+#   db-net:
+#     driver: bridge
 #   db:
 #     container_name: db
 #     image: postgres:13
