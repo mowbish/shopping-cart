@@ -4,7 +4,7 @@ WORKDIR /app/frontend
 COPY package.json ./
 COPY package-lock.json ./
 COPY . ./
-# RUN npm install 
+RUN npm install next
 
 # RUN npm install react-scripts@3.4.1 -g 
 RUN npm run dev
