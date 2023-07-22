@@ -5,26 +5,26 @@ from accounts.models import Customer
 
 
 class AccountTests(APITestCase):
-
     def test_create_valid_account(self):
         """
         Ensure we can create a new account object.
         """
         url = "http://localhost:8000/api/user/"
-        data = {"username": "test_username", "first_name": "test_first_name",
-                "last_name": "test_last_name", "email": "test_email@email.com", "password": "test"}
-        response = self.client.post(url, data, format='json')
+        data = {
+            "username": "test_username",
+            "first_name": "test_first_name",
+            "last_name": "test_last_name",
+            "email": "test_email@email.com",
+            "password": "test",
+        }
+        response = self.client.post(url, data, format="json")
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
         self.assertEqual(Customer.objects.count(), 1)
-        self.assertEqual(Customer.objects.get().username,
-                         data['username'])
-        self.assertEqual(Customer.objects.get().first_name,
-                         data['first_name'])
-        self.assertEqual(Customer.objects.get().last_name,
-                         data['last_name'])
-        self.assertEqual(Customer.objects.get().email,
-                         data['email'])
-    
+        self.assertEqual(Customer.objects.get().username, data["username"])
+        self.assertEqual(Customer.objects.get().first_name, data["first_name"])
+        self.assertEqual(Customer.objects.get().last_name, data["last_name"])
+        self.assertEqual(Customer.objects.get().email, data["email"])
+
     # def test_create_invalid_account(self):
     #     """
     #     Ensure we can create a new account object.
@@ -44,4 +44,3 @@ class AccountTests(APITestCase):
     #                      data['last_name'])
     #     self.assertEqual(Customer.objects.get().email,
     #                      data['email'])
-

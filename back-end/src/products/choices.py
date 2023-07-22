@@ -11,13 +11,13 @@ YELLOW = "YELLOW"
 PURPLE = "PURPLE"
 
 COLOR_CHOICES = [
-    (RED, _('RED')),
-    (BLUE, _('BLUE')),
-    (GREEN, _('GREEN')),
-    (BLACK, _('BLACK')),
-    (WHITE, _('WHITE')),
-    (PINK, _('PINK')),
-    (ORANGE, _('ORANGE')),
-    (YELLOW, _('YELLOW')),
-    (PURPLE, _('PURPLE')),
+    (RED, _("RED")),
+    (BLUE, _("BLUE")),
+    (GREEN, _("GREEN")),
+    (BLACK, _("BLACK")),
+    (WHITE, _("WHITE")),
+    (PINK, _("PINK")),
+    (ORANGE, _("ORANGE")),
+    (YELLOW, _("YELLOW")),
+    (PURPLE, _("PURPLE")),
 ]
