@@ -24,3 +24,19 @@ jobs:
 
     - name: Run Black
       run: black back-end/src
+      
+    - name: Configure Git
+      run: |
+          git config --global user.name "mowbish"
+          git config --global user.email "mobin.clash.ma@gmail.com"
+
+    - name: Commit formatted code
+      run: |
+          git add .
+          git commit -m "CI Black: change styles of code"
+          
+    - name: Push changes
+      uses: ad-m/github-push-action@master
+      with:
+        github_token: ${{ secrets.ACCESS_TOKEN }}
+        branch: ${{ github.ref }}
