@@ -9,7 +9,7 @@ from orders.choices import SENDING_STATUS, PAYMENT_STATUS
 
 
 class Discount(BaseModel):
-
+    
     customer = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.SET_NULL,

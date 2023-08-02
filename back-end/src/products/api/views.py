@@ -7,7 +7,7 @@ from products.api.serializers import (
     DestroyProductsModelSerializer,
     AllProductsModelSerializer,
 )
-from products.models import Product, Category
+from ..models import Product, Category
 from django.db.models import Q
 from rest_framework.permissions import IsAdminUser, AllowAny
 from rest_framework.decorators import action

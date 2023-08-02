@@ -1,5 +1,5 @@
 from rest_framework import serializers, exceptions
-from accounts.models import Customer, Address
+from ..models import Customer, Address
 from django.contrib.auth.hashers import make_password
 
 # Not Tested
