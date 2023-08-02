@@ -10,14 +10,6 @@ from orders.choices import SENDING_STATUS, PAYMENT_STATUS
 
 class Discount(BaseModel):
 
-    """
-    Here we dont inherit from BaseModel,
-    because we should have create time and expire time for
-    each discount. in BaseModel we have Craeted time field
-    and also in Discount we have created field.
-    because of this created fields have diffrent way to use.
-    """
-
     customer = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.SET_NULL,
@@ -42,7 +34,7 @@ class OrderItem(BaseModel):
     quantity = models.SmallIntegerField()
 
     class Meta:
-        db_table = _("order_item ")
+        db_table = _("order_item")
         verbose_name = _("Order item")
         verbose_name_plural = _("Order items")
 
