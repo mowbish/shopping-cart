@@ -16,6 +16,7 @@ class SignUpUserModelSerializer(serializers.ModelSerializer):
             "password",
             "is_staff",
             "is_active",
+            "avatar"
         )
 
     def create(self, validated_data):
@@ -67,7 +68,7 @@ class SignUpUserModelSerializer(serializers.ModelSerializer):
 class RetriveUserModelSerializer(serializers.ModelSerializer):
     class Meta:
         model = Customer
-        fields = ("first_name", "last_name", "username", "email", "is_active")
+        fields = ("first_name", "last_name", "username", "email", "is_active", "avatar")
 
 
 # Not Tested
@@ -76,7 +77,7 @@ class RetriveUserModelSerializer(serializers.ModelSerializer):
 class UpdateUserModelSerializer(serializers.ModelSerializer):
     class Meta:
         model = Customer
-        fields = ("first_name", "last_name", "username", "email")
+        fields = ("first_name", "last_name", "username", "email", "avatar")
 
 
 # Not Tested

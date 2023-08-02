@@ -3,5 +3,5 @@ from .views import UserModelViewSet, UserAddressModelViewSet
 
 router = DefaultRouter()
 
-router.register(r"user", UserModelViewSet, basename="user")
-router.register(r"user-address", UserAddressModelViewSet, basename="user-address")
+router.register(r"users", UserModelViewSet, basename="users")
+router.register(r"user-addresses", UserAddressModelViewSet, basename="user-addresses")

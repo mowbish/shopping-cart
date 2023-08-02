@@ -26,7 +26,8 @@ class Customer(AbstractUser):
 
 class Address(BaseModel):
     # Users can have one or many addresses
-    customer = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    customer = models.ForeignKey(settings.AUTH_USER_MODEL, related_name="addresses",
+                                 on_delete=models.CASCADE)
     address_name = models.CharField(
         _("address_name"), max_length=30, help_text="Home, Office, ..."
     )

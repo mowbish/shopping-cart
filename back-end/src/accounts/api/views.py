@@ -1,6 +1,6 @@
 import datetime
 from rest_framework import viewsets, mixins, status
-from .permissions import IsOwner, IsAddressOwner
+from .permissions import IsAddressOwner
 from .serializers import (
     SignUpUserModelSerializer,
     RetriveUserModelSerializer,
@@ -23,7 +23,6 @@ from drf_yasg import openapi
 
 class UserModelViewSet(viewsets.ModelViewSet):
     lookup_field = "username"
-    # permission_classes = [IsOwner]
 
     def get_queryset(self):
         return Customer.objects.filter(
@@ -39,18 +38,9 @@ class UserModelViewSet(viewsets.ModelViewSet):
             self.serializer_class = UpdateUserModelSerializer
         elif self.action == "destroy":
             self.serializer_class = DestroyUserModelSerializer
+
         return self.serializer_class
 
-    # @action(detail=False, methods=["POST"], permission_classes=[AllowAny], url_path="sign-up")
-    # def sign_up(self, request):
-    #     """
-    #     frontend developer should know that i used one route for admin user and normal user
-    #     signup and differences between admin and normal user signup is just "is_staff" field
-    #     """
-    #     serializer = SignUpUserModelSerializer(data=request.data)
-    #     serializer.is_valid(raise_exception=True)
-    #     serializer.save()
-    #     return Response({"data": serializer.data})
 
     @action(
         detail=False,
