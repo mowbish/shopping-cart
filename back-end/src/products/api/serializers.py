@@ -22,7 +22,65 @@ class ProductImagesModelSerializer(serializers.ModelSerializer):
         fields = ("product", "images")
 
 
+class CreateProductsModelSerializer(serializers.ModelSerializer):
+    product_images = ProductImagesModelSerializer(read_only=True)
+
+    class Meta:
+        model = Product
+        fields = (
+            "name",
+            "description",
+            "features",
+            "color",
+            "base_image",
+            "stock_count",
+            "price",
+            "category",
+            "extant",
+            "views",
+            "product_images",
+        )
+    
+
 class RetriveProductsModelSerializer(serializers.ModelSerializer):
+    product_images = ProductImagesModelSerializer(read_only=True)
+
+    class Meta:
+        model = Product
+        fields = (
+            "name",
+            "description",
+            "features",
+            "color",
+            "base_image",
+            "stock_count",
+            "price",
+            "category",
+            "extant",
+            "views",
+            "product_images",
+        )
+
+class UpdateProductsModelSerializer(serializers.ModelSerializer):
+    product_images = ProductImagesModelSerializer(read_only=True)
+
+    class Meta:
+        model = Product
+        fields = (
+            "name",
+            "description",
+            "features",
+            "color",
+            "base_image",
+            "stock_count",
+            "price",
+            "category",
+            "extant",
+            "views",
+            "product_images",
+        )
+
+class DestroyProductsModelSerializer(serializers.ModelSerializer):
     product_images = ProductImagesModelSerializer(read_only=True)
 
     class Meta:
