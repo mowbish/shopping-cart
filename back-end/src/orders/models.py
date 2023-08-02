@@ -12,6 +12,7 @@ class Discount(BaseModel):
     
     customer = models.ForeignKey(
         settings.AUTH_USER_MODEL,
+        related_name="discounts",
         on_delete=models.SET_NULL,
         null=True,
         related_name="discounts",
@@ -30,7 +31,7 @@ class Discount(BaseModel):
 
 
 class OrderItem(BaseModel):
-    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, related_name="order_items", on_delete=models.CASCADE)
     quantity = models.SmallIntegerField()
 
     class Meta:
