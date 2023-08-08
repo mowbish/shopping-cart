@@ -16,7 +16,7 @@ class SignUpUserModelSerializer(serializers.ModelSerializer):
             "password",
             "is_staff",
             "is_active",
-            "avatar"
+            "avatar",
         )
 
     def create(self, validated_data):

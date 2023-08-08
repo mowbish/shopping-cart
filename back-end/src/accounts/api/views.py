@@ -41,7 +41,6 @@ class UserModelViewSet(viewsets.ModelViewSet):
 
         return self.serializer_class
 
-
     @action(
         detail=False,
         methods=["GET"],

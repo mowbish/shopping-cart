@@ -40,7 +40,7 @@ class CreateProductsModelSerializer(serializers.ModelSerializer):
             "views",
             "product_images",
         )
-    
+
 
 class RetriveProductsModelSerializer(serializers.ModelSerializer):
     product_images = ProductImagesModelSerializer(read_only=True)
@@ -61,6 +61,7 @@ class RetriveProductsModelSerializer(serializers.ModelSerializer):
             "product_images",
         )
 
+
 class UpdateProductsModelSerializer(serializers.ModelSerializer):
     product_images = ProductImagesModelSerializer(read_only=True)
 
@@ -79,6 +80,7 @@ class UpdateProductsModelSerializer(serializers.ModelSerializer):
             "views",
             "product_images",
         )
+
 
 class DestroyProductsModelSerializer(serializers.ModelSerializer):
     product_images = ProductImagesModelSerializer(read_only=True)

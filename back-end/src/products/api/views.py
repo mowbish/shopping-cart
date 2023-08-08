@@ -22,19 +22,16 @@ class CategoryModelViewSet(viewsets.ModelViewSet):
 
 
 class ProductModelViewSet(viewsets.ModelViewSet):
-    
     lookup_field = "id"
 
     def get_permissions(self):
-        if self.action in ('list', 'retrieve'):
+        if self.action in ("list", "retrieve"):
             permissions_class = (AllowAny,)
         else:
             permissions_class = (IsAdminUser,)
         return [permission() for permission in permissions_class]
 
-
     def get_queryset(self):
-        
         return (
             Product.objects.all()
             .select_related("category")
@@ -42,7 +39,6 @@ class ProductModelViewSet(viewsets.ModelViewSet):
         )
 
     def get_serializer_class(self):
-        
         if self.action == "create":
             self.serializer_class = CreateProductsModelSerializer
         elif self.action == "retrieve":
@@ -54,6 +50,3 @@ class ProductModelViewSet(viewsets.ModelViewSet):
         elif self.action == "list":
             self.serializer_class = AllProductsModelSerializer
         return self.serializer_class
-    
-
-    

@@ -64,7 +64,9 @@ class Product(BaseModel):
 
 
 class ProductImages(models.Model):
-    product = models.ForeignKey("Product", related_name="images", on_delete=models.CASCADE)
+    product = models.ForeignKey(
+        "Product", related_name="images", on_delete=models.CASCADE
+    )
     images = models.ImageField(_("images"), upload_to="product_images", max_length=500)
 
     def __str__(self):

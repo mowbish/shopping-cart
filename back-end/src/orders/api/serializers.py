@@ -5,18 +5,18 @@
 
 # class CreateDiscountModelSerializer(serializers.ModelSerializer):
 #     username = serializers.StringRelatedField(many=False)
-    
+
 #     class Meta:
 #         model = Discount
 #         fields = ("product", "quantity")
-    
+
 #     def create(self, validated_data):
 #         customer = Customer.objects.filter(username=validated_data["username"])
 #         if not customer.exists():
 #             raise ProcessLookupError("user not found")
-        
+
 #         discount = Discount.objects.create(
-            
+
 #         )
 #         customer = Customer.objects.create(
 #             username=validated_data["username"],
@@ -34,7 +34,7 @@
 
 # class CreateOrderItemModelSerializer(serializers.ModelSerializer):
 #     product = serializers.StringRelatedField(many=False)
-    
+
 #     class Meta:
 #         model = OrderItem
 #         fields = ("product", "quantity")
